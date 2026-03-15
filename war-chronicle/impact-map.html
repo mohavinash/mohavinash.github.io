@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Impact — US-Iran War</title>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Courier New', monospace; background: #FAF8F3; }
+#map { width: 100vw; height: 100vh; }
+
+.map-legend {
+  position: absolute; bottom: 24px; left: 20px; z-index: 10;
+  background: rgba(250,248,243,0.93); border: 1px solid #c8c4bc;
+  padding: 10px 14px; font-size: 9px; color: #5a5a5a;
+}
+.legend-title {
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 8px; font-size: 8px; color: #1a1a1a;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.legend-swatch { width: 14px; height: 14px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+
+.source-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+  background: rgba(250,248,243,0.95); padding: 5px 16px;
+  font-size: 8px; color: #999; letter-spacing: 0.05em;
+  border-top: 1px solid #c8c4bc;
+}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="map-legend">
+  <div class="legend-title">Impact by Day 15</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#8b2020"></div> Direct combatants</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#b8860b"></div> Attacked or militarily affected</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#c4a265; opacity:0.7"></div> Economically squeezed</div>
+</div>
+
+<div class="source-bar">
+  Source: DataChutney OSINT analysis · Situation briefings · 15 days of conflict, Feb 28 – Mar 14, 2026
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibW9oYXZpbmFzaCIsImEiOiJjbW1idzc1dzIwMDF5MnBzYjF6Z2FmbmtiIn0.e6RM_uhmCa6etbMWrk-vnQ';
+
+// Tier 1: Direct combatants
+const COMBATANTS = ['IR', 'IL', 'US'];
+
+// Tier 2: Attacked, bases hit, infrastructure damaged, missiles intercepted
+const ATTACKED = [
+  'LB', // invaded, ground war
+  'IQ', // US bases hit, KC-135 crash, militia attacks
+  'BH', // NSA Bahrain hit, civilian killed
+  'QA', // Al Udeid hit, LNG halted
+  'AE', // Al Dhafra hit, Dubai debris
+  'KW', // Camp Arifjan hit, refinery shut
+  'SA', // Prince Sultan base, Ras Tanura drone
+  'JO', // 119 missiles fired at
+  'OM', // Thumrait base hit, industrial area struck
+  'TR', // 3 Iranian missiles intercepted in airspace
+  'AZ', // drone attack
+  'PS', // Gaza militia ops
+];
+
+// Tier 3: Economically squeezed — energy dependent, supply chain disrupted
+const SQUEEZED = [
+  'KR', // fuel price caps, first in 30 years
+  'BD', // universities shut to save power
+  'CN', // halted fuel exports
+  'JP', // LNG dependent
+  'IN', // tankers breaking blockade, sanctions waiver
+  'GB', // Diego Garcia basing, soldier killed via proxy
+  'FR', // soldier killed in Kurdistan
+  'DE', // snapback sanctions, energy prices
+  'ES', // withdrew ambassador
+  'IT', // direct talks with Iran
+  'PK', // neighbour, energy impact
+  'EG', // Suez alternative under strain
+  'LK', // Iris Dena sunk nearby
+  'SG', // shipping hub disrupted
+  'TW', // energy dependent
+  'TH', // energy dependent
+  'PH', // energy dependent
+  'ID', // energy dependent
+  'MY', // energy dependent
+  'VN', // energy dependent
+  'AU', // LNG exporter, price impact
+  'NZ', // energy price impact
+  'GR', // shipping industry
+  'CY', // eastern Mediterranean
+  'DJ', // Bab el-Mandeb strait
+  'ER', // Red Sea
+  'YE', // Houthi involvement
+  'RU', // oil windfall, intelligence sharing
+];
+
+// Labels for key countries — positioned to avoid overlap
+const LABELS = [
+  { iso: 'IR', coord: [53, 32.5], text: 'IRAN', tier: 1 },
+  { iso: 'IL', coord: [34.8, 31.5], text: 'ISRAEL', tier: 1 },
+  { iso: 'US', coord: [-98, 39], text: 'UNITED STATES', tier: 1 },
+  { iso: 'LB', coord: [36.5, 34.2], text: 'Lebanon\ninvaded', tier: 2 },
+  { iso: 'IQ', coord: [44, 33.3], text: 'Iraq\nbases hit', tier: 2 },
+  { iso: 'TR', coord: [35, 39.5], text: 'Turkey\nmissiles intercepted', tier: 2 },
+  { iso: 'SA', coord: [45, 24], text: 'Saudi Arabia\nRas Tanura hit', tier: 2 },
+  { iso: 'KR', coord: [128, 36], text: 'South Korea\nprice caps', tier: 3 },
+  { iso: 'BD', coord: [90.4, 23.7], text: 'Bangladesh\nuniversities shut', tier: 3 },
+  { iso: 'CN', coord: [104, 35], text: 'China\nfuel exports halted', tier: 3 },
+  { iso: 'IN', coord: [79, 21], text: 'India\nblockade-breaking', tier: 3 },
+  { iso: 'GB', coord: [-3.5, 55.5], text: 'UK\nbasing only', tier: 3 },
+  { iso: 'RU', coord: [60, 60], text: 'Russia\noil windfall', tier: 3 },
+];
+
+const TIER_COLORS = { 1: '#8b2020', 2: '#b8860b', 3: '#c4a265' };
+const TIER_OPACITY = { 1: 0.35, 2: 0.22, 3: 0.12 };
+const TIER_LINE_OPACITY = { 1: 0.7, 2: 0.5, 3: 0.25 };
+
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v11',
+  center: [45, 25],
+  zoom: 1.8,
+  attributionControl: false,
+  interactive: false,
+  fadeDuration: 0,
+  projection: 'naturalEarth',
+});
+
+map.on('load', () => {
+  // Add all three tiers
+  const tiers = [
+    { name: 'combatant', codes: COMBATANTS, tier: 1 },
+    { name: 'attacked', codes: ATTACKED, tier: 2 },
+    { name: 'squeezed', codes: SQUEEZED, tier: 3 },
+  ];
+
+  tiers.forEach(({ name, codes, tier }) => {
+    const color = TIER_COLORS[tier];
+    map.addLayer({
+      id: `fill-${name}`, type: 'fill',
+      source: { type: 'vector', url: 'mapbox://mapbox.country-boundaries-v1' },
+      'source-layer': 'country_boundaries',
+      filter: ['in', 'iso_3166_1', ...codes],
+      paint: { 'fill-color': color, 'fill-opacity': TIER_OPACITY[tier] }
+    });
+    map.addLayer({
+      id: `line-${name}`, type: 'line',
+      source: { type: 'vector', url: 'mapbox://mapbox.country-boundaries-v1' },
+      'source-layer': 'country_boundaries',
+      filter: ['in', 'iso_3166_1', ...codes],
+      paint: { 'line-color': color, 'line-width': tier === 1 ? 1.5 : 1, 'line-opacity': TIER_LINE_OPACITY[tier] }
+    });
+  });
+
+  // Add labels
+  LABELS.forEach(lab => {
+    const color = TIER_COLORS[lab.tier];
+    const lines = lab.text.split('\n');
+    const el = document.createElement('div');
+    el.style.cssText = `font-family:'Courier New',monospace; pointer-events:none; text-align:center;
+      text-shadow: 0 0 4px rgba(250,248,243,0.95), 0 0 8px rgba(250,248,243,0.9);`;
+
+    const nameSpan = document.createElement('div');
+    nameSpan.style.cssText = `font-size:8px; font-weight:700; letter-spacing:0.06em; color:${color}; white-space:nowrap;`;
+    nameSpan.textContent = lines[0];
+    el.appendChild(nameSpan);
+
+    if (lines[1]) {
+      const descSpan = document.createElement('div');
+      descSpan.style.cssText = `font-size:7px; font-style:italic; color:${color}; opacity:0.8; white-space:nowrap;`;
+      descSpan.textContent = lines[1];
+      el.appendChild(descSpan);
+    }
+
+    new mapboxgl.Marker({ element: el, anchor: 'center' })
+      .setLngLat(lab.coord)
+      .addTo(map);
+  });
+});
+</script>
+
+</body>
+</html>
