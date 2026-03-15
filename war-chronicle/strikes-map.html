@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 Days of Strikes — Operation Epic Fury</title>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Courier New', monospace; background: #FAF8F3; }
+#map { width: 100vw; height: 100vh; }
+
+.map-title {
+  position: absolute; top: 14px; left: 20px; z-index: 10;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #1a1a1a;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.9);
+}
+.map-subtitle {
+  position: absolute; top: 36px; left: 20px; z-index: 10;
+  font-size: 10px; color: #5a5a5a;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.9);
+}
+
+.legend {
+  position: absolute; bottom: 36px; left: 20px; z-index: 10;
+  background: rgba(250,248,243,0.93); border: 1px solid #c8c4bc;
+  padding: 10px 14px; font-size: 9px; color: #5a5a5a;
+}
+.legend-title {
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 6px; font-size: 8px; color: #1a1a1a;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.source-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+  background: rgba(250,248,243,0.95); padding: 5px 16px;
+  font-size: 8px; color: #999; letter-spacing: 0.05em;
+  border-top: 1px solid #c8c4bc;
+}
+
+.strike-marker { cursor: default; }
+
+.mapboxgl-popup-content {
+  font-family: 'Courier New', monospace !important;
+  font-size: 10px !important; padding: 8px 10px !important;
+  border-radius: 0 !important; max-width: 200px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+.popup-type { font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
+.popup-name { font-weight: 700; color: #1a1a1a; margin: 1px 0; }
+.popup-desc { color: #5a5a5a; font-size: 9px; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="map-title">15 Days of Strikes</div>
+<div class="map-subtitle">Known military strikes, attacks, and incidents · Feb 28 – Mar 14, 2026</div>
+
+<div class="legend">
+  <div class="legend-title">Attacker</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a2744"></div> Coalition (US + Israel)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b2020"></div> Iran / IRGC</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b8860b"></div> Proxy / militia</div>
+  <div class="legend-title" style="margin-top:8px">Type</div>
+  <div class="legend-item"><div class="legend-dot" style="background:transparent; border:2px solid #1a2744"></div> Air strike</div>
+  <div class="legend-item"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,1 11,11 1,11" fill="none" stroke="#8b2020" stroke-width="1.5"/></svg> Missile / drone</div>
+  <div class="legend-item"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" fill="none" stroke="#b8860b" stroke-width="1.5"/></svg> Naval / ground</div>
+</div>
+
+<div class="source-bar">
+  Source: DataChutney OSINT analysis · Situation briefings · Reuters, BBC, Al Jazeera, Defense One, Al-Monitor, MEE, New Arab · Map: Mapbox GL · 65 incidents mapped
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibW9oYXZpbmFzaCIsImEiOiJjbW1idzc1dzIwMDF5MnBzYjF6Z2FmbmtiIn0.e6RM_uhmCa6etbMWrk-vnQ';
+
+const STRIKES = [
+  // === COALITION STRIKES ON IRAN ===
+  { name:"Natanz Nuclear Facility", country:"Iran", lat:33.7244, lng:51.7275, type:"air_strike", attacker:"coalition", desc:"Underground enrichment plant damaged. IAEA confirmed.", major:true },
+  { name:"Fordow Nuclear Facility", country:"Iran", lat:34.8828, lng:51.5942, type:"air_strike", attacker:"coalition", desc:"Substantially damaged but not destroyed.", major:true },
+  { name:"Khamenei's Tehran Office", country:"Iran", lat:35.700, lng:51.405, type:"air_strike", attacker:"coalition", desc:"Supreme Leader killed. Mar 1.", major:true },
+  { name:"Tehran Fuel Depots", country:"Iran", lat:35.58, lng:51.50, type:"air_strike", attacker:"coalition", desc:"Massive fires, toxic rain. Triggered US-Israel friction. Mar 10." },
+  { name:"Tehran University (al-Quds rally)", country:"Iran", lat:35.713, lng:51.398, type:"air_strike", attacker:"coalition", desc:"Strike near rally. Chief justice on live TV when blast hit. Mar 13." },
+  { name:"Isfahan (Russian consulate)", country:"Iran", lat:32.655, lng:51.668, type:"air_strike", attacker:"coalition", desc:"Russian consulate damaged. Mar 11." },
+  { name:"Minab School", country:"Iran", lat:27.106, lng:57.081, type:"air_strike", attacker:"coalition", desc:"175 civilians killed. US investigating. Major incident.", major:true },
+  { name:"Evin Prison, Tehran", country:"Iran", lat:35.803, lng:51.432, type:"air_strike", attacker:"coalition", desc:"Reportedly hit. Notorious political prison." },
+  { name:"Mojtaba Khamenei (location)", country:"Iran", lat:35.72, lng:51.42, type:"air_strike", attacker:"coalition", desc:"New Supreme Leader 'injured, likely disfigured.'" },
+  { name:"Western/Central Iran (200 strikes)", country:"Iran", lat:33.5, lng:50.5, type:"air_strike", attacker:"coalition", desc:"200 strikes across western/central Iran. Mar 13." },
+  { name:"IRGC Checkpoints (informant-led)", country:"Iran", lat:35.68, lng:51.45, type:"air_strike", attacker:"coalition", desc:"Intelligence-led targeting via ground informants. Mar 13." },
+  { name:"Nuclear Scientists (targeted)", country:"Iran", lat:35.75, lng:51.39, type:"air_strike", attacker:"coalition", desc:"Top nuclear scientists killed by Israel. Mar 13." },
+  { name:"Kurdish Ops Inside Iran", country:"Iran", lat:35.3, lng:46.0, type:"ground_op", attacker:"coalition", desc:"Kurdish opposition backed by Mossad/CIA. Mar 11." },
+
+  // === IRANIAN RETALIATION — US BASES ===
+  { name:"NSA Bahrain", country:"Bahrain", lat:26.236, lng:50.608, type:"missile", attacker:"iran", desc:"IRGC counter-strike on US 5th Fleet HQ. Feb 28.", major:true },
+  { name:"Al Udeid Air Base", country:"Qatar", lat:25.118, lng:51.315, type:"missile", attacker:"iran", desc:"CENTCOM forward HQ hit. Feb 28.", major:true },
+  { name:"Al Dhafra Air Base", country:"UAE", lat:24.248, lng:54.547, type:"missile", attacker:"iran", desc:"US base in UAE targeted. Feb 28." },
+  { name:"Camp Arifjan / Ali Al Salem", country:"Kuwait", lat:29.075, lng:47.593, type:"missile", attacker:"iran", desc:"US base in Kuwait. Feb 28." },
+  { name:"Al Asad Air Base", country:"Iraq", lat:33.787, lng:42.441, type:"missile", attacker:"iran", desc:"US base in Iraq. Feb 28.", major:true },
+  { name:"Muwaffaq Salti Air Base", country:"Jordan", lat:32.356, lng:36.782, type:"missile", attacker:"iran", desc:"119 missiles/drones fired at Jordan. Feb 28." },
+  { name:"Prince Sultan Air Base", country:"Saudi Arabia", lat:24.063, lng:47.580, type:"missile", attacker:"iran", desc:"7th US soldier died from injuries here. Mar 9." },
+  { name:"Thumrait Air Base", country:"Oman", lat:17.666, lng:54.025, type:"missile", attacker:"iran", desc:"IRGC targeting US presence in Oman. Feb 28." },
+
+  // === IRANIAN STRIKES ON ISRAEL ===
+  { name:"Tel Aviv", country:"Israel", lat:32.085, lng:34.782, type:"missile", attacker:"iran", desc:"10 heavy missiles targeted. Part of 500+ barrage. Feb 28.", major:true },
+  { name:"Haifa (oil/gas)", country:"Israel", lat:32.794, lng:34.990, type:"drone", attacker:"iran", desc:"Drones targeted oil and gas facilities." },
+  { name:"Zarzir, Northern Israel", country:"Israel", lat:32.75, lng:35.23, type:"missile", attacker:"iran", desc:"59 injured in rocket barrage. Mar 13." },
+
+  // === ISRAELI STRIKES ON LEBANON ===
+  { name:"Southern Lebanon (ground offensive)", country:"Lebanon", lat:33.275, lng:35.20, type:"ground_op", attacker:"coalition", desc:"IDF ground offensive. 2 Israeli soldiers killed. Mar 2.", major:true },
+  { name:"Central Beirut (luxury hotel)", country:"Lebanon", lat:33.897, lng:35.510, type:"air_strike", attacker:"coalition", desc:"Iranians killed in hotel. War spreading beyond suburbs. Mar 11.", major:true },
+  { name:"Beirut Seafront", country:"Lebanon", lat:33.900, lng:35.480, type:"air_strike", attacker:"coalition", desc:"12 killed on Corniche. Mar 11." },
+  { name:"Nabatieh", country:"Lebanon", lat:33.379, lng:35.484, type:"air_strike", attacker:"coalition", desc:"Turned into 'ghost town.' Part of 25-mile zone." },
+  { name:"Litani River Bridge", country:"Lebanon", lat:33.35, lng:35.28, type:"air_strike", attacker:"coalition", desc:"Key Hezbollah crossing destroyed." },
+  { name:"Lebanon University", country:"Lebanon", lat:33.87, lng:35.51, type:"air_strike", attacker:"coalition", desc:"2 professors killed in bombing." },
+  { name:"Eastern Lebanon (airborne raid)", country:"Lebanon", lat:33.85, lng:36.0, type:"ground_op", attacker:"coalition", desc:"IDF airborne raid. Hezbollah clashes." },
+  { name:"Southern Lebanon (white phosphorus)", country:"Lebanon", lat:33.25, lng:35.40, type:"air_strike", attacker:"coalition", desc:"HRW: white phosphorus over civilian homes." },
+
+  // === NAVAL / MARITIME ===
+  { name:"Iris Dena (warship sunk)", country:"Indian Ocean", lat:8.0, lng:79.0, type:"naval", attacker:"coalition", desc:"US torpedoed Iranian warship. 84 sailors killed. Mar 4.", major:true },
+  { name:"16 Mine-Laying Vessels", country:"Strait of Hormuz", lat:26.50, lng:56.30, type:"naval", attacker:"coalition", desc:"US destroyed 16 Iranian mine-layers. Mar 11." },
+  { name:"Cargo Ship (projectile)", country:"Strait of Hormuz", lat:26.55, lng:56.20, type:"naval", attacker:"iran", desc:"Cargo ship hit near Hormuz. Mar 11." },
+  { name:"Two Vessels (explosions)", country:"Persian Gulf", lat:27.0, lng:52.0, type:"mine", attacker:"iran", desc:"Suspected mines or limpet charges. Mar 12." },
+  { name:"Two Tankers (Iraqi waters)", country:"Iraq", lat:29.8, lng:48.8, type:"naval", attacker:"iran", desc:"Set ablaze by Iran. At least one crew killed." },
+  { name:"Ras Tanura Refinery", country:"Saudi Arabia", lat:26.64, lng:50.16, type:"drone", attacker:"iran", desc:"Major Saudi oil terminal. Drone strike." },
+
+  // === PROXY / MILITIA ===
+  { name:"Kuwait (government high-rise)", country:"Kuwait", lat:29.376, lng:47.977, type:"drone", attacker:"proxy", desc:"Iraqi militia. PMF: 27 dead, 50 injured since March." },
+  { name:"US Embassy, Baghdad", country:"Iraq", lat:33.262, lng:44.235, type:"drone", attacker:"proxy", desc:"Drone hit US diplomatic hub near airport." },
+  { name:"PMF Base near Mosul", country:"Iraq", lat:36.335, lng:43.119, type:"air_strike", attacker:"coalition", desc:"US struck Hashed al-Shaabi base." },
+  { name:"Western Iraq (KC-135 crash)", country:"Iraq", lat:33.35, lng:42.0, type:"air_strike", attacker:"coalition", desc:"6 US crew killed. Tanker crash. Mar 13.", major:true },
+  { name:"Northern Iraq (French drone)", country:"Iraq", lat:36.4, lng:43.5, type:"drone", attacker:"proxy", desc:"1 French soldier killed, 6 wounded. Mar 13." },
+  { name:"Iraq (11 fighters killed)", country:"Iraq", lat:33.315, lng:44.366, type:"air_strike", attacker:"coalition", desc:"US strikes kill 11 Iran-backed fighters. Mar 13." },
+
+  // === REGIONAL SPILLOVER ===
+  { name:"Manama Residential Building", country:"Bahrain", lat:26.229, lng:50.586, type:"missile", attacker:"iran", desc:"Bahraini woman killed." },
+  { name:"UAE Consulate, Erbil", country:"Iraq", lat:36.191, lng:44.009, type:"drone", attacker:"iran", desc:"UAE consulate hit by drone." },
+  { name:"Dubai Financial District", country:"UAE", lat:25.21, lng:55.273, type:"missile", attacker:"iran", desc:"Debris from intercepted attack. Mar 13." },
+  { name:"Oman Industrial Area", country:"Oman", lat:23.60, lng:58.54, type:"drone", attacker:"iran", desc:"Two killed. Mar 13." },
+  { name:"Salalah Port, Oman", country:"Oman", lat:16.95, lng:54.0, type:"drone", attacker:"iran", desc:"Port fire after drone strike. Mar 13." },
+  { name:"Turkish Airspace (3rd intercept)", country:"Turkey", lat:37.0, lng:43.0, type:"missile", attacker:"iran", desc:"NATO intercepts 3rd Iranian missile. Mar 13.", major:true },
+  { name:"Azerbaijan", country:"Azerbaijan", lat:40.409, lng:49.867, type:"drone", attacker:"iran", desc:"Drone attack. Azerbaijan demands explanation." },
+  { name:"Gaza (militia ops)", country:"Palestine", lat:31.5, lng:34.467, type:"ground_op", attacker:"coalition", desc:"Israeli-backed militias vs Hamas. Mar 13." },
+  { name:"Saudi Arabia (projectile)", country:"Saudi Arabia", lat:24.714, lng:46.675, type:"missile", attacker:"iran", desc:"Two killed by projectile." },
+
+  // === DAY 15 (March 14) ===
+  { name:"Kharg Island (90+ targets)", country:"Iran", lat:29.233, lng:50.329, type:"air_strike", attacker:"coalition", desc:"US strikes 90+ military targets on Iran's main oil export terminal. Mar 14.", major:true },
+  { name:"US Embassy, Baghdad (drone)", country:"Iraq", lat:33.297, lng:44.394, type:"drone", attacker:"proxy", desc:"Iran-backed militia drone hit US diplomatic compound. Mar 14." },
+  { name:"Southern Lebanon (massive invasion)", country:"Lebanon", lat:33.20, lng:35.30, type:"ground_op", attacker:"coalition", desc:"Israel signals 'massive' ground invasion, described as 'like Gaza.' Mar 14.", major:true },
+];
+
+const ATTACKER_COLORS = { coalition: '#1a2744', iran: '#8b2020', proxy: '#b8860b' };
+
+// Country ISO codes for boundary fills
+const COUNTRY_STYLES = [
+  { iso: 'IR', color: '#8b2020', opacity: 0.07, lineOpacity: 0.4 },
+  { iso: 'IL', color: '#1a2744', opacity: 0.07, lineOpacity: 0.4 },
+  { iso: 'LB', color: '#b8860b', opacity: 0.09, lineOpacity: 0.5 },
+  { iso: 'IQ', color: '#5a5a5a', opacity: 0.04, lineOpacity: 0.2 },
+  { iso: 'SA', color: '#5a5a5a', opacity: 0.03, lineOpacity: 0.15 },
+  { iso: 'BH', color: '#5a5a5a', opacity: 0.05, lineOpacity: 0.3 },
+  { iso: 'QA', color: '#5a5a5a', opacity: 0.05, lineOpacity: 0.3 },
+  { iso: 'AE', color: '#5a5a5a', opacity: 0.04, lineOpacity: 0.2 },
+  { iso: 'KW', color: '#5a5a5a', opacity: 0.05, lineOpacity: 0.3 },
+  { iso: 'OM', color: '#5a5a5a', opacity: 0.03, lineOpacity: 0.15 },
+  { iso: 'JO', color: '#5a5a5a', opacity: 0.04, lineOpacity: 0.2 },
+  { iso: 'TR', color: '#5a5a5a', opacity: 0.03, lineOpacity: 0.15 },
+  { iso: 'AZ', color: '#5a5a5a', opacity: 0.04, lineOpacity: 0.2 },
+];
+
+function makeMarkerSVG(attacker, type, major) {
+  const color = ATTACKER_COLORS[attacker] || '#666';
+  const size = major ? 18 : 12;
+  const r = size / 2;
+
+  if (type === 'missile' || type === 'drone') {
+    // Triangle
+    const h = size, w = size;
+    return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <polygon points="${w/2},1 ${w-1},${h-1} 1,${h-1}" fill="${color}" opacity="0.85" stroke="white" stroke-width="1"/>
+    </svg>`;
+  } else if (type === 'naval' || type === 'mine' || type === 'ground_op') {
+    // Square
+    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <rect x="1" y="1" width="${size-2}" height="${size-2}" fill="${color}" opacity="0.85" stroke="white" stroke-width="1"/>
+    </svg>`;
+  } else {
+    // Circle (air_strike default)
+    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <circle cx="${r}" cy="${r}" r="${r-1}" fill="${color}" opacity="0.85" stroke="white" stroke-width="1"/>
+    </svg>`;
+  }
+}
+
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v11',
+  center: [50, 28.5],
+  zoom: 4.2,
+  attributionControl: false,
+  interactive: false,
+  fadeDuration: 0,
+});
+
+map.on('load', () => {
+  // Country boundary fills
+  COUNTRY_STYLES.forEach(cs => {
+    map.addLayer({
+      id: `fill-${cs.iso}`, type: 'fill',
+      source: { type: 'vector', url: 'mapbox://mapbox.country-boundaries-v1' },
+      'source-layer': 'country_boundaries',
+      filter: ['==', 'iso_3166_1', cs.iso],
+      paint: { 'fill-color': cs.color, 'fill-opacity': cs.opacity }
+    });
+    map.addLayer({
+      id: `line-${cs.iso}`, type: 'line',
+      source: { type: 'vector', url: 'mapbox://mapbox.country-boundaries-v1' },
+      'source-layer': 'country_boundaries',
+      filter: ['==', 'iso_3166_1', cs.iso],
+      paint: { 'line-color': cs.color, 'line-width': 1, 'line-opacity': cs.lineOpacity }
+    });
+  });
+
+  // Per-marker label offsets to prevent overlap — [anchor, offset_x, offset_y, short_name]
+  const LABEL_OVERRIDES = {
+    'Natanz Nuclear Facility':        ['top-left', 12, 0, null],
+    'Fordow Nuclear Facility':        ['top-left', 12, 0, null],
+    "Khamenei's Tehran Office":       ['top-left', 12, -2, null],
+    'Minab School':                   ['top-left', 12, 0, null],
+    'NSA Bahrain':                    ['top-left', 12, -2, null],
+    'Al Udeid Air Base':              ['top-left', 12, 2, null],
+    'Al Asad Air Base':               ['bottom-left', 12, 4, 'Al Asad Air Base'],
+    'Tel Aviv':                       ['top-left', 12, -2, null],
+    'Southern Lebanon (ground offensive)': ['bottom-left', 12, 6, 'S. Lebanon (ground)'],
+    'Central Beirut (luxury hotel)':  ['top-left', 12, -10, 'Central Beirut (luxury...)'],
+    'Iris Dena (warship sunk)':       ['top-left', 12, 0, null],
+    'Turkish Airspace (3rd intercept)': ['top-left', 12, -2, 'Turkish Airspace (3rd ...)'],
+    'Western Iraq (KC-135 crash)':    ['bottom-left', 12, 4, 'W. Iraq (KC-135 crash)'],
+    'Kharg Island (90+ targets)':     ['top-left', 12, -2, 'Kharg Island (90+ targets)'],
+    'Southern Lebanon (massive invasion)': ['bottom-left', 12, 6, 'S. Lebanon (invasion)'],
+  };
+
+  // Strike markers with labels for major incidents
+  STRIKES.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'strike-marker';
+    el.innerHTML = makeMarkerSVG(s.attacker, s.type, s.major);
+
+    new mapboxgl.Marker({ element: el, anchor: 'center' })
+      .setLngLat([s.lng, s.lat])
+      .setPopup(new mapboxgl.Popup({ offset: 10, closeButton: false })
+        .setHTML(`<div class="popup-type">${s.type.replace('_',' ')} · ${s.attacker}</div>
+          <div class="popup-name">${s.name}</div>
+          <div class="popup-desc">${s.desc}</div>`))
+      .addTo(map);
+
+    // Add text label for major incidents
+    if (s.major) {
+      const override = LABEL_OVERRIDES[s.name];
+      const anchor = override ? override[0] : 'top-left';
+      const offX = override ? override[1] : 8;
+      const offY = override ? override[2] : 2;
+      const text = (override && override[3]) ? override[3] : (s.name.length > 25 ? s.name.substring(0, 22) + '...' : s.name);
+      const color = ATTACKER_COLORS[s.attacker] || '#666';
+      const label = document.createElement('div');
+      label.style.cssText = `font-size:8px; color:${color}; font-family:'Courier New',monospace;
+        font-weight:700; letter-spacing:0.03em; white-space:nowrap;
+        text-shadow: 0 0 3px rgba(250,248,243,0.95), 0 0 6px rgba(250,248,243,0.9), 0 1px 2px rgba(250,248,243,0.8);
+        pointer-events:none;`;
+      label.textContent = text;
+      new mapboxgl.Marker({ element: label, anchor: anchor, offset: [offX, offY] })
+        .setLngLat([s.lng, s.lat])
+        .addTo(map);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

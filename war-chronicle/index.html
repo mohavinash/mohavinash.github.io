@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>21 Miles Between War and the Global Economy — The US-Iran War Chronicle</title>
+<meta name="description" content="A day-by-day chronicle of the US-Iran war: 15 days, 3,000+ strikes, $119 oil, 4 million displaced. How the Strait of Hormuz turned a military conflict into a global economic crisis.">
+<meta name="keywords" content="US-Iran war, Strait of Hormuz, oil crisis, Middle East conflict, Iran blockade, Brent crude, war chronicle, DataChutney, OSINT, military analysis">
+<meta name="author" content="DataChutney">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://datachutney.io/war-chronicle">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="21 Miles Between War and the Global Economy">
+<meta property="og:description" content="A day-by-day chronicle of the US-Iran war. 15 days, 3,000+ strikes, $119 oil, 4 million displaced. How the Strait of Hormuz turned a military conflict into a global economic crisis.">
+<meta property="og:site_name" content="DataChutney">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-14T00:00:00Z">
+<meta property="article:modified_time" content="2026-03-15T00:00:00Z">
+<meta property="article:author" content="DataChutney">
+<meta property="article:section" content="Analysis">
+<meta property="article:tag" content="US-Iran War">
+<meta property="article:tag" content="Strait of Hormuz">
+<meta property="article:tag" content="Oil Crisis">
+<meta property="article:tag" content="Middle East">
+<meta property="article:tag" content="OSINT">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="21 Miles Between War and the Global Economy">
+<meta name="twitter:description" content="15 days of the US-Iran war. 3,000+ strikes. $119 oil. 4M displaced. A day-by-day OSINT chronicle from DataChutney.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "21 Miles Between War and the Global Economy",
+  "description": "A day-by-day chronicle of the US-Iran war: 15 days, 3,000+ strikes, $119 oil, 4 million displaced. How the Strait of Hormuz turned a military conflict into a global economic crisis.",
+  "datePublished": "2026-03-14",
+  "dateModified": "2026-03-15",
+  "author": {
+    "@type": "Organization",
+    "name": "DataChutney",
+    "url": "https://datachutney.io"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DataChutney"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage"
+  },
+  "articleSection": "Situation Chronicle",
+  "keywords": ["US-Iran war", "Strait of Hormuz", "oil crisis", "Middle East", "OSINT", "military analysis"],
+  "about": [
+    { "@type": "Event", "name": "US-Iran War 2026", "startDate": "2026-02-28", "location": { "@type": "Place", "name": "Middle East" } },
+    { "@type": "Place", "name": "Strait of Hormuz", "geo": { "@type": "GeoCoordinates", "latitude": 26.1, "longitude": 55.8 } }
+  ],
+  "hasPart": [
+    { "@type": "WebPageElement", "name": "Phase I: First Strike", "description": "February 28 – March 2. US and Israeli air campaign, Khamenei killed, Lebanon front opened." },
+    { "@type": "WebPageElement", "name": "Phase II: The Blockade", "description": "March 3 – 6. Hormuz closed, 97% traffic gone, Qatar halts LNG, global energy crisis." },
+    { "@type": "WebPageElement", "name": "Phase III: Attrition", "description": "March 7 – 9. New Supreme Leader, $119 oil, US-Israel alliance cracks." },
+    { "@type": "WebPageElement", "name": "Phase IV: The Grind", "description": "March 10 – 14. Heavy bombers, regime change talk, IEA largest disruption, Kharg Island struck." }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF8F3;
+  --bg-paper: #F5F2EB;
+  --bg-dark: #1a1a1a;
+  --fg: #1a1a1a;
+  --fg-muted: #5a5a5a;
+  --fg-faint: #999;
+  --line: #c8c4bc;
+  --card-bg: #FDFCF8;
+  --card-border: #e0ddd6;
+  --red: #8b2020;
+  --amber: #b8860b;
+  --green: #2d6a2e;
+  --blue: #1a2744;
+  --water: #b8cce0;
+  --land: #e8e2d6;
+  --font: 'Courier Prime', 'Courier New', monospace;
+  --font-display: 'Special Elite', 'Courier New', monospace;
+  --font-serif: 'DM Serif Display', 'Georgia', serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font); background: var(--bg); color: var(--fg);
+  line-height: 1.65; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 2rem;
+  position: relative;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(139,32,32,0.03) 0%, transparent 70%);
+}
+.hero-classify {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3em; color: var(--red); border: 1px solid var(--red);
+  padding: 0.2rem 0.8rem; margin-bottom: 2rem; opacity: 0.7;
+}
+.hero-count {
+  font-family: var(--font-serif); font-size: clamp(5rem, 15vw, 12rem);
+  line-height: 0.85; color: var(--fg); letter-spacing: -0.04em;
+  margin-bottom: 0.5rem; font-style: italic;
+}
+.hero-count span {
+  font-style: normal; font-size: 0.35em; vertical-align: top;
+  margin-left: 0.3em; letter-spacing: 0;
+}
+h1.hero-title, .hero-title {
+  font-family: var(--font-display); font-size: clamp(1rem, 2.5vw, 1.4rem);
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--fg-muted);
+  margin-bottom: 2.5rem; font-weight: normal;
+}
+.hero-daterange {
+  font-size: 0.88rem; color: var(--fg-faint); letter-spacing: 0.08em;
+  margin-bottom: 3rem;
+}
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2rem; max-width: 44rem; width: 100%; padding: 0 1rem;
+}
+.hero-stat {
+  text-align: center; border-top: 2px solid var(--fg); padding-top: 0.8rem;
+}
+.hero-stat .num {
+  font-family: var(--font-serif); font-size: 1.8rem; display: block;
+  line-height: 1.1; margin-bottom: 0.2rem;
+}
+.hero-stat .num.red { color: var(--red); }
+.hero-stat .num.amber { color: var(--amber); }
+.hero-stat .lbl {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--fg-muted);
+}
+.scroll-cue {
+  position: absolute; bottom: 2rem; font-size: 0.7rem;
+  letter-spacing: 0.2em; color: var(--fg-faint); text-transform: uppercase;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ═══ CONTENT ═══ */
+.col { max-width: 42rem; margin: 0 auto; padding: 0 1.5rem; }
+.col-wide { max-width: 56rem; margin: 0 auto; padding: 0 1.5rem; }
+
+.lede {
+  padding-top: 4rem; padding-bottom: 3rem;
+  font-size: 1.05rem; line-height: 1.85; color: var(--fg-muted); text-align: justify;
+}
+.lede strong { color: var(--fg); }
+
+/* ═══ CHART ═══ */
+.chart-section { padding: 2rem 0 2.5rem; }
+.chart-section.flush {
+  max-width: 100%; padding-left: 0; padding-right: 0;
+  margin-left: -1.5rem; margin-right: -1.5rem;
+}
+.chart-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg);
+  margin-bottom: 0.4rem;
+}
+.chart-subtitle {
+  font-size: 0.88rem; color: var(--fg-muted); margin-bottom: 1rem; line-height: 1.6;
+}
+.chart-wrap {
+  width: 100%; border: 1px solid var(--card-border);
+  background: var(--card-bg); position: relative; overflow: hidden;
+}
+.chart-wrap svg { width: 100%; height: 100%; display: block; }
+.chart-source {
+  font-size: 0.78rem; color: var(--fg-muted); margin-top: 0.6rem; letter-spacing: 0.02em;
+  line-height: 1.55;
+}
+
+/* ═══ PHASE ═══ */
+.phase {
+  padding: 3rem 0 0; display: flex; align-items: baseline; gap: 1rem;
+  border-top: 3px solid var(--fg);
+}
+.phase-num {
+  font-family: var(--font-serif); font-size: 3rem; line-height: 1;
+  color: var(--fg); font-style: italic;
+}
+.phase-name {
+  font-family: var(--font-display); font-size: 1.15rem;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg);
+}
+.phase-dates {
+  font-size: 0.8rem; color: var(--fg-muted); letter-spacing: 0.06em; margin-top: 0.15rem;
+}
+.phase-intro {
+  padding: 0.8rem 0 1.2rem; font-size: 0.92rem; color: var(--fg-muted);
+  line-height: 1.7; font-style: italic;
+}
+
+/* ═══ DAY ═══ */
+.day {
+  padding: 1.3rem 0 1.8rem; border-top: 1px solid var(--line);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.day.visible { opacity: 1; transform: translateY(0); }
+
+.day-head {
+  display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.6rem;
+}
+.day-date {
+  font-family: var(--font-display); font-size: 1.1rem; line-height: 1;
+  flex-shrink: 0; min-width: 5rem; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.day-num {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--fg-muted); flex-shrink: 0;
+}
+.day-headline {
+  font-family: var(--font-display); font-size: 1.12rem; line-height: 1.35;
+  color: var(--fg); flex: 1;
+}
+
+.day-body {
+  display: grid; grid-template-columns: 1fr 9rem; gap: 1.5rem; align-items: start;
+}
+.day-narrative {
+  font-size: 0.94rem; color: var(--fg-muted); line-height: 1.75; text-align: justify;
+}
+.day-stat { text-align: right; }
+.day-stat .sv {
+  font-family: var(--font-serif); font-size: 2.4rem; line-height: 1; display: block;
+}
+.day-stat .sv.red { color: var(--red); }
+.day-stat .sv.amber { color: var(--amber); }
+.day-stat .sl {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--fg-muted); margin-top: 0.2rem; display: block;
+}
+
+/* ═══ QUOTE ═══ */
+.quote {
+  padding: 1.2rem 0 1.5rem;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.quote.visible { opacity: 1; transform: translateY(0); }
+.quote blockquote {
+  border-left: 3px solid var(--fg); padding-left: 1.2rem;
+  font-family: var(--font-serif); font-size: 1.3rem; font-style: italic;
+  line-height: 1.4; color: var(--fg);
+}
+.quote cite {
+  display: block; font-family: var(--font); font-style: normal;
+  font-size: 0.78rem; color: var(--fg-muted); margin-top: 0.5rem;
+  padding-left: 1.5rem; text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* ═══ DATA PANEL ═══ */
+.data-panel {
+  padding: 2rem 0; margin: 1rem 0;
+  background: var(--bg-paper); border-top: 2px solid var(--fg);
+  border-bottom: 1px solid var(--line);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.data-panel.visible { opacity: 1; transform: translateY(0); }
+.data-panel-inner { max-width: 52rem; margin: 0 auto; padding: 0 1.5rem; }
+.data-panel h3 {
+  font-family: var(--font-display); font-size: 1rem;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;
+}
+.data-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.data-cell { border-left: 2px solid var(--line); padding-left: 0.8rem; }
+.data-cell .dv { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; }
+.data-cell .dv.red { color: var(--red); }
+.data-cell .dv.amber { color: var(--amber); }
+.data-cell .dl {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--fg); margin-top: 0.25rem; font-weight: 700;
+}
+.data-cell .dd {
+  font-size: 0.85rem; color: var(--fg-muted); margin-top: 0.4rem; line-height: 1.65;
+}
+
+/* ═══ EXCHANGE VIZ ═══ */
+.exchange {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem;
+  padding: 1.5rem; align-items: center;
+}
+.exchange-side { text-align: center; }
+.exchange-side .ex-label {
+  font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--fg-faint); margin-bottom: 0.3rem;
+}
+.exchange-side .ex-big {
+  font-family: var(--font-serif); font-size: 2.5rem; line-height: 1;
+}
+.exchange-side .ex-unit {
+  font-size: 0.7rem; color: var(--fg-muted); margin-top: 0.2rem;
+}
+.exchange-vs {
+  font-family: var(--font-serif); font-size: 1.2rem; color: var(--fg-faint);
+  font-style: italic;
+}
+.exchange-bar {
+  grid-column: 1 / -1; display: flex; height: 12px;
+  margin-top: 0.5rem; border-radius: 1px; overflow: hidden;
+}
+.exchange-bar .eb-left {
+  background: var(--blue); transition: width 0.8s ease;
+}
+.exchange-bar .eb-right {
+  background: var(--red); flex: 1;
+}
+.exchange-bar-labels {
+  grid-column: 1 / -1; display: flex; justify-content: space-between;
+  font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-faint);
+}
+
+/* ═══ HORMUZ MAP (screenshot) ═══ */
+
+/* ═══ CLOSING ═══ */
+.closing {
+  padding: 4rem 0 6rem; text-align: center;
+}
+.closing-line {
+  width: 3rem; height: 2px; background: var(--fg); margin: 0 auto 2rem;
+}
+.closing h2 {
+  font-family: var(--font-serif); font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.25; margin-bottom: 1.5rem; font-style: italic;
+}
+.closing p {
+  font-size: 0.92rem; color: var(--fg-muted); line-height: 1.75;
+  max-width: 34rem; margin: 0 auto 1rem; text-align: justify;
+}
+.closing-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem; margin-top: 2.5rem; padding-top: 2rem;
+  border-top: 2px solid var(--fg);
+}
+.closing-stat .cv { font-family: var(--font-serif); font-size: 2rem; display: block; }
+.closing-stat .cl {
+  font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--fg-faint);
+}
+.colophon {
+  text-align: center; padding: 2rem 1.5rem; font-size: 0.65rem;
+  color: var(--fg-faint); letter-spacing: 0.1em; text-transform: uppercase;
+  border-top: 1px solid var(--line); max-width: 52rem; margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .day-body { grid-template-columns: 1fr; }
+  .day-stat { text-align: left; }
+  .day-stat .sv { font-size: 1.6rem; }
+  .data-row { grid-template-columns: 1fr; gap: 1rem; }
+  .closing-stats { grid-template-columns: repeat(2, 1fr); }
+  .day-head { flex-wrap: wrap; }
+  .exchange { grid-template-columns: 1fr; }
+  .exchange-vs { display: none; }
+  .hormuz-compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<article itemscope itemtype="https://schema.org/Article">
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" role="banner">
+  <div class="hero-classify">DataChutney // Situation Chronicle</div>
+  <div class="hero-count" aria-label="21 miles">21<span>miles</span></div>
+  <h1 class="hero-title" itemprop="headline">Between War and the Global Economy</h1>
+  <div class="hero-daterange"><time itemprop="datePublished" datetime="2026-03-14">15 days of the US–Iran war and counting · February 28 — March 14, 2026</time></div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">3,000+</span>
+      <span class="lbl">US and Israeli Strikes</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num amber">$119.40</span>
+      <span class="lbl">Peak Brent /bbl</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num red">4M+</span>
+      <span class="lbl">Displaced</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">13</span>
+      <span class="lbl">US Killed in Action</span>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">Scroll to begin</div>
+</header>
+
+<!-- ═══ LEDE ═══ -->
+<div class="col lede">
+  For weeks, the signs had been there. Indirect nuclear talks between Washington and Tehran, mediated by Oman, had collapsed in February 2026. Iran had agreed to never produce weapons-grade uranium, but President Trump was "not thrilled." He wanted more: an end to all enrichment, the dismantling of Iran's ballistic missile programme, sanctions relief on American terms. Tehran refused. In October 2025, Britain, France, and Germany had already triggered "snapback" sanctions under the 2015 nuclear deal, reimposing United Nations restrictions lifted years earlier. Brent crude sat at $72 a barrel. The Strait of Hormuz, a 21-mile-wide passage between Iran and Oman through which one-fifth of the world's oil supply passes every day, was open, busy, unremarkable.
+</div>
+<div class="col lede" style="padding-top:0;">
+  Then, on the evening of February 28, <strong>the United States and Israel launched the largest coordinated air campaign in the Middle East since the 2003 invasion of Iraq</strong>. Within 48 hours, Iran's Supreme Leader was dead, its nuclear enrichment facilities damaged, its air defences shattered. By every traditional measure of warfare, the opening blow was decisive. But Iran had a different theory of victory. <strong>Hours before Ayatollah Ali Khamenei was killed, he issued his final order: close the Strait of Hormuz.</strong> That single command transformed a military conflict into a global economic crisis, squeezing the world's energy supply through a chokepoint narrower than the English Channel and forcing every nation on earth to reckon with the price of this war.
+</div>
+
+
+<!-- ═══════════════════════════════ -->
+<!-- PHASE I: FIRST STRIKE          -->
+<!-- ═══════════════════════════════ -->
+<div class="col">
+  <div class="phase">
+    <div class="phase-num">I</div>
+    <div class="phase-info">
+      <div class="phase-name">First Strike</div>
+      <div class="phase-dates">February 28 – March 2</div>
+    </div>
+  </div>
+  <div class="phase-intro">
+    The United States and Israel achieve total air superiority within hours. But each escalation triggers a counter-escalation, and by the third day the war has doubled in scope.
+  </div>
+
+  <div class="day" data-day="1">
+    <div class="day-head">
+      <span class="day-date">February 28</span>
+      <span class="day-num">Day 1</span>
+      <span class="day-headline">The first wave is designed to end the war before it begins</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Coordinated American and Israeli strikes hit Iran's nuclear enrichment facilities at Natanz and Fordow, its ballistic missile launchers, the headquarters of the Islamic Revolutionary Guard Corps, and dozens of air defence and command nodes. Trump declares Iran a "core national security threat" and invokes Article 51 self-defence at the United Nations Security Council. Iran's response arrives within hours: a simultaneous barrage of ballistic missiles and drones targeting US military installations across seven countries. It is the largest Iranian retaliatory strike in history, dwarfing the 330-missile volley of April 2024. Britain's Prime Minister Starmer authorises the use of Diego Garcia and RAF Fairford for "specific and limited defensive purposes," a carefully worded commitment that stops well short of joining the offensive. And in Tehran, in what will prove to be his final act, Supreme Leader Khamenei orders the Strait of Hormuz closed.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">7</span>
+        <span class="sl">Countries under fire</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE OPENING EXCHANGE -->
+<div class="col-wide chart-section">
+  <div class="chart-title">The Opening Exchange</div>
+  <div class="chart-subtitle">The largest simultaneous air and missile exchange in Middle East history. American and Israeli precision strikes targeted fixed infrastructure; Iran's Islamic Revolutionary Guard Corps responded with a saturation barrage across the entire region.</div>
+  <div class="chart-wrap" style="padding: 1rem 1.5rem;">
+    <div class="exchange">
+      <div class="exchange-side">
+        <div class="ex-label">United States and Israel</div>
+        <div class="ex-big" style="color:var(--blue)">2,000+</div>
+        <div class="ex-unit">air sorties</div>
+      </div>
+      <div class="exchange-vs">vs</div>
+      <div class="exchange-side">
+        <div class="ex-label">Iran (Islamic Revolutionary Guard Corps)</div>
+        <div class="ex-big" style="color:var(--red)">2,500+</div>
+        <div class="ex-unit">500 ballistic missiles + 2,000 drones</div>
+      </div>
+      <div class="exchange-bar">
+        <div class="eb-left" style="width:45%"></div>
+        <div class="eb-right"></div>
+      </div>
+      <div class="exchange-bar-labels">
+        <span>Precision strikes on nuclear sites, air defences, command centres</span>
+        <span>Saturation barrage across US bases in 7 countries + Israel</span>
+      </div>
+    </div>
+  </div>
+  <div class="chart-source">
+    Sortie count from Institute for the Study of War assessment. Missile and drone count from US Joint Chiefs of Staff briefing, March 4.
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="2">
+    <div class="day-head">
+      <span class="day-date">March 1</span>
+      <span class="day-num">Day 2</span>
+      <span class="day-headline">Iran's Supreme Leader is killed in his Tehran office</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Ayatollah Ali Khamenei, 86 years old and Iran's Supreme Leader since 1989, is killed in a strike on his Tehran office. He had held power for 37 years, longer than the Shah he helped overthrow. A three-member transitional council assumes emergency authority. In Tehran, 100,000 people flee the city in the first 48 hours. Trump, briefly, sees opportunity: talks would now be "much easier," he says. The window closes almost immediately.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">100K</span>
+        <span class="sl">Flee Tehran</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"Too late for talks."</blockquote>
+    <cite>Donald Trump, March 3, reversing his brief openness to negotiations</cite>
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="3">
+    <div class="day-head">
+      <span class="day-date">March 2</span>
+      <span class="day-num">Day 3</span>
+      <span class="day-headline">A second front opens: Hezbollah strikes Israel, and Israel invades Lebanon</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Hezbollah, the Iranian-backed Lebanese militia with an estimated 150,000 rockets and four decades as Tehran's most capable proxy, launches a revenge barrage at northern Israel. Israel responds with a ground offensive into southern Lebanon, opening a second active front in a war that is 72 hours old. 112,000 Lebanese are displaced on the first day. The Lebanese government bans Hezbollah's military activities and demands it surrender its weapons. Hezbollah calls the order "misplaced" and keeps firing. Britain, France, and Germany condemn Iran's counter-strikes and call for diplomacy, but none commit forces. The war has doubled in scope before its first week.
+      </p>
+      <div class="day-stat">
+        <span class="sv">2</span>
+        <span class="sl">Active fronts</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ -->
+<!-- PHASE II: THE BLOCKADE         -->
+<!-- ═══════════════════════════════ -->
+<div class="col">
+  <div class="phase">
+    <div class="phase-num">II</div>
+    <div class="phase-info">
+      <div class="phase-name">The Blockade</div>
+      <div class="phase-dates">March 3 – 6</div>
+    </div>
+  </div>
+  <div class="phase-intro">
+    Iran cannot match American and Israeli air power. So it fights the war on different terrain — the narrow shipping lane between its coast and Oman through which the world's energy flows.
+  </div>
+
+  <div class="day" data-day="4">
+    <div class="day-head">
+      <span class="day-date">March 3</span>
+      <span class="day-num">Day 4</span>
+      <span class="day-headline">The nuclear prize is seized — but Hormuz is closing</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        The International Atomic Energy Agency confirms that Natanz, the centrepiece of Iran's enrichment programme, has sustained damage. Fordow, built into a mountain, is "substantially damaged but not destroyed." The stated military objective is being achieved. But the US Navy's promise to escort tankers through the Strait "as soon as possible" carries a qualifier that tells its own story. Traffic is collapsing. In the open ocean south of Sri Lanka, the US Navy torpedoes the Iranian warship Iris Dena, killing 84 sailors. It is the most significant naval engagement in decades.
+      </p>
+      <div class="day-stat">
+        <span class="sv amber">$81</span>
+        <span class="sl">Brent crude close</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="day" data-day="5">
+    <div class="day-head">
+      <span class="day-date">March 4</span>
+      <span class="day-num">Day 5</span>
+      <span class="day-headline">The chokepoint is sealed</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        The collapse is captured in a single data point from the IMF's PortWatch maritime tracking system: where a week earlier, 95 vessels and 53 tankers transited the Strait, today the number is three. None carry oil. Over a thousand ships sit idle on both sides as Iran's Revolutionary Guard lays mines in the channel. The world's most important energy corridor, through which 20 million barrels of oil and a quarter of global LNG pass each day, has shut down. The coalition controls the skies over Iran. Iran controls the water beneath them.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">97%</span>
+        <span class="sl">Traffic gone</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HORMUZ STRAIT MAP — placed here because Day 5 just described the closure -->
+<div class="col-wide chart-section">
+  <div class="chart-title">The Chokepoint</div>
+  <div class="chart-subtitle">The Strait of Hormuz: 21 miles wide at its narrowest. On February 27, 95 vessels and 53 tankers transited. By March 14, the blockade was showing its first cracks — two Indian tankers broke through — but traffic remained at roughly 6% of pre-war levels.</div>
+  <div class="chart-wrap" style="border:none; aspect-ratio: 1.7 / 1;">
+    <iframe src="hormuz-map.html" style="width:100%; height:100%; border:none;" title="Strait of Hormuz before and after — Mapbox GL visualization with PortWatch and Windward shipping data"></iframe>
+  </div>
+  <div class="chart-source">
+    Source: IMF PortWatch ArcGIS API · Windward Maritime Intelligence. Daily collapse: Feb 28: 76/44 → Mar 1: 17/7 → Mar 2: 4/2 → Mar 4: 3/0 → Mar 8: 6/1 → Mar 14: ~6/2 (two Indian tankers break blockade). Map: Mapbox GL.
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="6">
+    <div class="day-head">
+      <span class="day-date">March 5</span>
+      <span class="day-num">Day 6</span>
+      <span class="day-headline">Qatar halts liquefied natural gas production. The energy weapon is complete.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Qatar's Energy Minister delivers a message that reverberates through every trading floor in the world: no production restart until complete cessation of hostilities. Qatar supplies roughly 20% of global liquefied natural gas, the fuel that heats homes in Japan, powers factories in South Korea, generates electricity across Southeast Asia. Iraq, Kuwait, and the United Arab Emirates also curtail or stop output. Not out of solidarity with Iran, but because they physically cannot load tankers when the Strait is closed and storage tanks are full. The consequences spread at the speed of a futures contract. South Korea announces fuel price caps for the first time in 30 years. Bangladesh shuts its universities to conserve power. China orders its refiners to halt fuel exports. A war between three countries is now a war on the global economy.
+      </p>
+      <div class="day-stat">
+        <span class="sv amber">20%</span>
+        <span class="sl">Global LNG halted</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="day" data-day="7">
+    <div class="day-head">
+      <span class="day-date">March 6</span>
+      <span class="day-num">Day 7</span>
+      <span class="day-headline">Trump demands unconditional surrender. Spain breaks ranks.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        It is a demand no Iranian leader can accept, not even a weakened transitional council operating under bombardment. The same day, Spain permanently withdraws its ambassador to Israel, the first major European government to formally break with the coalition. Behind the scenes, the economics of the war are being quietly renegotiated: Washington announces a sanctions waiver allowing India to purchase stranded Russian oil. Moscow reports a "significant increase" in energy demand from its allies. Strange bedfellows. Strange beneficiaries.
+      </p>
+      <div class="day-stat">
+        <span class="sv amber">+28%</span>
+        <span class="sl">Brent since pre-war</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OIL CHART — placed here because we've now told the Hormuz + LNG story,
+     and the chart SHOWS their economic impact -->
+<div class="col-wide chart-section">
+  <div class="chart-title">The Price of This War</div>
+  <div class="chart-subtitle">Brent crude futures (BZ=F), daily close $/barrel. War began Friday evening Feb 28 — first trading day Monday Mar 2 gapped up from $72 to $78. Intraday high of $119.40 on Mar 9 before collapsing to close at $98.96.</div>
+  <div class="chart-wrap" style="aspect-ratio: 3.2 / 1;">
+    <svg id="oilChart" viewBox="0 0 800 260" preserveAspectRatio="none" role="img" aria-label="Brent crude oil price chart showing rise from $72 pre-war to $119.40 peak on March 9, closing at $105.82 on March 14, 2026"></svg>
+  </div>
+  <div class="chart-source">Source: Yahoo Finance API, ticker BZ=F. Daily close prices. 52-week range: $58.00–$119.40. Latest close: $105.82 (Mar 14).</div>
+</div>
+
+
+<!-- ═══════════════════════════════ -->
+<!-- PHASE III: ATTRITION            -->
+<!-- ═══════════════════════════════ -->
+<div class="col">
+  <div class="phase">
+    <div class="phase-num">III</div>
+    <div class="phase-info">
+      <div class="phase-name">Attrition</div>
+      <div class="phase-dates">March 7 – 9</div>
+    </div>
+  </div>
+  <div class="phase-intro">
+    The war's character transforms. Iran does not collapse. It reorganises under new leadership. Oil reaches its highest level since 2022. And the alliance between the United States and Israel begins to crack.
+  </div>
+
+  <div class="day" data-day="8">
+    <div class="day-head">
+      <span class="day-date">March 7</span>
+      <span class="day-num">Day 8</span>
+      <span class="day-headline">Iran names a new Supreme Leader. Israel vows to kill him too.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Iran's Assembly of Experts, the 88-member clerical body that selects the Supreme Leader, names Mojtaba Khamenei as successor. He is the dead leader's 56-year-old son, a hardliner aligned with the Revolutionary Guard and sanctioned by the United States since 2019. The appointment signals continuity, not reform. The regime is closing ranks under bombardment, not falling apart. Israel's Foreign Minister Katz responds within hours. Britain readies the aircraft carrier HMS Prince of Wales but does not commit it. The regime change that Washington and Tel Aviv had hoped the strikes would catalyse has not materialised.
+      </p>
+      <div class="day-stat">
+        <span class="sv">Day 8</span>
+        <span class="sl">Succession complete</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"Any continuity successor is a target for elimination."</blockquote>
+    <cite>Yisrael Katz, Israeli Foreign Minister, March 7</cite>
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="9">
+    <div class="day-head">
+      <span class="day-date">March 8</span>
+      <span class="day-num">Day 9</span>
+      <span class="day-headline">Brent crude hits $119 — then crashes $35 in a single session</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Brent crude futures touch their 52-week high in early trading, then collapse. A $35 swing in a single session. The volatility alone is devastating: fuel price spikes, fertiliser cost surges, inflationary pressure in every economy on earth. The International Energy Agency calls the disruption "temporary logistical," a characterisation that convinces nobody. The seventh American soldier to die in the conflict, a sergeant at Prince Sultan Air Base in Saudi Arabia, succumbs to injuries from an earlier missile strike. Iran's Hormuz blockade is doing what 500 missiles could not: imposing a cost that no amount of air superiority can bomb away.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">$35</span>
+        <span class="sl">Intraday price swing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="day" data-day="10">
+    <div class="day-head">
+      <span class="day-date">March 9</span>
+      <span class="day-num">Day 10</span>
+      <span class="day-headline">Israel strikes Tehran's fuel depots without telling Washington</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Israeli jets hit Tehran's fuel storage facilities without coordinating with the United States. Massive fires. Toxic smoke across the capital. Residents report black, oily rain. Washington is "formally angry." This is exactly the kind of escalation the Americans had tried to avoid. The US Energy Secretary publicly declares that the United States will not strike Iran's energy infrastructure, drawing a red line that Israel has already crossed. The Revolutionary Guard Corps, sensing the divide, issues a statement that functions as both a rebuke and a demand. In Congress, Democrats file war powers resolutions. Russia-linked hackers begin appearing on a new front: cyber operations supporting Iran, using drone tactics Moscow learned in Ukraine.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">$6B</span>
+        <span class="sl">Week 1 Pentagon cost</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"Will not let out one litre of oil while attacks continue."</blockquote>
+    <cite>Islamic Revolutionary Guard Corps statement, March 9</cite>
+  </div>
+</div>
+
+<!-- THE WORLD REACTS -->
+<div class="data-panel">
+  <div class="data-panel-inner">
+    <h3>The World Reacts</h3>
+    <div class="data-row">
+      <div class="data-cell">
+        <div class="dv" style="font-size:1.2rem; color:var(--fg)">The Coalition's Partners</div>
+        <div class="dd" style="margin-top:0.5rem">
+          <strong>Britain</strong> provides basing access but refuses combat. Trump humiliates Starmer on Truth Social: "We don't need people that join Wars after we've already won!" HMS Prince of Wales never deploys.<br><br>
+          <strong>France</strong> loses Chief Warrant Officer Arnaud Frion to a Shahed drone in Iraqi Kurdistan, the first European military death. Macron: "No one can tell what Donald Trump wants from this war."<br><br>
+          <strong>Italy</strong>. Meloni: "Italy isn't at war, won't be at war."
+        </div>
+      </div>
+      <div class="data-cell">
+        <div class="dv" style="font-size:1.2rem; color:var(--red)">Iran's Backers</div>
+        <div class="dd" style="margin-top:0.5rem">
+          <strong>Russia</strong> provides Iran with US warship targeting intelligence (<em>Washington Post</em>, Mar 6) and drone evasion tactics learned from Ukraine. Oil windfall: Urals crude above $70 vs the $59 budget assumption. ~60 hacktivist groups active by Mar 2.<br><br>
+          <strong>China</strong> abstains on UNSC rather than vetoing, but deploys the 30,000-ton Liaowang-1 signals intelligence vessel to the Gulf of Oman. 500+ military/dual-use satellites supporting intelligence-sharing with Iran.
+        </div>
+      </div>
+      <div class="data-cell">
+        <div class="dv" style="font-size:1.2rem; color:var(--amber)">The Fault Lines</div>
+        <div class="dd" style="margin-top:0.5rem">
+          <strong>Turkey</strong> intercepts three Iranian ballistic missiles inside its airspace, the first time a NATO member's territory has been targeted by Iran. Article 5 discussed but ruled out by both Rutte and Hegseth.<br><br>
+          <strong>Hamas</strong> publicly urges Iran to halt attacks on Gulf states, an extraordinary rift within Tehran's own alliance network.<br><br>
+          <strong>Israel</strong> succession threat. Katz: any Supreme Leader successor "will be a target for elimination... it does not matter what his name is or where he hides."
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ -->
+<!-- PHASE IV: THE GRIND             -->
+<!-- ═══════════════════════════════ -->
+<div class="col">
+  <div class="phase">
+    <div class="phase-num">IV</div>
+    <div class="phase-info">
+      <div class="phase-name">The Grind</div>
+      <div class="phase-dates">March 10 – 14</div>
+    </div>
+  </div>
+  <div class="phase-intro">
+    The military campaign escalates. Heavy bombers. Covert operations. Intelligence-led targeting. But each escalation widens the war without ending it. The home front erodes on both sides. A new question emerges: can a war this unpopular, this expensive, and this far from its stated objectives continue?
+  </div>
+
+  <div class="day" data-day="11">
+    <div class="day-head">
+      <span class="day-date">March 10</span>
+      <span class="day-num">Day 11</span>
+      <span class="day-headline">Heavy bombers deploy. Regime change enters the conversation.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        B-1 and B-52 strategic bombers arrive in the theatre. These are aircraft designed for sustained bombardment, not surgical strikes. The US Navy destroys 16 Iranian mine-laying vessels in the Strait. Netanyahu openly discusses creating "conditions for regime change" in Tehran. But the eighth American soldier is killed, over 140 are wounded, and G7 finance ministers begin discussing an emergency release of strategic oil reserves, an implicit acknowledgement that the economic damage is no longer containable. Turkey, a NATO ally, intercepts a third Iranian missile in its own airspace.
+      </p>
+      <div class="day-stat">
+        <span class="sv">140+</span>
+        <span class="sl">Americans wounded</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="day" data-day="12">
+    <div class="day-head">
+      <span class="day-date">March 11</span>
+      <span class="day-num">Day 12</span>
+      <span class="day-headline">The war breaches every boundary — air, sea, ground, cyber, covert</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Israeli commandos kill Iranian officials in a luxury hotel in central Beirut. The war is expanding beyond southern Lebanon into the capital itself. Russia-linked hackers appear on a new cyber front, supporting Iran with what Britain's Defence Secretary later calls Putin's "hidden hand." Kurdish opposition groups, reportedly backed by Mossad and the CIA, claim covert operations deep inside Iranian territory. China deploys a signals intelligence vessel to the Gulf of Oman, placing a major surveillance platform within observation range of the conflict. Mojtaba Khamenei has not spoken publicly since his appointment five days ago. Pentagon spokesman Hegseth claims he was "wounded, likely disfigured."
+      </p>
+      <div class="day-stat">
+        <span class="sv red">5</span>
+        <span class="sl">Fronts active</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ENERGY INFRASTRUCTURE — placed here after Day 12 because this is when the damage peaks.
+     Day 13 (next) opens with the IEA declaring it "the largest oil disruption in history" — THIS panel explains why. -->
+<div class="data-panel">
+  <div class="data-panel-inner">
+    <h3>The Infrastructure Toll by Day 12</h3>
+    <div class="data-row">
+      <div class="data-cell">
+        <div class="dv red">3</div>
+        <div class="dl">Refineries Damaged</div>
+        <div class="dd">Bapco Sitra (Bahrain, 380K bpd), force majeure declared. Ras Tanura (Saudi Arabia, largest marine terminal), shut after drone strike. Al Zour (Kuwait, 615K bpd), unable to ship, storage full.</div>
+      </div>
+      <div class="data-cell">
+        <div class="dv amber">7</div>
+        <div class="dl">Tankers Attacked</div>
+        <div class="dd">Sonangol Namibe, Louise P, Stena Imperative, Hercules Star, Skylight, Ocean Electra, MKD Vyom. Hundreds more sit anchored on both sides of the Strait.</div>
+      </div>
+      <div class="data-cell">
+        <div class="dv">2</div>
+        <div class="dl">Pipeline Bypasses Active</div>
+        <div class="dd">Saudi East-West Pipeline to Yanbu (5M bpd capacity, rarely loads above 2.5M). UAE Habshan-Fujairah (1.5M bpd). Together they help. They cannot replace Hormuz.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="13">
+    <div class="day-head">
+      <span class="day-date">March 12</span>
+      <span class="day-num">Day 13</span>
+      <span class="day-headline">The International Energy Agency declares the largest oil disruption in history</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        The International Energy Agency uses a phrase it has never used before: "largest oil supply disruption in history." Ten million barrels per day offline. The combined output of Saudi Arabia, Iraq, and Iran, gone. The United Nations Security Council passes a binding resolution 13 votes to zero, with two abstentions, demanding Iran halt its attacks. Russia and China abstain rather than vetoing. It is a crucial signal: Tehran's two most important diplomatic protectors are unwilling to shield it from formal condemnation. Mojtaba Khamenei finally breaks his five-day silence.
+      </p>
+      <div class="day-stat">
+        <span class="sv amber">10M</span>
+        <span class="sl">Barrels per day offline</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"The Strait will remain closed. Attacks on American bases will continue. Iran does not negotiate under bombardment."</blockquote>
+    <cite>Mojtaba Khamenei, new Supreme Leader of Iran, first public statement, March 12</cite>
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="14">
+    <div class="day-head">
+      <span class="day-date">March 13</span>
+      <span class="day-num">Day 14</span>
+      <span class="day-headline">Iran's military is destroyed. The war is America's least popular.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        Pentagon spokesman Hegseth announces that Iran's defence industrial base has been "functionally defeated." It can no longer manufacture new ballistic missiles or replace the weapons it has already fired. Israeli intelligence identifies and kills top nuclear scientists. Over 3,000 targets have been struck across Iran. By any conventional metric, the campaign has achieved its objectives. But six more Americans die when a KC-135 refuelling tanker crashes in western Iraq, bringing the total to 13. An Iran-backed militia immediately claims responsibility; the Pentagon attributes it to operational failure. The IEA announces a 400 million barrel strategic reserve release, the largest in its history. France and Italy open direct talks with Iran on safe passage through Hormuz, the first European diplomatic channel separate from the American military operation. The New York Times publishes a poll: this is the least popular American foreign war in modern polling history. In Michigan, a synagogue is attacked by a man whose family was killed in Israeli strikes on Lebanon.
+      </p>
+      <div class="day-stat">
+        <span class="sv red">13</span>
+        <span class="sl">Americans killed</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"Great honour to be killing them."</blockquote>
+    <cite>Donald Trump, March 13, speaking about Iranian military leaders</cite>
+  </div>
+</div>
+
+<!-- DISPLACEMENT CHART -->
+<div class="col-wide chart-section">
+  <div class="chart-title">The Displacement Crisis</div>
+  <div class="chart-subtitle">Each spike in displacement corresponds to a specific escalation. The initial Tehran evacuation. The Lebanon ground invasion. The fuel depot fires that rained toxic soot on Tehran. The revised United Nations estimate that tripled the count overnight.</div>
+  <div class="chart-wrap" style="aspect-ratio: 3.2 / 1;">
+    <svg id="dispChart" viewBox="0 0 800 250" preserveAspectRatio="none" role="img" aria-label="Displacement chart showing 4 million people displaced over 15 days, with major spikes at Tehran evacuation, Lebanon invasion, fuel depot fires, and UNHCR estimate revision"></svg>
+  </div>
+  <div class="chart-source">Source: United Nations High Commissioner for Refugees estimates via situation reporting. Total: 3.2 million in Iran + 800,000 in Lebanon = 4 million displaced.</div>
+</div>
+
+<!-- HUMANITARIAN PANEL — adds detail NOT shown in the chart above -->
+<div class="data-panel">
+  <div class="data-panel-inner">
+    <h3>The Known Human Cost</h3>
+    <div class="data-row">
+      <div class="data-cell">
+        <div class="dv red">2,000+</div>
+        <div class="dl">Civilian Deaths</div>
+        <div class="dd">1,300 in Iran, 687 in Lebanon. 175 in a single strike on a school in Minab. 26 Lebanese paramedics killed since March 2.</div>
+      </div>
+      <div class="data-cell">
+        <div class="dv red">13</div>
+        <div class="dl">American Service Members Killed</div>
+        <div class="dd">Seven in combat. Six in a KC-135 refuelling tanker crash in western Iraq. Over 140 wounded. The first US deaths came on Day 4.</div>
+      </div>
+      <div class="data-cell">
+        <div class="dv red">$11.3B</div>
+        <div class="dl">Pentagon War Cost Estimate</div>
+        <div class="dd">Through the first six days alone. True cost "likely far greater." Democrats in Congress forming a "wall" against continued war funding.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col">
+  <div class="day" data-day="15">
+    <div class="day-head">
+      <span class="day-date">March 14</span>
+      <span class="day-num">Day 15</span>
+      <span class="day-headline">The United States strikes Kharg Island. The blockade begins to crack.</span>
+    </div>
+    <div class="day-body">
+      <p class="day-narrative">
+        In a single decision that reverses two weeks of deliberate restraint, the United States strikes more than 90 military targets on Kharg Island, the terminal through which 90% of Iran's oil exports flow. Trump shares video of the strike. Until today, Washington had explicitly refused to target Iran's energy infrastructure, even as Israel hit Tehran's fuel depots without permission. Now both allies are striking oil. Iran claims its exports continue; the claim is contested. Separately, two Indian-flagged tankers successfully transit the Strait of Hormuz, the first commercial passage since the blockade began. Iran allowed them through. Friendly nations can pass. Western-flagged ships cannot. In Lebanon, Israel signals a "massive" ground invasion described by officials as "like Gaza." Hamas publicly urges Tehran to halt its attacks on Gulf states, an extraordinary rift within the Iranian alliance. And inside the White House, the administration's own artificial intelligence adviser publicly says what no senior official has said before.
+      </p>
+      <div class="day-stat">
+        <span class="sv amber">90+</span>
+        <span class="sl">Targets on Kharg Island</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote">
+  <div class="col">
+    <blockquote>"Declare victory and get out."</blockquote>
+    <cite>White House AI adviser, March 14 — the first senior administration voice to call for an exit</cite>
+  </div>
+</div>
+
+
+<!-- STRIKES MAP -->
+<div class="col-wide chart-section">
+  <div class="chart-title">The Theatre of War</div>
+  <div class="chart-subtitle">Sixty-five known strikes, attacks, and incidents across thirteen countries in fifteen days. Hover over any marker for details.</div>
+  <div class="chart-wrap" style="border:none; aspect-ratio: 1.6 / 1;">
+    <iframe src="strikes-map.html" style="width:100%; height:100%; border:none;" title="Interactive map of 65 military strikes across the Middle East"></iframe>
+  </div>
+  <div class="chart-source">Source: DataChutney open-source intelligence analysis. Locations derived from situation briefings and news reporting.</div>
+</div>
+
+<!-- ═══ CLOSING ═══ -->
+<div class="col closing">
+  <div class="closing-line"></div>
+  <h2>The War That Cannot End.</h2>
+  <p>
+    After fifteen days, the military campaign has achieved nearly every objective it defined. Iran's nuclear enrichment facilities are damaged. Its air defences are destroyed. Its Supreme Leader has been killed, his successor wounded. Its defence industrial base has been dismantled. Over 3,000 targets have been struck. Forty-three warships have been sunk. By any conventional measure of warfare, this is overwhelming victory.
+  </p>
+  <p>
+    But one objective remains conspicuously unfulfilled: regime change. Mojtaba Khamenei, wounded and possibly disfigured, governs from an undisclosed location, issuing defiant statements, holding Hormuz closed, projecting the kind of resistance that military dominance cannot extinguish. The regime has not fallen. It has not surrendered. It has not even come to the table. The stated war aim of creating "conditions for regime change" has, as of Day 15, produced a new Supreme Leader more hardline than the one who was killed.
+  </p>
+  <p>
+    The blockade is cracking. Two Indian tankers have transited the Strait, and naval escorts may open the passage further. But the damage is structural. The largest oil disruption in history. Four million displaced. Over $11 billion spent. And the first voices inside the administration are now saying publicly what critics have said from the start: declare victory and get out.
+  </p>
+  <p>
+    The world watches through a 21-mile strait. Every barrel of oil, every container of liquefied natural gas, every tanker that does or does not transit that narrow passage between Iran and Oman carries the economic fate of nations that had no part in starting this war and have no power to end it. South Korea caps fuel prices for the first time in three decades. Bangladesh closes its universities to save electricity. Farmers across the northern hemisphere plant their spring crops facing input costs that have risen by a third. The war between three countries is paid for by all of them.
+  </p>
+  <div class="closing-stats">
+    <div class="closing-stat">
+      <span class="cv">3,000+</span>
+      <span class="cl">US and Israeli Strikes</span>
+    </div>
+    <div class="closing-stat">
+      <span class="cv" style="color:var(--amber)">$11.3B+</span>
+      <span class="cl">Pentagon Cost Estimate</span>
+    </div>
+    <div class="closing-stat">
+      <span class="cv" style="color:var(--red)">4M+</span>
+      <span class="cl">People Displaced</span>
+    </div>
+    <div class="closing-stat">
+      <span class="cv">13</span>
+      <span class="cl">Americans Killed</span>
+    </div>
+  </div>
+</div>
+
+</article>
+
+<footer class="colophon" role="contentinfo">
+  <p>DataChutney · Situation Chronicle · Derived from open-source intelligence analysis · <time datetime="2026-03-14">March 14, 2026</time></p>
+</footer>
+
+
+<script>
+
+/* ═══ OIL PRICE CHART ═══ */
+(function() {
+  const svg = document.getElementById('oilChart');
+  const W = 800, H = 260;
+  const pad = { t: 25, r: 55, b: 40, l: 45 };
+  const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+  // Real daily close prices from Yahoo Finance BZ=F API
+  // Fetched via: query2.finance.yahoo.com/v8/finance/chart/BZ=F?interval=1d
+  const data = [
+    ['Feb 25', 70.85, null],
+    ['Feb 26', 70.75, null],
+    ['Feb 27', 72.48, null],
+    // WAR STARTS — markets closed Feb 28 (Fri evening strike), opens Mar 2 Mon
+    ['Mar 2',  77.74, 'War begins — gap up'],  // Mon open after Fri night strikes
+    ['Mar 3',  81.40, null],
+    ['Mar 4',  81.40, null],
+    ['Mar 5',  85.41, null],        // Hormuz at 4 vessels
+    ['Mar 6',  92.69, null],        // Qatar halts LNG
+    ['Mar 9',  98.96, '$119 intraday'],  // Intraday high $119.40
+    ['Mar 10', 87.80, null],        // Crashed from $119 to close $87.80
+    ['Mar 11', 91.98, null],
+    ['Mar 12', 100.46, null],       // IEA: largest disruption
+    ['Mar 13', 103.14, null],
+    ['Mar 14', 105.82, '$105.82'],  // Latest close — Kharg Island struck, prices spike
+  ];
+
+  const minP = 60, maxP = 125;
+  const x = (i) => pad.l + (i / (data.length - 1)) * cW;
+  const y = (p) => pad.t + cH - ((p - minP) / (maxP - minP)) * cH;
+  const pts = data.map((d, i) => ({ x: x(i), y: y(d[1]) }));
+
+  function spline(pts) {
+    let d = `M${pts[0].x},${pts[0].y}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0, i - 1)], p1 = pts[i],
+            p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+      d += ` C${p1.x+(p2.x-p0.x)/6},${p1.y+(p2.y-p0.y)/6} ${p2.x-(p3.x-p1.x)/6},${p2.y-(p3.y-p1.y)/6} ${p2.x},${p2.y}`;
+    }
+    return d;
+  }
+
+  const curve = spline(pts);
+  let s = `<defs><linearGradient id="oilG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#b8860b" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#b8860b" stop-opacity="0.02"/>
+  </linearGradient></defs>`;
+
+  [60,80,100,120].forEach(p => {
+    s += `<line x1="${pad.l}" y1="${y(p)}" x2="${W-pad.r}" y2="${y(p)}" stroke="#e0ddd6" stroke-width="0.5"/>`;
+    s += `<text x="${pad.l-8}" y="${y(p)+3.5}" text-anchor="end" font-family="'Courier Prime',monospace" font-size="11" fill="#777">$${p}</text>`;
+  });
+
+  // Intraday high line — $119.40 on Mar 9
+  s += `<line x1="${pad.l}" y1="${y(119.40)}" x2="${W-pad.r}" y2="${y(119.40)}" stroke="#8b2020" stroke-width="0.5" stroke-dasharray="3,4" opacity="0.5"/>`;
+  s += `<text x="${W-pad.r-4}" y="${y(119.40)-5}" text-anchor="end" font-family="'Courier Prime',monospace" font-size="9" fill="#8b2020" font-style="italic">$119.40 high</text>`;
+
+  // Pre-war level
+  s += `<line x1="${pad.l}" y1="${y(72)}" x2="${W-pad.r}" y2="${y(72)}" stroke="#999" stroke-width="0.5" stroke-dasharray="4,3"/>`;
+  s += `<text x="${pad.l+4}" y="${y(72)-4}" font-family="'Courier Prime',monospace" font-size="10" fill="#777">pre-war ~$72</text>`;
+
+  s += `<path d="${curve} L${pts[pts.length-1].x},${pad.t+cH} L${pts[0].x},${pad.t+cH} Z" fill="url(#oilG)"/>`;
+  s += `<path d="${curve}" fill="none" stroke="#b8860b" stroke-width="2.5"/>`;
+
+  data.forEach((d, i) => {
+    const px = pts[i].x, py = pts[i].y;
+    const color = d[1] >= 100 ? '#8b2020' : d[1] >= 85 ? '#b8860b' : '#5a5a5a';
+    s += `<circle cx="${px}" cy="${py}" r="${d[2]?4:2.5}" fill="${color}" stroke="#FDFCF8" stroke-width="1.5"/>`;
+    // X-axis: show every label
+    s += `<text x="${px}" y="${H-pad.b+18}" text-anchor="middle" font-family="'Courier Prime',monospace" font-size="10" fill="#777">${d[0]}</text>`;
+    if (d[2]) {
+      const above = d[1] >= 95;
+      const ay = above ? py-16 : py+20;
+      s += `<line x1="${px}" y1="${py+(above?-5:5)}" x2="${px}" y2="${ay+(above?5:-5)}" stroke="#999" stroke-width="0.5"/>`;
+      s += `<text x="${px}" y="${ay}" text-anchor="middle" font-family="'Courier Prime',monospace" font-size="9" fill="#444" font-style="italic">${d[2]}</text>`;
+    }
+  });
+
+  svg.innerHTML = s;
+})();
+
+
+/* ═══ DISPLACEMENT CHART ═══ */
+(function() {
+  const svg = document.getElementById('dispChart');
+  const W = 800, H = 250;
+  const pad = { t: 20, r: 40, b: 35, l: 50 };
+  const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+  // [day, displaced_thousands, annotation] — annotations mark EVENTS that caused spikes
+  const data = [
+    [0, 0, null],
+    [1, 0, null],
+    [2, 100, 'Tehran evacuation begins'],
+    [3, 212, 'Lebanon ground invasion'],
+    [4, 250, null],
+    [5, 300, null],
+    [6, 350, null],
+    [7, 400, null],
+    [8, 500, null],
+    [9, 600, null],
+    [10, 800, 'Fuel depot fires / toxic rain'],
+    [11, 1200, null],
+    [12, 2000, 'UNHCR revises Iran estimate'],
+    [13, 3500, null],
+    [14, 3900, null],
+    [15, 4000, '4M+ displaced'],
+  ];
+
+  const maxD = 4500;
+  const x = (i) => pad.l + (i / (data.length - 1)) * cW;
+  const y = (d) => pad.t + cH - (d / maxD) * cH;
+
+  const pts = data.map((d, i) => ({ x: x(i), y: y(d[1]) }));
+
+  function spline(pts) {
+    let d = `M${pts[0].x},${pts[0].y}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0,i-1)], p1 = pts[i],
+            p2 = pts[i+1], p3 = pts[Math.min(pts.length-1,i+2)];
+      d += ` C${p1.x+(p2.x-p0.x)/6},${p1.y+(p2.y-p0.y)/6} ${p2.x-(p3.x-p1.x)/6},${p2.y-(p3.y-p1.y)/6} ${p2.x},${p2.y}`;
+    }
+    return d;
+  }
+
+  const curve = spline(pts);
+  let s = `<defs><linearGradient id="dispG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#8b2020" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#8b2020" stop-opacity="0.03"/>
+  </linearGradient></defs>`;
+
+  [0, 1000, 2000, 3000, 4000].forEach(d => {
+    const yy = y(d);
+    s += `<line x1="${pad.l}" y1="${yy}" x2="${W-pad.r}" y2="${yy}" stroke="#e0ddd6" stroke-width="0.5"/>`;
+    const label = d === 0 ? '0' : (d/1000).toFixed(0) + 'M';
+    s += `<text x="${pad.l-8}" y="${yy+3.5}" text-anchor="end" font-family="'Courier Prime',monospace" font-size="11" fill="#777">${label}</text>`;
+  });
+
+  s += `<path d="${curve} L${pts[pts.length-1].x},${pad.t+cH} L${pts[0].x},${pad.t+cH} Z" fill="url(#dispG)"/>`;
+  s += `<path d="${curve}" fill="none" stroke="#8b2020" stroke-width="2"/>`;
+
+  // Custom label offsets to prevent overlap — [dx, dy, anchor]
+  const labelOffsets = {
+    2: [0, -22, 'start'],        // Tehran evacuation — shift up, anchor left
+    3: [20, -4, 'start'],       // Lebanon ground — shift right and lower
+    10: [0, -14, 'middle'],     // Fuel depot
+    12: [0, -14, 'middle'],     // UNHCR
+    15: [0, -14, 'middle'],     // 4M+
+  };
+  data.forEach((d, i) => {
+    const px = pts[i].x, py = pts[i].y;
+    if (d[2]) {
+      s += `<circle cx="${px}" cy="${py}" r="3.5" fill="#8b2020" stroke="#FDFCF8" stroke-width="1.5"/>`;
+      const off = labelOffsets[d[0]] || [0, -14, 'middle'];
+      const lx = px + off[0], ay = py + off[1];
+      s += `<line x1="${px}" y1="${py-5}" x2="${lx}" y2="${ay+5}" stroke="#999" stroke-width="0.5"/>`;
+      s += `<text x="${lx}" y="${ay}" text-anchor="${off[2]}" font-family="'Courier Prime',monospace" font-size="10" fill="#444" font-style="italic">${d[2]}</text>`;
+    }
+    // Day labels
+    if (d[0] === 1 || d[0] === 5 || d[0] === 7 || d[0] === 10 || d[0] === 14)
+      s += `<text x="${px}" y="${H-pad.b+16}" text-anchor="middle" font-family="'Courier Prime',monospace" font-size="10" fill="#777">Day ${d[0]}</text>`;
+  });
+
+  svg.innerHTML = s;
+})();
+
+
+/* ═══ SCROLL ANIMATIONS ═══ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.day, .quote, .data-panel').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
