@@ -39,7 +39,7 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
   <div class="legend-title">Impact by Day 15</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#8b2020"></div> Direct combatants</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#b8860b"></div> Attacked or militarily affected</div>
-  <div class="legend-item"><div class="legend-swatch" style="background:#c4a265; opacity:0.7"></div> Economically squeezed</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#1a2744"></div> Economically squeezed</div>
 </div>
 
 <div class="source-bar">
@@ -117,9 +117,9 @@ const LABELS = [
   { iso: 'RU', coord: [60, 60], text: 'Russia\noil windfall', tier: 3 },
 ];
 
-const TIER_COLORS = { 1: '#8b2020', 2: '#b8860b', 3: '#c4a265' };
-const TIER_OPACITY = { 1: 0.35, 2: 0.22, 3: 0.12 };
-const TIER_LINE_OPACITY = { 1: 0.7, 2: 0.5, 3: 0.25 };
+const TIER_COLORS = { 1: '#8b2020', 2: '#b8860b', 3: '#1a2744' };
+const TIER_OPACITY = { 1: 0.40, 2: 0.30, 3: 0.15 };
+const TIER_LINE_OPACITY = { 1: 0.8, 2: 0.6, 3: 0.4 };
 
 const map = new mapboxgl.Map({
   container: 'map',
