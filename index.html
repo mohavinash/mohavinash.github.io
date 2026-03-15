@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataChutney — Insights through AI and Data</title>
+    <meta name="description" content="DataChutney uses AI and data to surface insights and create engaging, deeply-researched interactive stories.">
+    <meta property="og:title" content="DataChutney">
+    <meta property="og:description" content="AI and data-driven insights. Research papers, legal judgments, geopolitical analysis — made interactive.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://datachutney.io">
+    <link rel="canonical" href="https://datachutney.io">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f7f3ec;
+            --bg-card: #f0ebe2;
+            --text: #1a1a2e;
+            --text-secondary: #6b6b7b;
+            --text-tertiary: #9b9bab;
+            --accent: #b8860b;
+            --rule: #d4cfc5;
+            --mono: 'JetBrains Mono', 'Courier New', monospace;
+            --serif: 'Playfair Display', Georgia, serif;
+            --body: 'Source Serif 4', Georgia, serif;
+        }
+
+        html { font-size: 17px; scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--body);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 6rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .brand {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .tagline {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-top: 1rem;
+        }
+
+        .intro {
+            font-family: var(--body);
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 2rem auto 0;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* ─── DIVIDER ─── */
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--rule);
+            margin: 3rem auto;
+        }
+
+        /* ─── STORIES ─── */
+        .stories {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .stories-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 2.5rem;
+        }
+
+        .story {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            position: relative;
+            transition: padding-left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .story:last-child {
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .story::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            opacity: 0.06;
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .story:hover {
+            padding-left: 1.5rem;
+        }
+
+        .story:hover::before {
+            width: 100%;
+        }
+
+        .story-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .story-number {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            letter-spacing: 0.1em;
+        }
+
+        .story-tag {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border: 1px solid;
+            border-radius: 1px;
+        }
+
+        .story-title {
+            font-family: var(--serif);
+            font-size: 1.55rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .story:hover .story-title {
+            color: var(--accent);
+        }
+
+        .story-description {
+            font-family: var(--body);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.65;
+            max-width: 580px;
+        }
+
+        .story-date {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+        }
+
+        /* Arrow that slides in on hover */
+        .story-arrow {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) translateX(-8px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 1.2rem;
+            color: var(--text-tertiary);
+        }
+
+        .story:hover .story-arrow {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Per-story theme colors */
+        .story--war .story-tag { color: #8b0000; border-color: #8b0000; }
+        .story--war::before { background: #8b0000; }
+
+        .story--legal .story-tag { color: #1a5c3a; border-color: #1a5c3a; }
+        .story--legal::before { background: #1a5c3a; }
+
+        .story--research .story-tag { color: #2c4a7c; border-color: #2c4a7c; }
+        .story--research::before { background: #2c4a7c; }
+
+        /* ─── UPCOMING BADGE ─── */
+        .upcoming-badge {
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 0.1rem 0.4rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .footer-rule {
+            width: 100%;
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .footer-brand span {
+            color: var(--accent);
+        }
+
+        .footer-text {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--text-tertiary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .footer-links {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 600px) {
+            html { font-size: 15px; }
+            header { padding: 4rem 1.5rem 2rem; }
+            .brand { font-size: 2.2rem; }
+            .stories { padding: 0 1.5rem 4rem; }
+            .story-title { font-size: 1.3rem; }
+            .story:hover { padding-left: 0.75rem; }
+            .story-arrow { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .story, .story::before, .story-title, .story-arrow {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand reveal">Data<span>Chutney</span></div>
+        <div class="tagline reveal">AI + Data + Insight</div>
+        <p class="intro reveal">Using artificial intelligence and data to surface insights from complex subjects — research papers, legal judgments, geopolitical crises — and turn them into engaging, interactive stories.</p>
+    </header>
+
+    <div class="divider reveal"></div>
+
+    <main class="stories">
+        <div class="stories-label reveal">Stories</div>
+
+        <a href="/cognitive-surrender-explainer/" class="story story--research reveal">
+            <div class="story-meta">
+                <span class="story-number">01</span>
+                <span class="story-tag">Research Paper</span>
+            </div>
+            <div class="story-title">The Cognitive Surrender</div>
+            <p class="story-description">An interactive explainer on Shaw & Nave's Tri-System Theory — how AI reshapes human reasoning and the emergence of cognitive surrender. Three experiments, 1,372 participants, one uncomfortable finding.</p>
+            <div class="story-date">March 2026</div>
+            <span class="story-arrow">&rarr;</span>
+        </a>
+
+        <a href="/delhi-excise-case-explainer/" class="story story--legal reveal">
+            <div class="story-meta">
+                <span class="story-number">02</span>
+                <span class="story-tag">Legal Judgment</span>
+            </div>
+            <div class="story-title">The Delhi Excise Case</div>
+            <p class="story-description">A visual breakdown of the Delhi Excise Policy case and acquittal — court findings, accused profiles, the timeline of India's most politically charged corruption trial.</p>
+            <div class="story-date">February 2026</div>
+            <span class="story-arrow">&rarr;</span>
+        </a>
+
+        <a class="story story--war reveal" style="cursor: default;">
+            <div class="story-meta">
+                <span class="story-number">03</span>
+                <span class="story-tag">Geopolitics</span>
+                <span class="upcoming-badge">Coming Soon</span>
+            </div>
+            <div class="story-title">21 Miles Between War and the Global Economy</div>
+            <p class="story-description">The US-Iran war chronicle — 15 days of conflict told through open-source intelligence, oil price data, maritime tracking, and displacement figures. How a 21-mile strait became the world's most expensive chokepoint.</p>
+            <div class="story-date">March 2026</div>
+        </a>
+    </main>
+
+    <footer>
+        <div class="footer-rule"></div>
+        <div class="footer-brand reveal">Data<span>Chutney</span></div>
+        <div class="footer-text reveal">Insights through AI and data</div>
+        <div class="footer-links reveal">
+            <a href="https://github.com/mohavinash">GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const els = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, i * 80);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            els.forEach(el => observer.observe(el));
+        });
+    </script>
+
+</body>
+</html>
