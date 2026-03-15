@@ -100,21 +100,17 @@ const SQUEEZED = [
   'RU', // oil windfall, intelligence sharing
 ];
 
-// Labels for key countries — positioned to avoid overlap
+// Impact annotations — short descriptions only, no country names (base map has those)
 const LABELS = [
-  { iso: 'IR', coord: [53, 32.5], text: 'IRAN', tier: 1 },
-  { iso: 'IL', coord: [34.8, 31.5], text: 'ISRAEL', tier: 1 },
-  { iso: 'US', coord: [-98, 39], text: 'UNITED STATES', tier: 1 },
-  { iso: 'LB', coord: [36.5, 34.2], text: 'Lebanon\ninvaded', tier: 2 },
-  { iso: 'IQ', coord: [44, 33.3], text: 'Iraq\nbases hit', tier: 2 },
-  { iso: 'TR', coord: [35, 39.5], text: 'Turkey\nmissiles intercepted', tier: 2 },
-  { iso: 'SA', coord: [45, 24], text: 'Saudi Arabia\nRas Tanura hit', tier: 2 },
-  { iso: 'KR', coord: [128, 36], text: 'South Korea\nprice caps', tier: 3 },
-  { iso: 'BD', coord: [90.4, 23.7], text: 'Bangladesh\nuniversities shut', tier: 3 },
-  { iso: 'CN', coord: [104, 35], text: 'China\nfuel exports halted', tier: 3 },
-  { iso: 'IN', coord: [79, 21], text: 'India\nblockade-breaking', tier: 3 },
-  { iso: 'GB', coord: [-3.5, 55.5], text: 'UK\nbasing only', tier: 3 },
-  { iso: 'RU', coord: [60, 60], text: 'Russia\noil windfall', tier: 3 },
+  { coord: [36.5, 34.5], text: 'invaded', tier: 2 },
+  { coord: [44, 33.8], text: 'bases hit', tier: 2 },
+  { coord: [35, 40], text: 'missiles intercepted', tier: 2 },
+  { coord: [46, 23.5], text: 'Ras Tanura hit', tier: 2 },
+  { coord: [128, 36.5], text: 'price caps', tier: 3 },
+  { coord: [90.4, 23.2], text: 'universities shut', tier: 3 },
+  { coord: [104, 34], text: 'fuel exports halted', tier: 3 },
+  { coord: [79, 20], text: 'blockade-breaking', tier: 3 },
+  { coord: [60, 58], text: 'oil windfall', tier: 3 },
 ];
 
 const TIER_COLORS = { 1: '#8b2020', 2: '#b8860b', 3: '#1a2744' };
@@ -158,26 +154,14 @@ map.on('load', () => {
     });
   });
 
-  // Add labels
+  // Add impact annotations
   LABELS.forEach(lab => {
     const color = TIER_COLORS[lab.tier];
-    const lines = lab.text.split('\n');
     const el = document.createElement('div');
-    el.style.cssText = `font-family:'Courier New',monospace; pointer-events:none; text-align:center;
+    el.style.cssText = `font-family:'Courier New',monospace; font-size:7px; font-style:italic;
+      color:${color}; white-space:nowrap; pointer-events:none;
       text-shadow: 0 0 4px rgba(250,248,243,0.95), 0 0 8px rgba(250,248,243,0.9);`;
-
-    const nameSpan = document.createElement('div');
-    nameSpan.style.cssText = `font-size:8px; font-weight:700; letter-spacing:0.06em; color:${color}; white-space:nowrap;`;
-    nameSpan.textContent = lines[0];
-    el.appendChild(nameSpan);
-
-    if (lines[1]) {
-      const descSpan = document.createElement('div');
-      descSpan.style.cssText = `font-size:7px; font-style:italic; color:${color}; opacity:0.8; white-space:nowrap;`;
-      descSpan.textContent = lines[1];
-      el.appendChild(descSpan);
-    }
-
+    el.textContent = lab.text;
     new mapboxgl.Marker({ element: el, anchor: 'center' })
       .setLngLat(lab.coord)
       .addTo(map);
