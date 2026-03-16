@@ -52,52 +52,49 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibW9oYXZpbmFzaCIsImEiOiJjbW1idzc1dzIwMDF5MnBzY
 // Tier 1: Direct combatants
 const COMBATANTS = ['IR', 'IL', 'US'];
 
-// Tier 2: Attacked, bases hit, infrastructure damaged, missiles intercepted
+// Tier 2: Attacked, bases hit, missiles intercepted, infrastructure damaged
+// Source: data-country-impact.md
 const ATTACKED = [
-  'LB', // invaded, ground war
-  'IQ', // US bases hit, KC-135 crash, militia attacks
-  'BH', // NSA Bahrain hit, civilian killed
-  'QA', // Al Udeid hit, LNG halted
-  'AE', // Al Dhafra hit, Dubai debris
-  'KW', // Camp Arifjan hit, refinery shut
-  'SA', // Prince Sultan base, Ras Tanura drone
-  'JO', // 119 missiles fired at
-  'OM', // Thumrait base hit, industrial area struck
+  'LB', // invaded, 687+ killed, 800K displaced
+  'IQ', // embassy hit, KC-135 crash, militia attacks
+  'BH', // drone attack wounded 32, 120+ missiles intercepted
+  'QA', // Al Udeid targeted, LNG halted
+  'AE', // Fujairah fire, 1800+ drones/missiles, Dubai debris
+  'KW', // militia drone strikes, IRGC targeted bases
+  'SA', // Prince Sultan base, Ras Tanura drone, US soldier died
+  'JO', // 119 missiles fired at, defence pacts activated
+  'OM', // 2 killed by drone, Salalah port fire, Thumrait targeted
   'TR', // 3 Iranian missiles intercepted in airspace
-  'AZ', // drone attack
-  'PS', // Gaza militia ops
+  'AZ', // drone attack, demanded explanation
+  'SY', // Israeli operations, Quneitra
+  'CY', // UK SBAs attacked, F-35s deployed
+  'YE', // Houthi arsenal degraded, Bab al-Mandab threat
+  'PS', // Gaza militia ops, settler violence surge
 ];
 
-// Tier 3: Economically squeezed — energy dependent, supply chain disrupted
+// Tier 3: Economically/politically affected
+// Source: data-country-impact.md
 const SQUEEZED = [
-  'KR', // fuel price caps, first in 30 years
-  'BD', // universities shut to save power
-  'CN', // halted fuel exports
-  'JP', // LNG dependent
-  'IN', // tankers breaking blockade, sanctions waiver
-  'GB', // Diego Garcia basing, soldier killed via proxy
-  'FR', // soldier killed in Kurdistan
-  'DE', // snapback sanctions, energy prices
-  'ES', // withdrew ambassador
-  'IT', // direct talks with Iran
-  'PK', // neighbour, energy impact
-  'EG', // Suez alternative under strain
-  'LK', // Iris Dena sunk nearby
-  'SG', // shipping hub disrupted
-  'TW', // energy dependent
-  'TH', // energy dependent
-  'PH', // energy dependent
-  'ID', // energy dependent
-  'MY', // energy dependent
-  'VN', // energy dependent
-  'AU', // LNG exporter, price impact
-  'NZ', // energy price impact
-  'GR', // shipping industry
-  'CY', // eastern Mediterranean
-  'DJ', // Bab el-Mandeb strait
-  'ER', // Red Sea
-  'YE', // Houthi involvement
-  'RU', // oil windfall, intelligence sharing
+  'GB', // defensive basing, SBAs attacked, 300K nationals in region
+  'RU', // oil windfall, intel sharing, consulate damaged, UNSC abstain
+  'CN', // evacuated 10K citizens, halted fuel exports, SIGINT vessel
+  'FR', // soldier killed, G7 calls, direct Iran talks, warships
+  'IN', // 2 tankers broke blockade, sanctions waiver
+  'DE', // snapback sanctions, considering defensive measures
+  'IT', // direct Iran talks on Hormuz, warships deployed
+  'ES', // permanently withdrew ambassador to Israel
+  'KR', // fuel price caps first in 30yr, Patriot missiles redeployed away
+  'JP', // asked Australia for LNG, supply chain disrupted
+  'AU', // embassies shut, deploying missiles to UAE
+  'KP', // backed Mojtaba, fired 10 ballistic missiles opportunistically
+  'PK', // Saudi defence pact potential, escalation risk
+  'EG', // bread price cap, pound record low
+  'BD', // universities shut, emergency energy measures
+  'VN', // work-from-home orders to save fuel
+  'UA', // anti-drone teams in Qatar/UAE/Saudi
+  'NL', // Amsterdam school attacked
+  'LK', // Iris Dena sailors repatriated
+  'GR', // shipowners braving Hormuz
 ];
 
 // Impact annotations — short descriptions only, no country names (base map has those)
@@ -106,11 +103,16 @@ const LABELS = [
   { coord: [44, 33.8], text: 'bases hit', tier: 2 },
   { coord: [35, 40], text: 'missiles intercepted', tier: 2 },
   { coord: [46, 23.5], text: 'Ras Tanura hit', tier: 2 },
+  { coord: [55.5, 25.5], text: 'Fujairah fire', tier: 2 },
+  { coord: [34, 26.5], text: 'SBAs attacked', tier: 2 },
   { coord: [128, 36.5], text: 'price caps', tier: 3 },
   { coord: [90.4, 23.2], text: 'universities shut', tier: 3 },
   { coord: [104, 34], text: 'fuel exports halted', tier: 3 },
   { coord: [79, 20], text: 'blockade-breaking', tier: 3 },
   { coord: [60, 58], text: 'oil windfall', tier: 3 },
+  { coord: [30, 27], text: 'bread price cap', tier: 3 },
+  { coord: [128, 40.5], text: '10 missiles fired', tier: 3 },
+  { coord: [106, 17], text: 'work-from-home orders', tier: 3 },
 ];
 
 const TIER_COLORS = { 1: '#8b2020', 2: '#b8860b', 3: '#2a5a8a' };
