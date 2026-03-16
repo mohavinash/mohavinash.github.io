@@ -42,7 +42,7 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
   border-top: 1px solid #c8c4bc;
 }
 
-.strike-marker { cursor: default; }
+.strike-marker { cursor: pointer; }
 
 .mapboxgl-popup-content {
   font-family: 'Courier New', monospace !important;
@@ -213,12 +213,19 @@ function makeMarkerSVG(attacker, type, major) {
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [50, 28.5],
-  zoom: 4.2,
+  center: [50, 26],
+  zoom: 3.8,
+  minZoom: 2.5,
+  maxZoom: 8,
   attributionControl: false,
-  interactive: false,
+  interactive: true,
+  scrollZoom: true,
+  dragPan: true,
+  dragRotate: false,
+  pitchWithRotate: false,
   fadeDuration: 0,
 });
+map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
 
 map.on('load', () => {
   // Country boundary fills
