@@ -56,6 +56,21 @@ Source: DataChutney OSINT analysis. Derived from situation briefings, daily brie
 | Switzerland | CH | Closed Tehran embassy, maintains US-Iran diplomatic "open line." |
 | Greece | GR | Shipowners braving Hormuz for profit despite risks. |
 
+## Red Sea / Bab el-Mandeb Corridor (verified external sources)
+
+| Date | Development | Source |
+|------|-------------|--------|
+| Mar 1 | Maersk pauses ALL Trans-Suez / Bab el-Mandeb sailings, reroutes ME11 + MECL around Cape of Good Hope | France 24, Maersk official |
+| Mar 1 | Hapag-Lloyd, CMA CGM also suspend Suez transits | Maritime News, Xeneta |
+| Mar 5 | Houthis "considering" Bab el-Mandeb closure, compounding Red Sea disruption | The New Arab, BBC |
+| Mar 8 | Bab el-Mandeb traffic: 43 vessels (72% of 60/day baseline). Disrupted by insurance/risk, not active attacks | IMF PortWatch API |
+| Mar 8 | Suez Canal: 35 vessels (57% of 65/day baseline) | IMF PortWatch API |
+| Mar 13 | Iran signals closure of Bab el-Mandeb alongside Hormuz | Times of Islamabad, Turkiye Today |
+| Mar 14 | Houthis declare "Hour Zero" — military alignment with Iran. Bab el-Mandeb blockade a "primary option" | Sunday Guardian, gCaptain, FreightWaves, BusinessToday |
+| Mar 15 | Houthis: "fingers on trigger" but have NOT attacked. Arsenal 55-69% degraded. 2025 ceasefire restraining | JNS, Global Security Review |
+
+**Status as of Day 17:** Houthis threatening but NOT re-engaged. Red Sea disrupted by commercial risk aversion (insurance, rerouting), not active attacks. "Double chokepoint" (Hormuz + Bab el-Mandeb) scenario threatened but not materialised.
+
 ## Summary
 
 - **Tier 1:** 3 countries (US, Iran, Israel)
