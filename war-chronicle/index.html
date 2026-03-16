@@ -373,7 +373,34 @@ h1.hero-title, .hero-title {
   border-top: 1px solid var(--line); max-width: 52rem; margin: 0 auto;
 }
 
+/* ═══ TIMELINE NAV ═══ */
+.timeline-nav {
+  position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+  z-index: 100; display: flex; flex-direction: column; align-items: center;
+}
+.timeline-nav .tn-line {
+  width: 1px; background: var(--line); position: absolute;
+  top: 0; bottom: 0; left: 50%;
+}
+.timeline-nav a {
+  position: relative; display: block; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--line); margin: 6px 0;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.timeline-nav a:hover, .timeline-nav a.active {
+  background: var(--red); transform: scale(1.6);
+}
+.timeline-nav a .tn-tip {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font); font-size: 0.55rem; color: var(--fg-faint);
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.timeline-nav a:hover .tn-tip { opacity: 1; }
+
 @media (max-width: 640px) {
+  .timeline-nav { display: none; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .day-body { grid-template-columns: 1fr; }
   .day-stat { text-align: left; }
@@ -388,6 +415,10 @@ h1.hero-title, .hero-title {
 </style>
 </head>
 <body>
+
+<nav class="timeline-nav" aria-label="Day navigation">
+  <div class="tn-line"></div>
+</nav>
 
 <article itemscope itemtype="https://schema.org/Article">
 
@@ -1254,6 +1285,41 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.day, .quote, .data-panel').forEach(el => observer.observe(el));
+
+/* ═══ TIMELINE NAV ═══ */
+(function() {
+  const nav = document.querySelector('.timeline-nav');
+  if (!nav) return;
+  const days = document.querySelectorAll('.day[data-day]');
+  days.forEach(day => {
+    const num = day.getAttribute('data-day');
+    const date = day.querySelector('.day-date');
+    const a = document.createElement('a');
+    a.href = '#';
+    a.setAttribute('data-target', num);
+    const tip = document.createElement('span');
+    tip.className = 'tn-tip';
+    tip.textContent = date ? date.textContent : 'Day ' + num;
+    a.appendChild(tip);
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      day.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    nav.appendChild(a);
+  });
+
+  // Highlight active day on scroll
+  const navLinks = nav.querySelectorAll('a');
+  const dayObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const num = e.target.getAttribute('data-day');
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('data-target') === num));
+      }
+    });
+  }, { threshold: 0.3 });
+  days.forEach(d => dayObs.observe(d));
+})();
 </script>
 
 </body>
