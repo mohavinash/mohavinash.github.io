@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>15 Days of Strikes — Operation Epic Fury</title>
+<title>17 Days of Strikes — Operation Epic Fury</title>
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
 <style>
@@ -59,8 +59,8 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
 
 <div id="map"></div>
 
-<div class="map-title">15 Days of Strikes</div>
-<div class="map-subtitle">Known military strikes, attacks, and incidents · Feb 28 – Mar 14, 2026</div>
+<div class="map-title">17 Days of Strikes</div>
+<div class="map-subtitle">Known military strikes, attacks, and incidents · Feb 28 – Mar 16, 2026</div>
 
 <div class="legend">
   <div class="legend-title">Attacker</div>
@@ -74,7 +74,7 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
 </div>
 
 <div class="source-bar">
-  Source: DataChutney OSINT analysis · Situation briefings · Reuters, BBC, Al Jazeera, Defense One, Al-Monitor, MEE, New Arab · Map: Mapbox GL · 65 incidents mapped
+  Source: DataChutney OSINT analysis · Situation briefings · Reuters, BBC, Al Jazeera, Defense One, Al-Monitor, MEE, New Arab · Map: Mapbox GL · 74 incidents mapped
 </div>
 
 <script>
@@ -152,6 +152,19 @@ const STRIKES = [
   { name:"Kharg Island (90+ targets)", country:"Iran", lat:29.233, lng:50.329, type:"air_strike", attacker:"coalition", desc:"US strikes 90+ military targets on Iran's main oil export terminal. Mar 14.", major:true },
   { name:"US Embassy, Baghdad (drone)", country:"Iraq", lat:33.297, lng:44.394, type:"drone", attacker:"proxy", desc:"Iran-backed militia drone hit US diplomatic compound. Mar 14." },
   { name:"Southern Lebanon (massive invasion)", country:"Lebanon", lat:33.20, lng:35.30, type:"ground_op", attacker:"coalition", desc:"Israel signals 'massive' ground invasion, described as 'like Gaza.' Mar 14.", major:true },
+
+  // === DAY 16 (March 15) ===
+  { name:"Southern Lebanon (ground op)", country:"Lebanon", lat:33.22, lng:35.25, type:"ground_op", attacker:"coalition", desc:"IDF begins 'targeted ground operation' to expand buffer zone. Dozens killed. Mar 15." },
+  { name:"Western Iran (new strikes)", country:"Iran", lat:34.0, lng:48.5, type:"air_strike", attacker:"coalition", desc:"US and Israel carry out new strikes on western Iran. Mar 15." },
+  { name:"Italy-US Airbase, Kuwait (drone)", country:"Kuwait", lat:29.2, lng:47.7, type:"drone", attacker:"proxy", desc:"Drone hits Italy-US airbase in Kuwait. No injuries. Mar 15." },
+  { name:"Iraqi Kurdistan (drones)", country:"Iraq", lat:36.2, lng:44.5, type:"drone", attacker:"iran", desc:"Civilians wounded as drones hit Iraqi Kurdistan. Mar 15." },
+
+  // === DAY 17 (March 16) ===
+  { name:"Dubai Airport (drone attack)", country:"UAE", lat:25.253, lng:55.366, type:"drone", attacker:"iran", desc:"Drone strikes Dubai airport. Fuel tank fire. Flights suspended. Mar 16.", major:true },
+  { name:"Abu Dhabi (civilian missile)", country:"UAE", lat:24.453, lng:54.654, type:"missile", attacker:"iran", desc:"One killed by missile on civilian car. First fatality in UAE capital. Mar 16.", major:true },
+  { name:"Riyadh (55 drones)", country:"Saudi Arabia", lat:24.714, lng:46.675, type:"drone", attacker:"iran", desc:"55 drones intercepted over Riyadh overnight. Mar 16." },
+  { name:"Hamadan, Iran (strikes)", country:"Iran", lat:34.799, lng:48.515, type:"air_strike", attacker:"coalition", desc:"US-Israeli strike pounds city of Hamadan in western Iran. Mar 16." },
+  { name:"Chabahar, Iran (first far-east strikes)", country:"Iran", lat:25.291, lng:60.643, type:"air_strike", attacker:"coalition", desc:"US fighter jets strike near Chabahar in southeastern Iran. First strikes near Pakistan border. Mar 16.", major:true },
 ];
 
 const ATTACKER_COLORS = { coalition: '#1a2744', iran: '#8b2020', proxy: '#b8860b' };
@@ -243,6 +256,9 @@ map.on('load', () => {
     'Western Iraq (KC-135 crash)':    ['bottom-left', 12, 4, 'W. Iraq (KC-135 crash)'],
     'Kharg Island (90+ targets)':     ['top-left', 12, -2, 'Kharg Island (90+ targets)'],
     'Southern Lebanon (massive invasion)': ['bottom-left', 12, 6, 'S. Lebanon (invasion)'],
+    'Dubai Airport (drone attack)':       ['top-left', 12, -2, 'Dubai Airport (drone)'],
+    'Abu Dhabi (civilian missile)':       ['bottom-left', 12, 4, 'Abu Dhabi (first fatality)'],
+    'Chabahar, Iran (first far-east strikes)': ['top-left', 12, -2, 'Chabahar (new front)'],
   };
 
   // Strike markers with labels for major incidents
