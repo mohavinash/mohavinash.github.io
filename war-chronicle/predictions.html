@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligence Estimates — US-Iran War Predictions | DataChutney</title>
+<meta name="description" content="10 intelligence questions about the US-Iran war, answered by a 106-node Bayesian Network. Interactive predictions updated daily from OSINT feeds.">
+<meta name="author" content="DataChutney">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://datachutney.io/war-chronicle/predictions">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intelligence Estimates — US-Iran War Predictions">
+<meta property="og:description" content="10 intelligence questions. 106 nodes. 5 days of Bayesian inference tracking the US-Iran conflict.">
+<meta property="og:site_name" content="DataChutney">
+<meta property="article:published_time" content="2026-03-19T00:00:00Z">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Intelligence Estimates — US-Iran War Predictions">
+<meta name="twitter:description" content="10 intelligence questions answered by Bayesian inference. Updated daily.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF8F3;
+  --bg-paper: #F5F2EB;
+  --bg-dark: #1a1a1a;
+  --fg: #1a1a1a;
+  --fg-muted: #5a5a5a;
+  --fg-faint: #999;
+  --line: #c8c4bc;
+  --card-bg: #FDFCF8;
+  --card-border: #e0ddd6;
+  --red: #8b2020;
+  --amber: #b8860b;
+  --green: #2d6a2e;
+  --blue: #1a2744;
+  --water: #b8cce0;
+  --land: #e8e2d6;
+  --font: 'Courier Prime', 'Courier New', monospace;
+  --font-display: 'Special Elite', 'Courier New', monospace;
+  --font-serif: 'DM Serif Display', 'Georgia', serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font); background: var(--bg); color: var(--fg);
+  line-height: 1.65; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 2rem;
+  position: relative;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(139,32,32,0.03) 0%, transparent 70%);
+}
+.hero-classify {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3em; color: var(--red); border: 1px solid var(--red);
+  padding: 0.2rem 0.8rem; margin-bottom: 2rem; opacity: 0.7;
+  position: relative;
+}
+.hero-title-main {
+  font-family: var(--font-serif); font-size: clamp(2.8rem, 8vw, 5.5rem);
+  line-height: 0.95; color: var(--fg); letter-spacing: -0.03em;
+  margin-bottom: 0.8rem; font-style: italic; text-align: center;
+  position: relative;
+}
+.hero-subtitle {
+  font-family: var(--font-display); font-size: clamp(0.8rem, 2vw, 1.1rem);
+  text-transform: uppercase; letter-spacing: 0.18em; color: var(--fg-muted);
+  margin-bottom: 0.8rem; font-weight: normal; text-align: center;
+  position: relative;
+}
+.hero-subtext {
+  font-size: 0.88rem; color: var(--fg-faint); letter-spacing: 0.04em;
+  margin-bottom: 3rem; text-align: center; max-width: 36rem;
+  position: relative; line-height: 1.6;
+}
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2rem; max-width: 48rem; width: 100%; padding: 0 1rem;
+  position: relative;
+}
+.hero-stat {
+  text-align: center; border-top: 2px solid var(--fg); padding-top: 0.8rem;
+}
+.hero-stat .num {
+  font-family: var(--font-serif); font-size: 1.8rem; display: block;
+  line-height: 1.1; margin-bottom: 0.2rem;
+}
+.hero-stat .num.red { color: var(--red); }
+.hero-stat .num.amber { color: var(--amber); }
+.hero-stat .num.green { color: var(--green); }
+.hero-stat .lbl {
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--fg-muted);
+}
+.scroll-cue {
+  position: absolute; bottom: 2rem; font-size: 0.7rem;
+  letter-spacing: 0.2em; color: var(--fg-faint); text-transform: uppercase;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ═══ LAYOUT ═══ */
+.page-body {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  gap: 3rem;
+}
+
+/* ═══ SIDEBAR NAV ═══ */
+.sidebar {
+  position: sticky; top: 0; height: 100vh;
+  padding: 2rem 0; overflow-y: auto;
+  border-right: 1px solid var(--line);
+}
+.sidebar-label {
+  font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--fg-faint); margin-bottom: 1rem; padding-right: 1rem;
+}
+.sidebar a {
+  display: block; padding: 0.45rem 1rem 0.45rem 0;
+  font-size: 0.78rem; color: var(--fg-muted); text-decoration: none;
+  border-right: 2px solid transparent;
+  transition: all 0.2s ease; line-height: 1.35;
+}
+.sidebar a:hover { color: var(--fg); }
+.sidebar a.active {
+  color: var(--fg); border-right-color: var(--red); font-weight: 700;
+}
+.sidebar .nav-num {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 0.9rem; margin-right: 0.4rem; color: var(--fg-faint);
+}
+.sidebar a.active .nav-num { color: var(--red); }
+
+/* ═══ DATE SELECTOR ═══ */
+.date-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  padding: 0.8rem 0; margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.date-bar-label {
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--fg-faint); flex-shrink: 0;
+}
+.date-pills { display: flex; gap: 0.4rem; }
+.date-pill {
+  font-family: var(--font); font-size: 0.72rem; padding: 0.3rem 0.7rem;
+  border: 1px solid var(--line); background: transparent; color: var(--fg-muted);
+  cursor: pointer; transition: all 0.15s ease; letter-spacing: 0.02em;
+}
+.date-pill:hover { border-color: var(--fg-muted); color: var(--fg); }
+.date-pill.active {
+  background: var(--fg); color: var(--bg); border-color: var(--fg);
+}
+
+/* ═══ QUESTION SECTION ═══ */
+.q-section {
+  padding: 3rem 0 2rem;
+  border-top: 3px solid var(--fg);
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.q-section.visible { opacity: 1; transform: translateY(0); }
+
+.q-header {
+  display: flex; align-items: baseline; gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+.q-num {
+  font-family: var(--font-serif); font-size: 3.2rem; line-height: 1;
+  color: var(--fg); font-style: italic; flex-shrink: 0;
+}
+.q-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg);
+  flex: 1;
+}
+.q-confidence {
+  font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.15em;
+  padding: 0.2rem 0.6rem; border: 1px solid; flex-shrink: 0;
+  font-weight: 700;
+}
+.q-confidence.high { color: var(--green); border-color: var(--green); }
+.q-confidence.moderate { color: var(--amber); border-color: var(--amber); }
+.q-confidence.low { color: var(--red); border-color: var(--red); }
+
+.q-headline {
+  font-size: 0.94rem; color: var(--fg-muted); line-height: 1.7;
+  margin-bottom: 1.5rem; padding-left: 4.5rem;
+}
+
+/* ═══ STACKED BAR CHART ═══ */
+.chart-container { margin-bottom: 1.5rem; }
+.chart-label-row {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--fg-muted); margin-bottom: 0.1rem; font-weight: 700;
+}
+.bar-row {
+  display: flex; align-items: center; margin-bottom: 0.6rem;
+}
+.bar-var-name {
+  width: 11rem; flex-shrink: 0; font-size: 0.72rem;
+  color: var(--fg-muted); text-align: right; padding-right: 0.8rem;
+  letter-spacing: 0.02em; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar-track {
+  flex: 1; height: 28px; display: flex; position: relative;
+  background: var(--bg-paper); border: 1px solid var(--card-border);
+  overflow: hidden; cursor: pointer;
+}
+.bar-seg {
+  height: 100%; position: relative; transition: opacity 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  min-width: 0;
+}
+.bar-seg:hover { opacity: 0.85; }
+.bar-seg-label {
+  font-size: 0.58rem; font-weight: 700; color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4); white-space: nowrap;
+  overflow: hidden; pointer-events: none;
+}
+.bar-mode-indicator {
+  width: 3.5rem; flex-shrink: 0; font-size: 0.68rem;
+  font-weight: 700; padding-left: 0.5rem; color: var(--fg);
+}
+
+/* ═══ TOOLTIP ═══ */
+.tooltip {
+  position: fixed; z-index: 10000; pointer-events: none;
+  background: var(--bg-dark); color: #fff; padding: 0.5rem 0.75rem;
+  font-family: var(--font); font-size: 0.72rem; line-height: 1.5;
+  max-width: 22rem; opacity: 0; transition: opacity 0.12s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.tooltip.show { opacity: 1; }
+.tooltip-title { font-weight: 700; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.tooltip-row { display: flex; justify-content: space-between; gap: 1rem; }
+.tooltip-state { opacity: 0.7; }
+.tooltip-val { font-weight: 700; }
+.tooltip-mode { color: #f0c040; }
+
+/* ═══ SPARKLINE ═══ */
+.sparkline-container {
+  margin-bottom: 1.5rem; padding: 0.8rem 1rem;
+  background: var(--bg-paper); border: 1px solid var(--card-border);
+}
+.sparkline-header {
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--fg-faint); margin-bottom: 0.5rem;
+}
+.sparkline-wrap { position: relative; }
+.sparkline-wrap svg { display: block; }
+.spark-dot { cursor: pointer; }
+.spark-tooltip {
+  font-size: 0.65rem; font-family: var(--font); fill: var(--fg-muted);
+  pointer-events: none; opacity: 0; transition: opacity 0.15s;
+}
+.spark-dot:hover + .spark-tooltip,
+.spark-dot:hover ~ .spark-tooltip { opacity: 1; }
+
+/* ═══ MC PANEL ═══ */
+.mc-panel {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  margin-bottom: 1.5rem; padding: 1.2rem;
+  background: var(--bg-paper); border: 1px solid var(--card-border);
+  border-top: 2px solid var(--fg);
+}
+.mc-cell {}
+.mc-val {
+  font-family: var(--font-serif); font-size: 2.8rem; line-height: 1;
+}
+.mc-val.green { color: var(--green); }
+.mc-val.amber { color: var(--amber); }
+.mc-label {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--fg-muted); margin-top: 0.3rem;
+}
+.mc-note {
+  font-size: 0.72rem; color: var(--fg-faint); grid-column: 1 / -1;
+  font-style: italic;
+}
+
+/* ═══ SCENARIO BADGES ═══ */
+.scenario-row {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem;
+}
+.scenario-badge {
+  font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.2rem 0.55rem; border: 1px solid; font-weight: 700;
+  white-space: nowrap;
+}
+.scenario-badge.iran { color: var(--red); border-color: var(--red); background: rgba(139,32,32,0.05); }
+.scenario-badge.us { color: var(--blue); border-color: var(--blue); background: rgba(26,39,68,0.05); }
+.scenario-badge.proxy { color: var(--amber); border-color: var(--amber); background: rgba(184,134,11,0.05); }
+.scenario-badge.intl { color: var(--green); border-color: var(--green); background: rgba(45,106,46,0.05); }
+
+/* ═══ METHODOLOGY FOOTER ═══ */
+.methodology {
+  max-width: 56rem; margin: 0 auto; padding: 4rem 1.5rem 3rem;
+  border-top: 3px solid var(--fg);
+}
+.methodology h2 {
+  font-family: var(--font-display); font-size: 1rem;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+.methodology p {
+  font-size: 0.88rem; color: var(--fg-muted); line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.footer-classify {
+  font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3em; color: var(--red); border: 1px solid var(--red);
+  padding: 0.15rem 0.6rem; opacity: 0.5; display: inline-block;
+  margin-bottom: 1rem;
+}
+.footer-credit {
+  font-size: 0.78rem; color: var(--fg-faint); letter-spacing: 0.06em;
+}
+
+/* ═══ COLOR PALETTE FOR STATES ═══ */
+.c0 { background: #8b2020; }
+.c1 { background: #b8860b; }
+.c2 { background: #2d6a2e; }
+.c3 { background: #1a2744; }
+.c4 { background: #6b4c8a; }
+.c5 { background: #c45a3c; }
+
+/* ═══ MOBILE ═══ */
+@media (max-width: 860px) {
+  .page-body {
+    grid-template-columns: 1fr; gap: 0;
+  }
+  .sidebar {
+    position: sticky; top: 0; height: auto;
+    border-right: none; border-bottom: 1px solid var(--line);
+    padding: 0.8rem 0; display: flex; gap: 0;
+    overflow-x: auto; overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index: 50; background: var(--bg);
+  }
+  .sidebar-label { display: none; }
+  .sidebar a {
+    white-space: nowrap; padding: 0.4rem 0.8rem;
+    border-right: none; border-bottom: 2px solid transparent;
+    font-size: 0.7rem;
+  }
+  .sidebar a.active { border-bottom-color: var(--red); border-right-color: transparent; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .q-header { flex-wrap: wrap; }
+  .q-headline { padding-left: 0; }
+  .bar-var-name { width: 7rem; font-size: 0.65rem; }
+  .mc-panel { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-title-main { font-size: 2.2rem; }
+  .bar-var-name { width: 5rem; font-size: 0.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-classify">Unclassified // For Educational Use</div>
+  <div class="hero-title-main">Intelligence Estimates</div>
+  <div class="hero-subtitle">10 questions. 106 nodes. 5 days of Bayesian inference.</div>
+  <div class="hero-subtext">How a probabilistic war model tracks the US-Iran conflict in near real-time</div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num green">94%</span>
+      <span class="lbl">Ceasefire probability</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num amber">7</span>
+      <span class="lbl">Median phases</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num red">$107</span>
+      <span class="lbl">Brent crude /bbl</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">8</span>
+      <span class="lbl">Active scenarios</span>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll to explore</div>
+</section>
+
+<!-- ═══ MAIN BODY ═══ -->
+<div class="page-body">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-label">Intelligence Questions</div>
+    <a href="#q-ceasefire_timeline"><span class="nav-num">1</span> Ceasefire Timeline</a>
+    <a href="#q-oil_prices"><span class="nav-num">2</span> Oil Prices</a>
+    <a href="#q-hormuz_closure"><span class="nav-num">3</span> Hormuz Closure</a>
+    <a href="#q-regime_change"><span class="nav-num">4</span> Regime Change</a>
+    <a href="#q-us_ground_invasion"><span class="nav-num">5</span> Ground Invasion</a>
+    <a href="#q-proxy_fronts"><span class="nav-num">6</span> Proxy Fronts</a>
+    <a href="#q-civilian_casualties"><span class="nav-num">7</span> Civilian Casualties</a>
+    <a href="#q-nuclear_program"><span class="nav-num">8</span> Nuclear Program</a>
+    <a href="#q-us_domestic_politics"><span class="nav-num">9</span> US Domestic Politics</a>
+    <a href="#q-russia_china_role"><span class="nav-num">10</span> Russia &amp; China</a>
+  </nav>
+
+  <!-- CONTENT -->
+  <main id="content">
+    <!-- DATE SELECTOR -->
+    <div class="date-bar" id="date-bar">
+      <span class="date-bar-label">Assessment Date</span>
+      <div class="date-pills" id="date-pills"></div>
+    </div>
+
+    <!-- QUESTION SECTIONS — rendered by JS -->
+    <div id="questions"></div>
+  </main>
+</div>
+
+<!-- ═══ METHODOLOGY ═══ -->
+<section class="methodology">
+  <h2>Methodology</h2>
+  <p>This page shows outputs from a <strong>106-node Bayesian Network</strong> modeling the US-Iran war. The network ingests OSINT from <strong>23 RSS/Atom feeds</strong>, maps evidence to observation nodes via LLM, and runs <strong>Junction Tree inference</strong> + <strong>Monte Carlo simulation</strong> (50 samples per run). Predictions are updated daily. The model is backtested against 11 historical crises with 91.9% forward accuracy.</p>
+  <p>Confidence tiers are derived from the probability margin between the top-1 and top-2 states: High (margin &ge; 0.36), Moderate (0.10&ndash;0.36), Low (&lt; 0.10). All posteriors are computed with KL-Capacity C=1.3 and temperature T=0.25.</p>
+  <div class="footer-classify">Unclassified // For Educational Use</div>
+  <div class="footer-credit">DataChutney &middot; March 19, 2026</div>
+</section>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ═══ CONFIG ═══ */
+  const QUERY_ORDER = [
+    'ceasefire_timeline', 'oil_prices', 'hormuz_closure', 'regime_change',
+    'us_ground_invasion', 'proxy_fronts', 'civilian_casualties',
+    'nuclear_program', 'us_domestic_politics', 'russia_china_role'
+  ];
+
+  const QUERY_LABELS = {
+    ceasefire_timeline: 'Ceasefire Timeline',
+    oil_prices: 'Oil Prices',
+    hormuz_closure: 'Hormuz Closure',
+    regime_change: 'Regime Change',
+    us_ground_invasion: 'US Ground Invasion',
+    proxy_fronts: 'Proxy Fronts',
+    civilian_casualties: 'Civilian Casualties',
+    nuclear_program: 'Nuclear Program',
+    us_domestic_politics: 'US Domestic Politics',
+    russia_china_role: 'Russia & China'
+  };
+
+  const QUERY_VARS = {
+    ceasefire_timeline: ['ceasefire_pressure', 'actor_us', 'actor_iran', 'us_domestic_pressure', 'war_outcome'],
+    oil_prices: ['oil_price', 'oil_supply_buffer', 'hormuz_status', 'insurance_premiums', 'global_inflation'],
+    hormuz_closure: ['hormuz_status', 'hormuz_control', 'actor_iran', 'insurance_premiums', 'oil_price'],
+    regime_change: ['regime_stability', 'iran_governance', 'actor_iran', 'iran_economic_pressure', 'nuclear_program_status'],
+    us_ground_invasion: ['ground_force_deployment', 'actor_us', 'us_domestic_pressure', 'us_military_casualties', 'territorial_control'],
+    proxy_fronts: ['actor_hezbollah', 'actor_houthis', 'infrastructure_damage', 'civilian_casualties', 'coalition_cohesion'],
+    civilian_casualties: ['civilian_casualties', 'infrastructure_damage', 'us_military_casualties', 'refugee_displacement', 'ceasefire_pressure'],
+    nuclear_program: ['nuclear_program_status', 'actor_iran', 'regime_stability', 'infrastructure_damage', 'actor_israel'],
+    us_domestic_politics: ['us_domestic_pressure', 'us_military_casualties', 'actor_us', 'oil_price', 'ceasefire_pressure'],
+    russia_china_role: ['actor_russia', 'actor_china', 'oil_price', 'actor_iran', 'iran_munition_stockpile']
+  };
+
+  const HEADLINES = {
+    ceasefire_timeline: 'The model predicts ceasefire with 94% probability. Median duration: 7 phases.',
+    oil_prices: 'Oil assessed at crisis levels. Brent at $107/bbl, up 50% in 3 weeks.',
+    hormuz_closure: 'Strait remains blocked. 9 vessels vs 95 pre-war baseline.',
+    regime_change: 'Regime transitional but not collapsing. Three senior leaders killed in 48 hours.',
+    us_ground_invasion: 'No US ground troops in Iran. But Pentagon weighs troops + island seizure.',
+    proxy_fronts: 'Hezbollah 80% degraded. Houthis not re-engaged but rhetoric deterring shipping.',
+    civilian_casualties: 'Heavy civilian casualties. 30 children killed/wounded per day in Lebanon.',
+    nuclear_program: 'Nuclear program degraded. Natanz/Fordow damaged. Projectile near Bushehr.',
+    us_domestic_politics: 'Critical domestic pressure. Gas at $4/gal. Counterterrorism chief resigned.',
+    russia_china_role: 'Russia strengthened (oil windfall + drone supply). China weakened (energy squeeze).'
+  };
+
+  const SCENARIO_NAMES = {
+    scenario_strike_nuclear_sites: { label: 'Nuclear Strikes', cls: 'us' },
+    scenario_close_hormuz: { label: 'Hormuz Blockade', cls: 'iran' },
+    scenario_oil_embargo: { label: 'Oil Embargo', cls: 'us' },
+    scenario_china_oil_lifeline: { label: 'China Oil Lifeline', cls: 'intl' },
+    scenario_un_resolution: { label: 'UN Resolution', cls: 'intl' },
+    scenario_deploy_carrier: { label: 'Carrier Deployed', cls: 'us' },
+    scenario_iran_strikes_us_bases: { label: 'Iran Strikes US', cls: 'iran' },
+    scenario_houthi_blockade: { label: 'Houthi Blockade', cls: 'proxy' },
+    scenario_hezbollah_escalation: { label: 'Hezbollah Escalation', cls: 'proxy' },
+    scenario_us_ground_invasion: { label: 'Ground Invasion', cls: 'us' },
+    scenario_desal_infrastructure_attack: { label: 'Desal Attack', cls: 'iran' },
+    scenario_iea_reserve_release: { label: 'IEA Reserves', cls: 'intl' },
+    scenario_arms_resupply: { label: 'Arms Resupply', cls: 'us' },
+    scenario_targeted_assassination: { label: 'Targeted Kill', cls: 'us' },
+    scenario_cyber_attack: { label: 'Cyber Attack', cls: 'us' }
+  };
+
+  // State color palette — deterministic per state name
+  const STATE_COLORS = [
+    '#8b2020', '#b8860b', '#2d6a2e', '#1a2744', '#6b4c8a', '#c45a3c',
+    '#2a7b9b', '#7a6c3a', '#9b3a5a', '#3a6b5a', '#5a3a7a', '#8a5a2a'
+  ];
+
+  function stateColor(state, idx) {
+    return STATE_COLORS[idx % STATE_COLORS.length];
+  }
+
+  function formatVarName(name) {
+    return name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+      .replace(/\bUs\b/g, 'US').replace(/\bUn\b/g, 'UN')
+      .replace(/\bIran\b/g, 'Iran').replace(/\bLng\b/g, 'LNG')
+      .replace(/\bIea\b/g, 'IEA').replace(/\bMc\b/g, 'MC');
+  }
+
+  function formatState(state) {
+    return state.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  function formatDateShort(d) {
+    const parts = d.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[parseInt(parts[1])-1] + ' ' + parseInt(parts[2]);
+  }
+
+  /* ═══ TOOLTIP ═══ */
+  const tooltip = document.getElementById('tooltip');
+  function showTooltip(e, html) {
+    tooltip.innerHTML = html;
+    tooltip.classList.add('show');
+    const x = Math.min(e.clientX + 12, window.innerWidth - 240);
+    const y = e.clientY - 10;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+  function hideTooltip() { tooltip.classList.remove('show'); }
+
+  /* ═══ MAIN ═══ */
+  let DATA = null;
+  let currentDateIdx = -1;
+
+  async function init() {
+    try {
+      const resp = await fetch('predictions-data.json');
+      DATA = await resp.json();
+    } catch(err) {
+      document.getElementById('questions').innerHTML = '<p style="padding:2rem;color:var(--red)">Failed to load predictions-data.json</p>';
+      return;
+    }
+
+    buildDatePills();
+    buildQuestionSections();
+    selectDate(DATA.dates.length - 1); // latest
+    initScrollObserver();
+    initSidebarHighlight();
+  }
+
+  function buildDatePills() {
+    const cont = document.getElementById('date-pills');
+    DATA.dates.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'date-pill';
+      btn.textContent = formatDateShort(d);
+      btn.dataset.idx = i;
+      btn.addEventListener('click', () => selectDate(i));
+      cont.appendChild(btn);
+    });
+  }
+
+  function selectDate(idx) {
+    if (idx === currentDateIdx) return;
+    currentDateIdx = idx;
+    document.querySelectorAll('.date-pill').forEach((p, i) => {
+      p.classList.toggle('active', i === idx);
+    });
+    renderAllCharts();
+  }
+
+  function buildQuestionSections() {
+    const cont = document.getElementById('questions');
+    QUERY_ORDER.forEach((qk, qi) => {
+      const q = DATA.queries[qk];
+      if (!q) return;
+
+      // Determine overall confidence from first variable of latest date
+      const latestDate = q.dates[q.dates.length - 1];
+      const vars = QUERY_VARS[qk] || [];
+      const firstVar = vars[0] && latestDate.posteriors[vars[0]];
+      const conf = firstVar ? firstVar.confidence : 'moderate';
+
+      const section = document.createElement('section');
+      section.className = 'q-section';
+      section.id = 'q-' + qk;
+
+      section.innerHTML = `
+        <div class="q-header">
+          <div class="q-num">${qi + 1}</div>
+          <div class="q-title">${q.question}</div>
+          <div class="q-confidence ${conf}">${conf}</div>
+        </div>
+        <div class="q-headline">${HEADLINES[qk] || ''}</div>
+        <div class="chart-container" id="chart-${qk}"></div>
+        <div class="sparkline-container" id="spark-${qk}">
+          <div class="sparkline-header">Prediction trend: <strong>${formatVarName(vars[0] || '')}</strong> mode probability across 5 assessment dates</div>
+          <div class="sparkline-wrap" id="spark-wrap-${qk}"></div>
+        </div>
+        <div class="mc-panel" id="mc-${qk}"></div>
+        <div class="scenario-row" id="scenarios-${qk}"></div>
+      `;
+
+      cont.appendChild(section);
+    });
+  }
+
+  function renderAllCharts() {
+    QUERY_ORDER.forEach(qk => {
+      const q = DATA.queries[qk];
+      if (!q) return;
+      const dateEntry = q.dates[currentDateIdx];
+      if (!dateEntry) return;
+
+      renderStackedBars(qk, dateEntry);
+      renderSparkline(qk, q.dates);
+      renderMC(qk, dateEntry);
+      renderScenarios(qk, dateEntry);
+    });
+  }
+
+  /* ═══ STACKED BAR CHART ═══ */
+  function renderStackedBars(qk, dateEntry) {
+    const cont = document.getElementById('chart-' + qk);
+    if (!cont) return;
+    const vars = QUERY_VARS[qk] || [];
+    let html = '';
+
+    vars.forEach(vName => {
+      const v = dateEntry.posteriors[vName];
+      if (!v) return;
+
+      const states = v.states;
+      const entries = Object.entries(states).sort((a, b) => b[1] - a[1]);
+
+      let segsHtml = '';
+      entries.forEach(([st, prob], si) => {
+        const pct = (prob * 100).toFixed(1);
+        const w = Math.max(prob * 100, 0.5);
+        const isMode = st === v.mode;
+        const label = prob > 0.08 ? `${formatState(st)} ${pct}%` : '';
+        const border = isMode ? 'border: 2px solid #fff; margin: -1px;' : '';
+        segsHtml += `<div class="bar-seg" style="width:${w}%;background:${stateColor(st, si)};${border}"
+          data-var="${vName}" data-state="${st}" data-prob="${pct}" data-mode="${isMode}"
+          onmouseenter="window._barHover(event)" onmouseleave="window._barLeave()">
+          <span class="bar-seg-label">${label}</span>
+        </div>`;
+      });
+
+      const modePct = (v.prob * 100).toFixed(0);
+      html += `<div class="bar-row">
+        <div class="bar-var-name" title="${formatVarName(vName)}">${formatVarName(vName)}</div>
+        <div class="bar-track">${segsHtml}</div>
+        <div class="bar-mode-indicator">${modePct}%</div>
+      </div>`;
+    });
+
+    cont.innerHTML = html;
+  }
+
+  window._barHover = function(e) {
+    const el = e.currentTarget;
+    const varName = formatVarName(el.dataset.var);
+    const state = formatState(el.dataset.state);
+    const prob = el.dataset.prob;
+    const isMode = el.dataset.mode === 'true';
+    showTooltip(e, `<div class="tooltip-title">${varName}</div>
+      <div class="tooltip-row"><span class="tooltip-state">${state}</span>
+      <span class="tooltip-val ${isMode ? 'tooltip-mode' : ''}">${prob}%${isMode ? ' (mode)' : ''}</span></div>`);
+  };
+  window._barLeave = hideTooltip;
+
+  /* ═══ SPARKLINE ═══ */
+  function renderSparkline(qk, dates) {
+    const cont = document.getElementById('spark-wrap-' + qk);
+    if (!cont) return;
+    const vars = QUERY_VARS[qk] || [];
+    const topVar = vars[0];
+    if (!topVar) return;
+
+    const points = dates.map((d, i) => {
+      const v = d.posteriors[topVar];
+      return { date: d.date, prob: v ? v.prob : 0, mode: v ? v.mode : '?' };
+    });
+
+    const W = 360, H = 60, PAD = 24;
+    const maxP = Math.max(...points.map(p => p.prob), 0.5);
+    const minP = Math.min(...points.map(p => p.prob), 0);
+
+    const xs = points.map((_, i) => PAD + i * ((W - 2 * PAD) / (points.length - 1)));
+    const ys = points.map(p => {
+      const range = maxP - minP || 0.1;
+      return H - PAD - ((p.prob - minP) / range) * (H - 2 * PAD);
+    });
+
+    let pathD = xs.map((x, i) => (i === 0 ? 'M' : 'L') + x + ',' + ys[i]).join(' ');
+
+    // Area fill
+    let areaD = pathD + ` L${xs[xs.length-1]},${H - PAD} L${xs[0]},${H - PAD} Z`;
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px">
+      <defs>
+        <linearGradient id="sparkGrad-${qk}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--red)" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaD}" fill="url(#sparkGrad-${qk})"/>
+      <path d="${pathD}" fill="none" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/>`;
+
+    points.forEach((p, i) => {
+      const isActive = i === currentDateIdx;
+      const r = isActive ? 5 : 3.5;
+      const fill = isActive ? 'var(--red)' : 'var(--bg)';
+      svg += `<circle class="spark-dot" cx="${xs[i]}" cy="${ys[i]}" r="${r}" fill="${fill}" stroke="var(--red)" stroke-width="1.5"
+        data-date="${p.date}" data-prob="${(p.prob*100).toFixed(1)}" data-mode="${p.mode}"
+        onmouseenter="window._sparkHover(event)" onmouseleave="window._sparkLeave()"/>`;
+      // Date labels below
+      svg += `<text x="${xs[i]}" y="${H - 4}" text-anchor="middle" font-size="8" fill="var(--fg-faint)" font-family="var(--font)">${formatDateShort(p.date)}</text>`;
+    });
+
+    svg += '</svg>';
+    cont.innerHTML = svg;
+  }
+
+  window._sparkHover = function(e) {
+    const el = e.currentTarget;
+    showTooltip(e, `<div class="tooltip-title">${el.dataset.date}</div>
+      <div>${formatState(el.dataset.mode)}: ${el.dataset.prob}%</div>`);
+  };
+  window._sparkLeave = hideTooltip;
+
+  /* ═══ MC PANEL ═══ */
+  function renderMC(qk, dateEntry) {
+    const cont = document.getElementById('mc-' + qk);
+    if (!cont) return;
+    const mc = dateEntry.mc;
+    if (!mc) { cont.innerHTML = ''; return; }
+
+    const ceasefire = mc.termination ? (mc.termination.ceasefire * 100).toFixed(0) : '?';
+    const median = mc.duration ? mc.duration.median : '?';
+    const range = mc.duration ? `${mc.duration.range[0]}-${mc.duration.range[1]}` : '';
+
+    cont.innerHTML = `
+      <div class="mc-cell">
+        <div class="mc-val green">${ceasefire}%</div>
+        <div class="mc-label">Ceasefire probability</div>
+      </div>
+      <div class="mc-cell">
+        <div class="mc-val amber">${median}</div>
+        <div class="mc-label">Median phases${range ? ' (' + range + ' range)' : ''}</div>
+      </div>
+      <div class="mc-note">50 Monte Carlo simulations per assessment date</div>
+    `;
+  }
+
+  /* ═══ SCENARIOS ═══ */
+  function renderScenarios(qk, dateEntry) {
+    const cont = document.getElementById('scenarios-' + qk);
+    if (!cont) return;
+    const scenarios = dateEntry.detected_scenarios || [];
+    cont.innerHTML = scenarios.map(s => {
+      const info = SCENARIO_NAMES[s] || { label: formatVarName(s.replace('scenario_', '')), cls: 'intl' };
+      return `<span class="scenario-badge ${info.cls}">${info.label}</span>`;
+    }).join('');
+  }
+
+  /* ═══ SCROLL ANIMATIONS ═══ */
+  function initScrollObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.q-section').forEach(el => observer.observe(el));
+  }
+
+  /* ═══ SIDEBAR HIGHLIGHT ═══ */
+  function initSidebarHighlight() {
+    const sections = QUERY_ORDER.map(qk => document.getElementById('q-' + qk)).filter(Boolean);
+    const links = document.querySelectorAll('.sidebar a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          links.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '-10% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  }
+
+  /* ═══ LAUNCH ═══ */
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>
