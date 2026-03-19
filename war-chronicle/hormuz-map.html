@@ -54,14 +54,14 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
     <div class="divider"></div>
   </div>
   <div class="panel">
-    <div class="panel-label">March 16</div>
-    <div class="panel-sub red">~6 vessels · blockade cracking but escorts stall (Windward/OSINT)</div>
+    <div class="panel-label">March 19</div>
+    <div class="panel-sub red">9 vessels (PortWatch) · US weighs troops + island seizure · Iran proposes tolls</div>
     <div id="map-after" class="map"></div>
   </div>
 </div>
 
 <div class="source-bar">
-  Source: IMF PortWatch ArcGIS API (Feb 27: 95 total, 53 tankers) · Windward Maritime Intelligence (Mar 11: 2 outbound crossings, 0 inbound, 7-day avg 2.57) · Map: Mapbox GL
+  Source: IMF PortWatch ArcGIS API (Feb 27: 95 total, 53 tankers; Mar 15: 9 vessels) · Windward Maritime Intelligence unavailable · Map: Mapbox GL
 </div>
 
 <script>
@@ -278,7 +278,7 @@ function createMap(containerId, shipCount, showMines, seed) {
 }
 
 const mapBefore = createMap('map-before', 65, false, 42);
-const mapAfter = createMap('map-after', 4, true, 99);
+const mapAfter = createMap('map-after', 9, true, 99);
 </script>
 
 </body>

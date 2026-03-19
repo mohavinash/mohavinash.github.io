@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>17 Days of Strikes — Operation Epic Fury</title>
+<title>20 Days of Strikes — Operation Epic Fury</title>
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
 <style>
@@ -59,8 +59,8 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
 
 <div id="map"></div>
 
-<div class="map-title">17 Days of Strikes</div>
-<div class="map-subtitle">Known military strikes, attacks, and incidents · Feb 28 – Mar 16, 2026</div>
+<div class="map-title">20 Days of Strikes</div>
+<div class="map-subtitle">Known military strikes, attacks, and incidents · Feb 28 – Mar 19, 2026</div>
 
 <div class="legend">
   <div class="legend-title">Attacker</div>
@@ -74,7 +74,7 @@ body { font-family: 'Courier New', monospace; background: #FAF8F3; }
 </div>
 
 <div class="source-bar">
-  Source: DataChutney OSINT analysis · Situation briefings · Reuters, BBC, Al Jazeera, Defense One, Al-Monitor, MEE, New Arab · Map: Mapbox GL · 74 incidents mapped
+  Source: DataChutney OSINT analysis · Situation briefings · Reuters, BBC, Al Jazeera, Defense One, Al-Monitor, MEE, New Arab · Map: Mapbox GL · 102 incidents mapped
 </div>
 
 <script>
@@ -165,6 +165,38 @@ const STRIKES = [
   { name:"Riyadh (55 drones)", country:"Saudi Arabia", lat:24.714, lng:46.675, type:"drone", attacker:"iran", desc:"55 drones intercepted over Riyadh overnight. Mar 16." },
   { name:"Hamadan, Iran (strikes)", country:"Iran", lat:34.799, lng:48.515, type:"air_strike", attacker:"coalition", desc:"US-Israeli strike pounds city of Hamadan in western Iran. Mar 16." },
   { name:"Chabahar, Iran (first far-east strikes)", country:"Iran", lat:25.291, lng:60.643, type:"air_strike", attacker:"coalition", desc:"US fighter jets strike near Chabahar in southeastern Iran. First strikes near Pakistan border. Mar 16.", major:true },
+
+  // === DAY 18 — MARCH 17 ===
+  { name:"Larijani assassination (Tehran)", country:"Iran", lat:35.715, lng:51.41, type:"air_strike", attacker:"coalition", desc:"Israel kills Ali Larijani (security chief/'de facto leader') + Basij commander Soleimani. Highest-profile since Khamenei. Mar 17.", major:true },
+  { name:"Beirut Airport Road", country:"Lebanon", lat:33.821, lng:35.488, type:"air_strike", attacker:"coalition", desc:"Israeli strike on Beirut airport road. 1 killed, 9 wounded. Mar 17." },
+  { name:"Beirut Southern Suburbs (airport area)", country:"Lebanon", lat:33.83, lng:35.50, type:"air_strike", attacker:"coalition", desc:"Israeli strikes hit southern suburbs near airport. Mar 17." },
+  { name:"South Lebanon (IDF ground expansion)", country:"Lebanon", lat:33.28, lng:35.22, type:"ground_op", attacker:"coalition", desc:"Israel sends more troops to south Lebanon; vows 'no return' for displaced. 2 Lebanese soldiers killed. Mar 17." },
+  { name:"Baghdad Embassy (Green Zone)", country:"Iraq", lat:33.297, lng:44.363, type:"missile", attacker:"iran", desc:"Drones and rockets slam into US Embassy compound in Green Zone. Second major attack. Mar 17." },
+  { name:"Qatar (second missile wave)", country:"Qatar", lat:25.287, lng:51.533, type:"missile", attacker:"iran", desc:"Qatar intercepts second wave of missiles. Mar 17." },
+  { name:"UAE (airspace closed)", country:"UAE", lat:25.07, lng:55.17, type:"missile", attacker:"iran", desc:"UAE airspace briefly closed. Missile debris kills one. Mar 17." },
+  { name:"Israel (Hezbollah rocket)", country:"Israel", lat:32.08, lng:34.78, type:"missile", attacker:"proxy", desc:"Building burns in Israel after Hezbollah rocket from Lebanon. Mar 17." },
+  { name:"Jerusalem (missile shrapnel)", country:"Israel", lat:31.778, lng:35.236, type:"missile", attacker:"iran", desc:"Missile shrapnel fell on Jerusalem holy sites. Mar 17." },
+  { name:"Kuwait (Hezbollah sabotage plot)", country:"Kuwait", lat:29.376, lng:47.977, type:"ground_op", attacker:"proxy", desc:"Kuwait arrests 16 Hezbollah-affiliated over 'sabotage plot'. Mar 17." },
+
+  // === DAY 19 — MARCH 18 ===
+  { name:"Intelligence Minister Khatib (Tehran)", country:"Iran", lat:35.70, lng:51.43, type:"air_strike", attacker:"coalition", desc:"Israel kills Iran's intelligence minister Khatib. Third senior assassination in 48 hours. Mar 18.", major:true },
+  { name:"South Pars Gas Field", country:"Iran", lat:27.50, lng:52.50, type:"air_strike", attacker:"coalition", desc:"Israel strikes South Pars oil/gas facilities in coordination with US. Iran's largest gas field. Mar 18.", major:true },
+  { name:"Bushehr Nuclear Plant (near miss)", country:"Iran", lat:28.833, lng:50.883, type:"air_strike", attacker:"coalition", desc:"Projectile hits near Bushehr nuclear power plant. No damage reported. Mar 18.", major:true },
+  { name:"Israel strikes Tehran command centers", country:"Iran", lat:35.69, lng:51.40, type:"air_strike", attacker:"coalition", desc:"Israel carries out series of strikes on command centers in Tehran. Court building in southern Iran also hit. Mar 18." },
+  { name:"Central Beirut (building collapse)", country:"Lebanon", lat:33.890, lng:35.505, type:"air_strike", attacker:"coalition", desc:"Building collapses after Israeli strike. 12+ killed, 41 wounded. Journalist killed. Mar 18.", major:true },
+  { name:"Ramat Gan, Israel (cluster munitions)", country:"Israel", lat:32.082, lng:34.810, type:"missile", attacker:"iran", desc:"Elderly couple (70s) killed by Iranian cluster missile. First civilian fatalities in Israeli pop centers. 192 hospitalized in 24h. Mar 18.", major:true },
+  { name:"Iran strikes 4 Israeli cities", country:"Israel", lat:32.05, lng:34.76, type:"missile", attacker:"iran", desc:"Iran strikes four Israeli cities + US bases across Middle East. Cluster munitions confirmed. Mar 18." },
+  { name:"Baghdad Embassy (third attack)", country:"Iraq", lat:33.297, lng:44.363, type:"missile", attacker:"iran", desc:"Drone attack targets US embassy in Baghdad again. Explosion heard. Mar 18." },
+
+  // === DAY 20 — MARCH 19 ===
+  { name:"South Lebanon (river bridges destroyed)", country:"Lebanon", lat:33.30, lng:35.26, type:"air_strike", attacker:"coalition", desc:"IDF destroys river bridges in southern Lebanon — cutting Hezbollah supply/retreat routes. Defensive consolidation. Mar 19." },
+  { name:"Ras Laffan LNG Hub", country:"Qatar", lat:25.92, lng:51.53, type:"missile", attacker:"iran", desc:"Iran strikes Qatar's Ras Laffan gas hub — 'extensive damage' to one of world's most critical LNG facilities. Mar 19.", major:true },
+  { name:"Yanbu SAMREF Refinery", country:"Saudi Arabia", lat:24.09, lng:38.06, type:"missile", attacker:"iran", desc:"Saudi Aramco-Exxon SAMREF refinery targeted. Red Sea coast — connected to East-West Pipeline bypass. Mar 19.", major:true },
+  { name:"Abu Dhabi Habshan Gas Facility", country:"UAE", lat:23.82, lng:53.63, type:"missile", attacker:"iran", desc:"Habshan gas processing facility stops operations after missile attack. Mar 19.", major:true },
+  { name:"Kuwait (second oil refinery)", country:"Kuwait", lat:29.08, lng:48.13, type:"drone", attacker:"iran", desc:"Second Kuwaiti oil refinery hit by drone. Mar 19." },
+  { name:"Bandar Anzali (Caspian)", country:"Iran", lat:37.47, lng:49.46, type:"air_strike", attacker:"coalition", desc:"US/Israel strike Iran's Caspian Sea port — first strikes on northern Iran, new geographic front. Mar 19.", major:true },
+  { name:"Tel Aviv (3 explosions)", country:"Israel", lat:32.07, lng:34.77, type:"missile", attacker:"iran", desc:"3 explosions in Tel Aviv after Iranian missile alert. Iran's 8th barrage since midnight. Mar 19." },
+  { name:"Israel (oil refineries struck)", country:"Israel", lat:32.80, lng:35.00, type:"missile", attacker:"iran", desc:"Iran strikes several strategic targets in Israel including oil refineries. Mar 19." },
 ];
 
 const ATTACKER_COLORS = { coalition: '#1a2744', iran: '#8b2020', proxy: '#b8860b' };
@@ -266,6 +298,10 @@ map.on('load', () => {
     'Dubai Airport (drone attack)':       ['top-left', 12, -2, 'Dubai Airport (drone)'],
     'Abu Dhabi (civilian missile)':       ['bottom-left', 12, 4, 'Abu Dhabi (first fatality)'],
     'Chabahar, Iran (first far-east strikes)': ['top-left', 12, -2, 'Chabahar (new front)'],
+    'Ras Laffan LNG Hub':                     ['top-left', 12, -2, 'Ras Laffan (energy war)'],
+    'Yanbu SAMREF Refinery':                  ['top-left', 12, -2, 'Yanbu Refinery'],
+    'Abu Dhabi Habshan Gas Facility':         ['bottom-left', 12, 4, 'Habshan (ops halted)'],
+    'Bandar Anzali (Caspian)':                ['top-left', 12, -2, 'Bandar Anzali (Caspian)'],
   };
 
   // Strike markers with labels for major incidents
