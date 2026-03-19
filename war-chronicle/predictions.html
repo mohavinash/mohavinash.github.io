@@ -437,7 +437,7 @@ body::before {
   <div class="headline-shifts">
     <h2>Headline Shifts</h2>
     <div class="shift-item">War outcome flipped: Decisive Victory <span class="shift-arrow">&rarr;</span> Ceasefire Settlement <span style="color:var(--muted)">(Mar 18)</span></div>
-    <div class="shift-item">Oil classification: Elevated <span class="shift-arrow">&rarr;</span> High <span style="color:var(--muted)">(Mar 16)</span></div>
+    <div class="shift-item">Oil band: $85–110 <span class="shift-arrow">&rarr;</span> $110–150/bbl <span style="color:var(--muted)">(Mar 16)</span></div>
     <div class="shift-item">Nuclear program: Destroyed <span class="shift-arrow">&rarr;</span> Degraded <span style="color:var(--muted)">(Mar 16)</span></div>
   </div>
 
@@ -512,7 +512,7 @@ body::before {
 
   const CONTEXT = [
     'The model shifted from victory to ceasefire after Iran\'s leadership decapitation failed to produce surrender and the Hormuz blockade proved resilient.',
-    'Oil jumped from "elevated" to "high" on March 16 as Brent crossed $100 after the Kharg Island strike and Dubai airport attack.',
+    'Oil jumped from the $85–110 band to the $110–150 band on March 16 as Brent crossed $100 after the Kharg Island strike and Dubai airport attack. By March 19, Brent hit $107 with intraday spikes toward $115.',
     'Hormuz has been assessed as blocked since Day 1. Transit data shows 0\u20139 vessels vs 95 pre-war.',
     'Three senior leaders killed in 48 hours (Larijani, Soleimani, Khatib). Regime change probability held steady at 45% \u2014 the model sees it as contested, not certain.',
     'Ground deployment probability rose as Trump discussed troops and Kharg seizure, but pulled back as the "not afraid of Vietnam" rhetoric met political resistance.',
@@ -522,6 +522,79 @@ body::before {
     'Political crisis probability edged up from 60% to 62% as the counterterrorism director resigned and gas hit $4/gallon.',
     'Russia has been assessed as strengthened throughout \u2014 oil windfall + Shahed drone supply chain + satellite imagery sharing.'
   ];
+
+  // --- HUMAN-READABLE STATE LABELS ---
+  // Translates internal model states to what users actually want to see
+  const STATE_LABELS = {
+    oil_price: {
+      low: 'Below $60/bbl',
+      normal: '$60–85/bbl',
+      elevated: '$85–110/bbl',
+      high: '$110–150/bbl',
+      crisis: 'Above $150/bbl'
+    },
+    war_outcome: {
+      ceasefire_settlement: 'Ceasefire Settlement',
+      stalemated_conflict: 'Stalemated Conflict',
+      decisive_us_israel_victory: 'Decisive US-Israel Victory',
+      prolonged_attritional_war: 'Prolonged War'
+    },
+    hormuz_status: {
+      open: 'Open (normal traffic)',
+      stressed: 'Stressed (reduced traffic)',
+      restricted: 'Restricted (major disruption)',
+      blocked: 'Blocked (near-zero traffic)'
+    },
+    iran_governance: {
+      irgc_continuity: 'IRGC Continuity (regime holds)',
+      elite_fragmentation: 'Elite Fragmentation (internal split)',
+      regime_change: 'Regime Change (leadership transition)',
+      state_failure: 'State Failure (collapse)'
+    },
+    ground_force_deployment: {
+      none: 'No ground troops',
+      limited: 'Limited (special forces)',
+      significant: 'Significant (brigade-level)',
+      major: 'Major (division-level invasion)'
+    },
+    proxy_front_activity: {
+      dormant: 'Dormant (not engaged)',
+      active: 'Active Operations',
+      full_mobilization: 'Full Mobilization'
+    },
+    civilian_casualties: {
+      minimal: 'Minimal',
+      light: 'Light',
+      moderate: 'Moderate',
+      heavy: 'Heavy (2,000+ deaths)',
+      mass: 'Mass Casualties'
+    },
+    nuclear_program_status: {
+      intact: 'Intact',
+      degraded: 'Degraded (damaged but functional)',
+      disabled: 'Disabled (years to rebuild)',
+      destroyed: 'Destroyed (irreparable)'
+    },
+    us_political_outcome: {
+      limited_domestic_effect: 'Limited Political Impact',
+      political_backlash: 'Political Backlash',
+      systemic_political_crisis: 'Systemic Political Crisis'
+    },
+    actor_russia: {
+      weakened: 'Weakened',
+      baseline: 'Unchanged',
+      strengthened: 'Strengthened'
+    },
+    actor_china: {
+      weakened: 'Weakened',
+      baseline: 'Unchanged',
+      strengthened: 'Strengthened'
+    }
+  };
+
+  function labelState(varId, state) {
+    return (STATE_LABELS[varId] && STATE_LABELS[varId][state]) || state.replace(/_/g, ' ');
+  }
 
   // --- COLOR PALETTES PER VARIABLE ---
   const COLOR_MAP = {
@@ -588,7 +661,12 @@ body::before {
   };
 
   // --- STATE DISPLAY NAMES ---
+  // Uses human-readable labels when available, falls back to title case
+  let _currentChartVar = null; // set before rendering each chart
   function formatState(s) {
+    if (_currentChartVar && STATE_LABELS[_currentChartVar] && STATE_LABELS[_currentChartVar][s]) {
+      return STATE_LABELS[_currentChartVar][s];
+    }
     return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   }
 
@@ -599,6 +677,7 @@ body::before {
 
   // --- CHART RENDERING ---
   function renderStackedAreaChart(containerId, timeline, primaryVar) {
+    _currentChartVar = primaryVar; // set for formatState() to use human labels
     const container = document.getElementById(containerId);
     if (!container || !timeline || timeline.length === 0) return;
 
@@ -833,7 +912,7 @@ body::before {
     const latestOilPrice = data.oil_prices_usd[data.dates[data.dates.length - 1]];
     const firstOilPrice = 71.65; // pre-war Brent baseline
     const oilPctChange = ((latestOilPrice - firstOilPrice) / firstOilPrice * 100).toFixed(1);
-    ANSWERS[1] = `Oil classified as <strong>HIGH</strong>. Brent crude: <span class="big-number">$${latestOilPrice.toFixed(2)}</span>/bbl, up ${oilPctChange}% in three weeks.`;
+    ANSWERS[1] = `Model predicts <strong>$110–150/bbl</strong> range with 97% probability. Actual Brent: <span class="big-number">$${latestOilPrice.toFixed(2)}</span>/bbl, up ${oilPctChange}% in three weeks. On March 14, the model had oil in the $85–110 range (94%). It jumped to the $110–150 band on March 16 after Kharg Island was struck.`;
 
     let html = '';
 
