@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intelligence Estimates — US-Iran War Predictions | DataChutney</title>
-<meta name="description" content="10 questions about the US-Iran war, answered daily by a 106-node Bayesian Network. Pointed answers with trend visualization.">
+<meta name="description" content="10 questions about the US-Iran war, answered daily by a 106-node Bayesian Network. Genuine model predictions — structural outcomes inferred from the network, not observation mirrors.">
 <meta name="author" content="DataChutney">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://datachutney.io/war-chronicle/predictions">
@@ -101,6 +101,14 @@ body::before {
   font-size: 1rem;
   color: var(--muted);
   max-width: 40rem;
+  line-height: 1.5;
+}
+
+.hero .subtitle-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  font-style: italic;
   line-height: 1.5;
 }
 
@@ -221,15 +229,7 @@ body::before {
   border-radius: 2px;
   white-space: nowrap;
   font-weight: 700;
-}
-
-.source-badge.model {
   background: var(--green);
-  color: #fff;
-}
-
-.source-badge.osint {
-  background: var(--amber);
   color: #fff;
 }
 
@@ -292,7 +292,6 @@ body::before {
   gap: 0.35rem;
   font-size: 0.72rem;
   color: var(--muted);
-  text-transform: capitalize;
 }
 
 .legend-swatch {
@@ -310,6 +309,78 @@ body::before {
   font-style: italic;
   padding-left: 1rem;
   border-left: 2px solid var(--border);
+}
+
+/* EVIDENCE CHAIN (expandable) */
+.evidence-toggle {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  cursor: pointer;
+  margin-top: 0.8rem;
+  padding: 0.3rem 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  background: none;
+  transition: color 0.2s;
+}
+.evidence-toggle:hover { color: var(--text); }
+.evidence-toggle::before { content: '+ '; }
+.evidence-toggle.open::before { content: '- '; }
+
+.evidence-chain {
+  display: none;
+  margin-top: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-paper);
+  border-left: 2px solid var(--border);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+.evidence-chain.open { display: block; }
+
+.evidence-chain .chain-header {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.evidence-chain .chain-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+}
+.chain-source {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.chain-source.osint { background: #b8860b22; color: #8a6508; }
+.chain-source.bn { background: #2d6a2e22; color: #2d6a2e; }
+.chain-source.scenario { background: #1a274422; color: #1a2744; }
+.chain-var { color: var(--text); }
+.chain-state { font-weight: 700; }
+.chain-conf { color: var(--muted); font-size: 0.72rem; }
+.chain-arrow { color: var(--muted); font-size: 0.8rem; }
+.chain-output {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+}
+.chain-margin {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--muted);
 }
 
 /* MC SECTION */
@@ -430,15 +501,16 @@ body::before {
   <header class="hero">
     <div class="classification">UNCLASSIFIED // FOR EDUCATIONAL USE</div>
     <h1>Intelligence Estimates</h1>
-    <p class="subtitle">10 questions about the US-Iran war. Answered daily by a 106-node Bayesian Network.</p>
+    <p class="subtitle">What a 106-node Bayesian Network predicts about the US-Iran war.</p>
+    <p class="subtitle-note">These are model predictions &mdash; outcomes inferred by the network, not observed data. We deliberately excluded questions where the model simply mirrors observation inputs.</p>
   </header>
 
   <!-- HEADLINE SHIFTS -->
   <div class="headline-shifts">
     <h2>Headline Shifts</h2>
     <div class="shift-item">War outcome flipped: Decisive Victory <span class="shift-arrow">&rarr;</span> Ceasefire Settlement <span style="color:var(--muted)">(Mar 18)</span></div>
-    <div class="shift-item">Oil band: $85–110 <span class="shift-arrow">&rarr;</span> $110–150/bbl <span style="color:var(--muted)">(Mar 16)</span></div>
-    <div class="shift-item">Nuclear program: Destroyed <span class="shift-arrow">&rarr;</span> Degraded <span style="color:var(--muted)">(Mar 16)</span></div>
+    <div class="shift-item">US objectives: Failed probability rose from 52% <span class="shift-arrow">&rarr;</span> 64% <span style="color:var(--muted)">(Mar 14&ndash;19)</span></div>
+    <div class="shift-item">Iranian regime: 69% probability of falling in some form <span style="color:var(--muted)">(Mar 19)</span></div>
   </div>
 
   <!-- STICKY NAV -->
@@ -464,7 +536,7 @@ body::before {
         <div class="stat-label">Median Phases</div>
       </div>
       <div class="mc-stat">
-        <div class="stat-value" id="mc-range">6-11</div>
+        <div class="stat-value" id="mc-range">6&ndash;11</div>
         <div class="stat-label">Phase Range</div>
       </div>
     </div>
@@ -472,7 +544,7 @@ body::before {
     <div class="mc-chart-container" id="mc-chart"></div>
 
     <div style="margin-top:1.5rem;">
-      <p class="context-line">MC ceasefire probability dropped from 100% to 88% on March 16 when stalemate scenarios first appeared, then oscillated between 88-94% as the model incorporated new OSINT about extended proxy operations and Hormuz resilience.</p>
+      <p class="context-line">MC ceasefire probability dropped from 100% to 88% on March 16 when stalemate scenarios first appeared, then oscillated between 88&ndash;94% as the model incorporated new OSINT about extended proxy operations and Hormuz resilience.</p>
     </div>
 
     <div style="margin-top:1.5rem;">
@@ -483,8 +555,9 @@ body::before {
   <!-- METHODOLOGY -->
   <footer class="methodology">
     <h2>Methodology</h2>
-    <p><strong style="color:var(--green);">Model Prediction</strong> = structural variable inferred by Bayesian Network from all evidence</p>
-    <p><strong style="color:var(--amber);">OSINT Assessed</strong> = observation variable directly reflecting evidence from 23 RSS/Atom feeds</p>
+    <p>These predictions are structural &mdash; inferred by the Bayesian Network from the interaction of all 106 nodes, not directly observed from news feeds.</p>
+    <p>We deliberately excluded questions where the model simply mirrors observation data (oil price bands, Hormuz vessel counts, casualty levels, nuclear status). Those are inputs, not predictions.</p>
+    <p>Every answer on this page is labeled <strong style="color:var(--green);">MODEL PREDICTION</strong> because every answer is a genuine inference.</p>
     <p><strong>MC Simulation</strong> = 50 Monte Carlo forward simulations of the war's trajectory</p>
     <p class="accuracy">Accuracy: 91.9% on 11 historical crises (forward prediction mode)</p>
     <div class="footer-line">Updated daily. DataChutney. March 19, 2026.</div>
@@ -496,99 +569,90 @@ body::before {
 (function() {
   'use strict';
 
-  // --- HARDCODED ANSWERS & CONTEXT ---
-  const ANSWERS = [
-    'Ceasefire settlement, <span class="big-number">65%</span> probability. Flipped from decisive US-Israel victory (52%) on March 18.',
-    null, // computed dynamically with oil price
-    'Blocked, <span class="big-number">100%</span> confidence. 9 vessels transiting vs 95 pre-war.',
-    'Regime change most likely at <span class="big-number">45%</span>, but elite fragmentation (28%) and state failure (24%) are close behind. Not a clean prediction.',
-    'No US troops in Iran — but the model shows major deployment probability climbing from 52% to 64% over 5 days, before pulling back to 59%.',
-    'Full mobilization <span class="big-number">51%</span>, active operations 42%. Hezbollah degraded but proxies still fighting.',
-    'Heavy, <span class="big-number">94%</span> confidence. This is assessed from OSINT, not a forward prediction.',
-    'Degraded, <span class="big-number">79%</span>. Flipped from "destroyed" (48%) on March 16 as assessments became more cautious.',
-    'Systemic political crisis, <span class="big-number">62%</span>. Model predicts this war is NOT politically survivable.',
-    'Russia: strengthened, <span class="big-number">100%</span>. China: weakened. Russia profits from oil; China suffers from energy squeeze.'
-  ];
+  // --- SYNTHESIZED ANSWERS (plain English, key probabilities bolded) ---
+  const ANSWERS = {
+    war_outcome: 'Ceasefire settlement, <span class="big-number">65%</span> probability. The model shifted from predicting decisive US-Israel victory (52%) to ceasefire on March 18 &mdash; the same day Iran\'s leadership decapitation failed to produce surrender.',
+    iran_governance: '<span class="big-number">69%</span> probability the regime falls &mdash; either through regime change (45%) or state failure (24%). Only 3% chance the IRGC maintains full continuity. But &ldquo;regime change&rdquo; and &ldquo;state failure&rdquo; are very different outcomes.',
+    us_strategic_objective: 'No. <span class="big-number">64%</span> probability the US strategic objective has failed. Only 9% chance of full achievement. The model assesses partial achievement at 27%.',
+    us_political_outcome: 'No. <span class="big-number">62%</span> probability of systemic political crisis. 33% political backlash. Only 4% limited domestic effect.',
+    israel_strategic_objective: 'Partially. <span class="big-number">65%</span> probability of partial achievement. 18% failed, 16% fully achieved.',
+    iran_strategic_objective: 'No. <span class="big-number">88%</span> probability of strategic defeat. Only 8% chance Iran preserves reduced deterrence, 3% restores it.',
+    coalition_cohesion: 'No. <span class="big-number">79%</span> probability the coalition is fractured. 20% fraying. Only 1% strong.',
+    lng_supply_disruption: 'Critical &mdash; <span class="big-number">97%</span> probability. This is the model\'s highest-confidence prediction.',
+    air_campaign_intensity: 'Yes. <span class="big-number">61%</span> probability the air campaign is at low intensity. 27% moderate. Only 12% high.',
+    regional_realignment: 'Gulf states are hedging, not aligning. <span class="big-number">39%</span> probability of fragmentation, 25% formalized Arab-Israel bloc, 23% hardened anti-Iran bloc.'
+  };
 
-  const CONTEXT = [
-    'The model shifted from victory to ceasefire after Iran\'s leadership decapitation failed to produce surrender and the Hormuz blockade proved resilient.',
-    'Oil jumped from the $85–110 band to the $110–150 band on March 16 as Brent crossed $100 after the Kharg Island strike and Dubai airport attack. By March 19, Brent hit $107 with intraday spikes toward $115.',
-    'Hormuz has been assessed as blocked since Day 1. Transit data shows 0\u20139 vessels vs 95 pre-war.',
-    'Three senior leaders killed in 48 hours (Larijani, Soleimani, Khatib). Regime change probability held steady at 45% \u2014 the model sees it as contested, not certain.',
-    'Ground deployment probability rose as Trump discussed troops and Kharg seizure, but pulled back as the "not afraid of Vietnam" rhetoric met political resistance.',
-    'Proxy mobilization gradually increased as Hezbollah fought IDF in Lebanon while Houthis deterred Red Sea shipping without firing a shot.',
-    'Casualties assessed as heavy throughout. Driven by OSINT: 30 children killed/wounded per day in Lebanon, 2,000+ cumulative regional deaths.',
-    'Initial assessment was "destroyed" (48%) but revised to "degraded" (79%) as IAEA reporting showed damage was substantial but not total.',
-    'Political crisis probability edged up from 60% to 62% as the counterterrorism director resigned and gas hit $4/gallon.',
-    'Russia has been assessed as strengthened throughout \u2014 oil windfall + Shahed drone supply chain + satellite imagery sharing.'
-  ];
+  const CONTEXT = {
+    war_outcome: 'This was the biggest prediction flip in the model\'s 5-day run. The BN infers war outcome from the interaction of all 106 nodes &mdash; ceasefire pressure, domestic politics, military balance, and economic strain.',
+    iran_governance: 'Three senior leaders killed in 48 hours. The model sees collapse as likely but the mode of collapse is contested &mdash; orderly transition vs chaotic failure.',
+    us_strategic_objective: 'Military dominance has not translated into political resolution. Iran\'s leadership is destroyed but the regime hasn\'t surrendered, Hormuz remains blocked, and the economic fallout exceeds any military gain.',
+    us_political_outcome: 'Gas at $4/gallon, counterterrorism director resigned, least popular war in modern history. The model sees this becoming a defining political liability.',
+    israel_strategic_objective: 'Israel has destroyed Iran\'s military infrastructure and killed senior leaders, but the ground operation in Lebanon is stretching resources and cluster bomb retaliation is hitting Israeli cities.',
+    iran_strategic_objective: 'Defence industrial base "functionally defeated," three senior leaders killed, economy halted. The model\'s strongest single prediction.',
+    coalition_cohesion: 'France, Germany, Japan, Australia, Poland all refused Hormuz participation. The EU called on the US to end the war. "Coalition of the unwilling."',
+    lng_supply_disruption: 'Qatar halted LNG production. Ras Laffan hub struck. Japan and South Korea taking emergency measures. The model sees no pathway to LNG normalization while Hormuz remains blocked.',
+    air_campaign_intensity: 'After 20 days and 3,000+ targets, the target set is shrinking. The campaign is transitioning from destruction to maintenance &mdash; but strikes continue on leadership targets.',
+    regional_realignment: 'Saudi Arabia simultaneously threatens military action against Iran AND blames Israel for starting the war. The model sees no clean alignment &mdash; every Gulf state is playing every side.'
+  };
 
   // --- HUMAN-READABLE STATE LABELS ---
-  // Translates internal model states to what users actually want to see
   const STATE_LABELS = {
-    oil_price: {
-      low: 'Below $60/bbl',
-      normal: '$60–85/bbl',
-      elevated: '$85–110/bbl',
-      high: '$110–150/bbl',
-      crisis: 'Above $150/bbl'
-    },
     war_outcome: {
-      ceasefire_settlement: 'Ceasefire Settlement',
-      stalemated_conflict: 'Stalemated Conflict',
-      decisive_us_israel_victory: 'Decisive US-Israel Victory',
+      ceasefire_settlement: 'Ceasefire',
+      stalemated_conflict: 'Stalemate',
+      decisive_us_israel_victory: 'Decisive Victory',
       prolonged_attritional_war: 'Prolonged War'
     },
-    hormuz_status: {
-      open: 'Open (normal traffic)',
-      stressed: 'Stressed (reduced traffic)',
-      restricted: 'Restricted (major disruption)',
-      blocked: 'Blocked (near-zero traffic)'
-    },
     iran_governance: {
-      irgc_continuity: 'IRGC Continuity (regime holds)',
-      elite_fragmentation: 'Elite Fragmentation (internal split)',
-      regime_change: 'Regime Change (leadership transition)',
-      state_failure: 'State Failure (collapse)'
+      irgc_continuity: 'Regime Holds',
+      elite_fragmentation: 'Internal Split',
+      regime_change: 'Regime Change',
+      state_failure: 'State Collapse'
     },
-    ground_force_deployment: {
-      none: 'No ground troops',
-      limited: 'Limited (special forces)',
-      significant: 'Significant (brigade-level)',
-      major: 'Major (division-level invasion)'
-    },
-    proxy_front_activity: {
-      dormant: 'Dormant (not engaged)',
-      active: 'Active Operations',
-      full_mobilization: 'Full Mobilization'
-    },
-    civilian_casualties: {
-      minimal: 'Minimal',
-      light: 'Light',
-      moderate: 'Moderate',
-      heavy: 'Heavy (2,000+ deaths)',
-      mass: 'Mass Casualties'
-    },
-    nuclear_program_status: {
-      intact: 'Intact',
-      degraded: 'Degraded (damaged but functional)',
-      disabled: 'Disabled (years to rebuild)',
-      destroyed: 'Destroyed (irreparable)'
+    us_strategic_objective: {
+      achieved: 'Achieved',
+      partially_achieved: 'Partial',
+      failed: 'Failed'
     },
     us_political_outcome: {
-      limited_domestic_effect: 'Limited Political Impact',
-      political_backlash: 'Political Backlash',
-      systemic_political_crisis: 'Systemic Political Crisis'
+      limited_domestic_effect: 'Limited Impact',
+      political_backlash: 'Backlash',
+      systemic_political_crisis: 'Political Crisis',
+      presidential_vindication: 'Vindication'
     },
-    actor_russia: {
-      weakened: 'Weakened',
-      baseline: 'Unchanged',
-      strengthened: 'Strengthened'
+    israel_strategic_objective: {
+      achieved: 'Achieved',
+      partially_achieved: 'Partial',
+      failed: 'Failed'
     },
-    actor_china: {
-      weakened: 'Weakened',
-      baseline: 'Unchanged',
-      strengthened: 'Strengthened'
+    iran_strategic_objective: {
+      strategic_victory: 'Iran Wins',
+      survival_deterrence_restored: 'Survives (strong)',
+      survival_reduced_deterrence: 'Survives (weak)',
+      strategic_defeat: 'Strategic Defeat'
+    },
+    coalition_cohesion: {
+      strong: 'Strong',
+      fraying: 'Fraying',
+      fractured: 'Fractured'
+    },
+    lng_supply_disruption: {
+      normal: 'Normal',
+      reduced: 'Reduced',
+      critical: 'Critical'
+    },
+    air_campaign_intensity: {
+      low: 'Low',
+      moderate: 'Moderate',
+      high: 'High'
+    },
+    regional_realignment: {
+      no_major_shift: 'No Shift',
+      anti_iran_bloc_hardens: 'Anti-Iran Bloc',
+      formalized_arab_israel_bloc: 'Arab-Israel Bloc',
+      gulf_hedging_fragmentation: 'Gulf Fragmentation',
+      iran_axis_strengthens: 'Iran Axis Grows'
     }
   };
 
@@ -604,48 +668,16 @@ body::before {
       decisive_us_israel_victory: '#1a2744',
       prolonged_attritional_war: '#8b2020'
     },
-    oil_price: {
-      low: '#2d6a2e',
-      normal: '#4a8a4c',
-      moderate: '#b8860b',
-      elevated: '#8a6508',
-      high: '#8b2020',
-      crisis: '#5c1010'
-    },
-    hormuz_status: {
-      open: '#2d6a2e',
-      stressed: '#b8860b',
-      restricted: '#8a6508',
-      blocked: '#8b2020'
-    },
     iran_governance: {
       irgc_continuity: '#1a2744',
       elite_fragmentation: '#b8860b',
       regime_change: '#8b2020',
       state_failure: '#5c1010'
     },
-    ground_force_deployment: {
-      none: '#2d6a2e',
-      limited: '#4a8a4c',
-      significant: '#b8860b',
-      major: '#8b2020'
-    },
-    proxy_front_activity: {
-      dormant: '#2d6a2e',
-      active: '#b8860b',
-      full_mobilization: '#8b2020'
-    },
-    civilian_casualties: {
-      minimal: '#2d6a2e',
-      moderate: '#b8860b',
-      heavy: '#8b2020',
-      mass: '#5c1010'
-    },
-    nuclear_program_status: {
-      intact: '#2d6a2e',
-      degraded: '#b8860b',
-      disabled: '#8a6508',
-      destroyed: '#8b2020'
+    us_strategic_objective: {
+      achieved: '#2d6a2e',
+      partially_achieved: '#b8860b',
+      failed: '#8b2020'
     },
     us_political_outcome: {
       presidential_vindication: '#2d6a2e',
@@ -653,16 +685,42 @@ body::before {
       political_backlash: '#b8860b',
       systemic_political_crisis: '#8b2020'
     },
-    actor_russia: {
-      weakened: '#2d6a2e',
-      baseline: '#b8860b',
-      strengthened: '#8b2020'
+    israel_strategic_objective: {
+      achieved: '#2d6a2e',
+      partially_achieved: '#b8860b',
+      failed: '#8b2020'
+    },
+    iran_strategic_objective: {
+      strategic_victory: '#2d6a2e',
+      survival_deterrence_restored: '#4a8a4c',
+      survival_reduced_deterrence: '#b8860b',
+      strategic_defeat: '#8b2020'
+    },
+    coalition_cohesion: {
+      strong: '#2d6a2e',
+      fraying: '#b8860b',
+      fractured: '#8b2020'
+    },
+    lng_supply_disruption: {
+      normal: '#2d6a2e',
+      reduced: '#b8860b',
+      critical: '#8b2020'
+    },
+    air_campaign_intensity: {
+      low: '#2d6a2e',
+      moderate: '#b8860b',
+      high: '#8b2020'
+    },
+    regional_realignment: {
+      no_major_shift: '#4a8a4c',
+      anti_iran_bloc_hardens: '#1a2744',
+      formalized_arab_israel_bloc: '#b8860b',
+      gulf_hedging_fragmentation: '#8b2020',
+      iran_axis_strengthens: '#5c1010'
     }
   };
 
-  // --- STATE DISPLAY NAMES ---
-  // Uses human-readable labels when available, falls back to title case
-  let _currentChartVar = null; // set before rendering each chart
+  let _currentChartVar = null;
   function formatState(s) {
     if (_currentChartVar && STATE_LABELS[_currentChartVar] && STATE_LABELS[_currentChartVar][s]) {
       return STATE_LABELS[_currentChartVar][s];
@@ -677,7 +735,7 @@ body::before {
 
   // --- CHART RENDERING ---
   function renderStackedAreaChart(containerId, timeline, primaryVar) {
-    _currentChartVar = primaryVar; // set for formatState() to use human labels
+    _currentChartVar = primaryVar;
     const container = document.getElementById(containerId);
     if (!container || !timeline || timeline.length === 0) return;
 
@@ -686,7 +744,6 @@ body::before {
     const cw = W - pad.left - pad.right;
     const ch = H - pad.top - pad.bottom;
 
-    // Get all states, sorted by final value descending for stacking
     const allStates = Object.keys(timeline[0].states);
     const stateOrder = allStates.slice().sort((a, b) => {
       const lastT = timeline[timeline.length - 1].states;
@@ -699,7 +756,6 @@ body::before {
     const n = timeline.length;
     const xStep = n > 1 ? cw / (n - 1) : cw / 2;
 
-    // Build stacked data
     const stacked = timeline.map((t, i) => {
       let cumul = 0;
       const layers = [];
@@ -711,21 +767,18 @@ body::before {
       return { x: pad.left + i * xStep, date: t.date, layers };
     });
 
-    // Build area paths
     let svgContent = '';
 
     for (let si = 0; si < stateOrder.length; si++) {
       const state = stateOrder[si];
       const color = palette[state] || fallbackColors[si % fallbackColors.length];
 
-      // Forward top edge
       let pathD = 'M';
       for (let i = 0; i < n; i++) {
         const x = stacked[i].x;
         const y = pad.top + ch - (stacked[i].layers[si].y1 / 100) * ch;
         pathD += (i === 0 ? '' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
       }
-      // Backward bottom edge
       for (let i = n - 1; i >= 0; i--) {
         const x = stacked[i].x;
         const y = pad.top + ch - (stacked[i].layers[si].y0 / 100) * ch;
@@ -735,7 +788,6 @@ body::before {
       svgContent += `<path d="${pathD}" fill="${color}" opacity="0.75"/>`;
     }
 
-    // Line on top of each area for legibility
     for (let si = 0; si < stateOrder.length; si++) {
       const state = stateOrder[si];
       const color = palette[state] || fallbackColors[si % fallbackColors.length];
@@ -748,26 +800,22 @@ body::before {
       svgContent += `<path d="${lineD}" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.9"/>`;
     }
 
-    // Y-axis gridlines
     for (let pct = 0; pct <= 100; pct += 25) {
       const y = pad.top + ch - (pct / 100) * ch;
       svgContent += `<line x1="${pad.left}" y1="${y}" x2="${pad.left + cw}" y2="${y}" stroke="#d4cfc5" stroke-width="0.5"/>`;
       svgContent += `<text x="${pad.left - 6}" y="${y + 3.5}" text-anchor="end" fill="#5a5a5a" font-size="9" font-family="Courier Prime,monospace">${pct}%</text>`;
     }
 
-    // X-axis labels
     for (let i = 0; i < n; i++) {
       const x = stacked[i].x;
       svgContent += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="#5a5a5a" font-size="9" font-family="Courier Prime,monospace">${formatDate(timeline[i].date)}</text>`;
     }
 
-    // Invisible hover zones
     for (let i = 0; i < n; i++) {
       const x = stacked[i].x;
       svgContent += `<rect x="${x - xStep/2}" y="${pad.top}" width="${xStep}" height="${ch}" fill="transparent" class="hover-zone" data-idx="${i}" data-chart="${containerId}"/>`;
     }
 
-    // Vertical hover line (hidden by default)
     svgContent += `<line class="hover-line" x1="0" y1="${pad.top}" x2="0" y2="${pad.top + ch}" stroke="#1a1a1a" stroke-width="0.75" stroke-dasharray="3,2" opacity="0" pointer-events="none"/>`;
 
     container.innerHTML = `
@@ -777,7 +825,6 @@ body::before {
       </div>
     `;
 
-    // Legend
     const legendDiv = document.createElement('div');
     legendDiv.className = 'chart-legend';
     for (const state of stateOrder) {
@@ -810,14 +857,12 @@ body::before {
         tip.innerHTML = html;
         tip.style.opacity = '1';
 
-        // Position tooltip
         const svgRect = svg.getBoundingClientRect();
         const containerRect = chartContainer.getBoundingClientRect();
         const xPx = (d.x / W) * svgRect.width + svgRect.left - containerRect.left;
         tip.style.left = (xPx + 12) + 'px';
         tip.style.top = '10px';
 
-        // Flip if near right edge
         if (xPx > containerRect.width * 0.65) {
           tip.style.left = (xPx - tip.offsetWidth - 12) + 'px';
         }
@@ -845,14 +890,12 @@ body::before {
 
     let svg = '';
 
-    // Gridlines
     for (let pct = 0; pct <= 100; pct += 25) {
       const y = pad.top + ch - (pct / 100) * ch;
       svg += `<line x1="${pad.left}" y1="${y}" x2="${pad.left + cw}" y2="${y}" stroke="#d4cfc5" stroke-width="0.5"/>`;
       svg += `<text x="${pad.left - 6}" y="${y + 3.5}" text-anchor="end" fill="#5a5a5a" font-size="9" font-family="Courier Prime,monospace">${pct}%</text>`;
     }
 
-    // Ceasefire area
     let areaD = `M${pad.left},${pad.top + ch}`;
     for (let i = 0; i < n; i++) {
       const x = pad.left + i * xStep;
@@ -862,7 +905,6 @@ body::before {
     areaD += `L${pad.left + (n-1) * xStep},${pad.top + ch}Z`;
     svg += `<path d="${areaD}" fill="#2d6a2e" opacity="0.15"/>`;
 
-    // Ceasefire line
     let lineD = 'M';
     for (let i = 0; i < n; i++) {
       const x = pad.left + i * xStep;
@@ -871,7 +913,6 @@ body::before {
     }
     svg += `<path d="${lineD}" fill="none" stroke="#2d6a2e" stroke-width="2"/>`;
 
-    // Stalemate line
     let sLineD = 'M';
     for (let i = 0; i < n; i++) {
       const x = pad.left + i * xStep;
@@ -880,7 +921,6 @@ body::before {
     }
     svg += `<path d="${sLineD}" fill="none" stroke="#b8860b" stroke-width="2" stroke-dasharray="4,3"/>`;
 
-    // Dots + labels
     for (let i = 0; i < n; i++) {
       const x = pad.left + i * xStep;
       const yc = pad.top + ch - (trend[i].ceasefire / 100) * ch;
@@ -888,7 +928,6 @@ body::before {
       svg += `<circle cx="${x}" cy="${yc}" r="3" fill="#2d6a2e"/>`;
       svg += `<circle cx="${x}" cy="${ys}" r="3" fill="#b8860b"/>`;
       svg += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="#5a5a5a" font-size="9" font-family="Courier Prime,monospace">${formatDate(trend[i].date)}</text>`;
-      // Ceasefire label
       svg += `<text x="${x}" y="${yc - 8}" text-anchor="middle" fill="#2d6a2e" font-size="9" font-family="Courier Prime,monospace" font-weight="700">${trend[i].ceasefire}%</text>`;
     }
 
@@ -903,24 +942,80 @@ body::before {
     `;
   }
 
+  // --- EVIDENCE CHAIN TOGGLE ---
+  window.toggleEvidence = function(id, btn) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+  };
+
+  const SOURCE_LABELS = { osint: 'OSINT', bn: 'Model', scenario: 'Scenario' };
+
+  function renderEvidenceChains(data) {
+    const chains = data.evidence_chains;
+    if (!chains) return;
+
+    for (const [varId, chain] of Object.entries(chains)) {
+      const el = document.getElementById('ev-' + varId);
+      if (!el) continue;
+
+      let html = '<div class="chain-header">Evidence Chain</div>';
+
+      if (chain.parents.length === 0) {
+        html += '<div style="color:var(--muted);font-style:italic;">Root node — no direct parents in the graph.</div>';
+      } else {
+        for (const par of chain.parents) {
+          const srcClass = par.source;
+          const srcLabel = SOURCE_LABELS[par.source] || par.source;
+          const state = labelState(par.var, par.state);
+          let confStr = '';
+          if (par.source === 'osint' && par.confidence) {
+            confStr = ` <span class="chain-conf">(confidence: ${(par.confidence * 100).toFixed(0)}%)</span>`;
+          } else if (par.source === 'bn' && par.prob) {
+            confStr = ` <span class="chain-conf">(${par.prob}%)</span>`;
+          } else if (par.source === 'scenario') {
+            confStr = ` <span class="chain-conf">(${par.state})</span>`;
+          }
+          const varLabel = par.var.replace(/_/g, ' ');
+          html += `<div class="chain-row">
+            <span class="chain-source ${srcClass}">${srcLabel}</span>
+            <span class="chain-var">${varLabel}</span>
+            <span class="chain-arrow">=</span>
+            <span class="chain-state">${state}</span>${confStr}
+          </div>`;
+        }
+      }
+
+      html += `<div class="chain-output">
+        <span class="chain-arrow">&rarr;</span> ${varId.replace(/_/g, ' ')} = <strong>${labelState(varId, chain.mode)}</strong> (${chain.prob}%)
+      </div>`;
+
+      const marginPct = (chain.margin * 100).toFixed(1);
+      let marginQuality = 'strong';
+      if (chain.margin < 0.1) marginQuality = 'weak — treat with caution';
+      else if (chain.margin < 0.3) marginQuality = 'moderate';
+
+      html += `<div class="chain-margin">Prediction margin: ${marginPct}pp (${marginQuality}). Confidence: ${chain.confidence}.</div>`;
+
+      el.innerHTML = html;
+    }
+  }
+
   // --- MAIN RENDER ---
   function render(data) {
     const questionsEl = document.getElementById('questions-container');
     const questions = data.questions;
 
-    // Compute oil answer dynamically
-    const latestOilPrice = data.oil_prices_usd[data.dates[data.dates.length - 1]];
-    const firstOilPrice = 71.65; // pre-war Brent baseline
-    const oilPctChange = ((latestOilPrice - firstOilPrice) / firstOilPrice * 100).toFixed(1);
-    ANSWERS[1] = `Model predicts <strong>$110–150/bbl</strong> range with 97% probability. Actual Brent: <span class="big-number">$${latestOilPrice.toFixed(2)}</span>/bbl, up ${oilPctChange}% in three weeks. On March 14, the model had oil in the $85–110 range (94%). It jumped to the $110–150 band on March 16 after Kharg Island was struck.`;
-
     let html = '';
 
     questions.forEach((q, i) => {
       const num = i + 1;
-      const sourceClass = q.source_type === 'structural' ? 'model' : 'osint';
-      const sourceLabel = q.source_type === 'structural' ? 'Model Prediction' : 'OSINT Assessed';
-      const chartId = 'chart-' + q.id;
+      const varId = q.var;
+      const chartId = 'chart-' + varId;
+      const answer = ANSWERS[varId] || '';
+      const context = CONTEXT[varId] || '';
 
       html += `
         <article class="question-card" id="q${num}">
@@ -929,11 +1024,13 @@ body::before {
               <span class="q-number">${num}</span>
               <span class="q-text">${q.question}</span>
             </div>
-            <span class="source-badge ${sourceClass}">${sourceLabel}</span>
+            <span class="source-badge">Model Prediction</span>
           </div>
-          <div class="the-answer">${ANSWERS[i]}</div>
+          <div class="the-answer">${answer}</div>
           <div id="${chartId}"></div>
-          <div class="context-line">${CONTEXT[i]}</div>
+          <div class="context-line">${context}</div>
+          <button class="evidence-toggle" onclick="toggleEvidence('ev-${varId}', this)">How we arrived at this</button>
+          <div class="evidence-chain" id="ev-${varId}"></div>
         </article>
       `;
     });
@@ -941,12 +1038,13 @@ body::before {
     questionsEl.innerHTML = html;
 
     // Render charts
-    questions.forEach((q, i) => {
-      renderStackedAreaChart('chart-' + q.id, q.timeline, q.primary_var);
+    questions.forEach((q) => {
+      renderStackedAreaChart('chart-' + q.var, q.timeline, q.var);
     });
 
     // Render MC
     renderMCChart(data);
+    renderEvidenceChains(data);
 
     // Update MC stats from latest data
     const lastMC = data.mc_trend[data.mc_trend.length - 1];
