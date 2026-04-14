@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Seven Amendments &mdash; The 131st Amendment &mdash; DataChutney</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.app{display:flex;min-height:100vh}.sidebar{width:260px;flex-shrink:0;background:var(--navy);color:#ccc;padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;transition:margin-left .25s ease;z-index:50}.sidebar.collapsed{margin-left:-260px}.sidebar-title{display:block;font-size:1.3rem;font-weight:700;color:#fff;padding:1.25rem 1.25rem .5rem;text-decoration:none;line-height:1.2;font-family:Georgia,serif}.sidebar-title:hover{color:var(--gold-l)}.sidebar-sub{font-size:.65rem;color:#888;padding:0 1.25rem .75rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.08)}.sidebar-brand{margin-top:auto;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.1em;color:#555;padding:.75rem 1.25rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-brand a{color:#666;text-decoration:none}.sidebar-section{font-family:'Courier New',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.12em;color:#666;padding:.5rem 1.25rem .25rem}.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;color:#999;text-decoration:none;font-size:.78rem;border-left:3px solid transparent;transition:all .12s}.sidebar a:hover{color:#fff;background:rgba(255,255,255,.04)}.sidebar a.active{color:#fff;border-left-color:var(--gold);background:rgba(255,255,255,.06)}.sidebar-num{font-family:'Courier New',monospace;font-size:.5rem;color:var(--gold);font-weight:700;min-width:18px}.sidebar-toggle{position:fixed;top:.75rem;left:.75rem;z-index:60;width:32px;height:32px;background:var(--navy);color:var(--gold-l);border:1px solid rgba(255,255,255,.15);border-radius:4px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:left .25s ease}.sidebar-toggle.shifted{left:268px}.main-content{flex:1;min-width:0}@media(max-width:768px){.sidebar{position:fixed;height:100vh}}
+</style>
+</head>
+<body>
+<button class="sidebar-toggle shifted" id="sidebar-toggle" aria-label="Toggle navigation">&#9776;</button>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <a href="./" class="sidebar-title">The 131st<br>Amendment</a>
+    <div class="sidebar-sub">Women's reservation, Lok Sabha expansion, and the rewriting of India's delimitation rules.</div>
+    <div class="sidebar-section">Explore</div>
+    <a href="./"><span class="sidebar-num">&bull;</span> Simulator</a>
+    <div class="sidebar-section">Analysis</div>
+    <a href="bill.html"><span class="sidebar-num">01</span> What the Bill Does</a>
+    <a href="clauses.html"><span class="sidebar-num">02</span> The Seven Amendments</a>
+    <a href="history.html"><span class="sidebar-num">03</span> The 50-Year Freeze</a>
+    <a href="perspectives.html"><span class="sidebar-num">04</span> Four Perspectives</a>
+    <a href="sources.html"><span class="sidebar-num">05</span> Sources</a>
+    <div class="sidebar-brand"><a href="https://datachutney.io">DataChutney</a> &middot; April 2026</div>
+  </nav>
+  <div class="main-content">
+    <div class="page-header">
+      <div class="section-num">Section 02</div>
+      <h1>The Seven Amendments</h1>
+      <div class="page-sub">Click each clause to see the current text, the proposed change, and what&rsquo;s at stake.</div>
+    </div>
+    <div class="page-body"><div class="wide">
+
+      <p style="max-width:720px">The bill amends Articles 55, 81, 82, 170, 330, 332, and 334A of the Constitution. In five of six substantive clauses, the same transformation occurs: <strong>"the last preceding census"</strong> becomes <strong>"such census as Parliament may by law determine."</strong></p>
+
+      <div id="clause-grid" style="margin-top:1.5rem"></div>
+
+      <div class="danger" style="max-width:720px;margin-top:1.5rem">
+        <span class="danger-label">The pattern</span>
+        The third proviso &mdash; the freeze that has protected seat allocation since 1976 &mdash; is deleted in both Article 82 (Lok Sabha) and Article 170 (State Assemblies). The choice of which census to use moves from constitutional text to ordinary legislation.
+      </div>
+
+      <div class="sidenote" style="max-width:720px">
+        <span class="sidenote-label">Source</span>
+        All text from the bill as circulated: Bill No. 107 of 2026. Constitutional text from the Annexure to the bill. Analysis: <a href="https://www.livelaw.in/top-stories/centre-proposes-constitution-amendment-to-increase-lok-sabha-seats-to-850-to-allow-delimitation-before-2026-census-530262" target="_blank" rel="noopener">LiveLaw</a>.
+      </div>
+
+      <div class="page-nav" style="max-width:720px">
+        <a href="bill.html">&larr; 01 What the Bill Does</a>
+        <a href="history.html">03 The 50-Year Freeze &rarr;</a>
+      </div>
+    </div></div>
+
+    <footer><a href="https://datachutney.io">DataChutney</a> &middot; April 2026 &middot; Independent and non-partisan.</footer>
+  </div>
+</div>
+<script src="js/data.js"></script>
+<script>
+document.getElementById('sidebar-toggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('collapsed');document.getElementById('sidebar-toggle').classList.toggle('shifted')});
+// Render clause cards
+const grid = document.getElementById('clause-grid');
+if (grid && window.DATA) {
+  grid.innerHTML = window.DATA.CLAUSES.map(c => {
+    const pdfHtml = c.pdf ? `
+      <div style="border-top:1px solid var(--border-l);background:#fff;overflow:hidden">
+        <div style="background:var(--navy);color:#aaa;padding:.3rem .75rem;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.05em;text-transform:uppercase">From the bill \u2014 ${c.pdf.label}</div>
+        <img src="${c.pdf.img}" alt="Highlighted excerpt - Article ${c.article}" style="width:100%;display:block" loading="lazy">
+      </div>` : '';
+    return `
+    <div class="clause-card" onclick="this.classList.toggle('open')">
+      <div class="clause-header">
+        <span class="clause-article">Art. ${c.article}</span>
+        <span class="clause-title">${c.title}</span>
+        <span class="clause-chevron">&#9660;</span>
+      </div>
+      <div class="clause-body">
+        <div class="clause-comparison">
+          <div class="clause-before"><span class="clause-col-label">Current Constitution</span>${c.before}</div>
+          <div class="clause-after"><span class="clause-col-label">Proposed Change</span>${c.after}</div>
+        </div>
+        <div class="clause-risk">${c.risk}</div>
+        ${pdfHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

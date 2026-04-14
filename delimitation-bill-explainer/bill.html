@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What the Bill Does &mdash; The 131st Amendment &mdash; DataChutney</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.app{display:flex;min-height:100vh}.sidebar{width:260px;flex-shrink:0;background:var(--navy);color:#ccc;padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;transition:margin-left .25s ease;z-index:50}.sidebar.collapsed{margin-left:-260px}.sidebar-title{display:block;font-size:1.3rem;font-weight:700;color:#fff;padding:1.25rem 1.25rem .5rem;text-decoration:none;line-height:1.2;font-family:Georgia,serif}.sidebar-title:hover{color:var(--gold-l)}.sidebar-sub{font-size:.65rem;color:#888;padding:0 1.25rem .75rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.08)}.sidebar-brand{margin-top:auto;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.1em;color:#555;padding:.75rem 1.25rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-brand a{color:#666;text-decoration:none}.sidebar-section{font-family:'Courier New',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.12em;color:#666;padding:.5rem 1.25rem .25rem}.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;color:#999;text-decoration:none;font-size:.78rem;border-left:3px solid transparent;transition:all .12s}.sidebar a:hover{color:#fff;background:rgba(255,255,255,.04)}.sidebar a.active{color:#fff;border-left-color:var(--gold);background:rgba(255,255,255,.06)}.sidebar-num{font-family:'Courier New',monospace;font-size:.5rem;color:var(--gold);font-weight:700;min-width:18px}.sidebar-toggle{position:fixed;top:.75rem;left:.75rem;z-index:60;width:32px;height:32px;background:var(--navy);color:var(--gold-l);border:1px solid rgba(255,255,255,.15);border-radius:4px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:left .25s ease}.sidebar-toggle.shifted{left:268px}.main-content{flex:1;min-width:0}@media(max-width:768px){.sidebar{position:fixed;height:100vh}}
+</style>
+</head>
+<body>
+<button class="sidebar-toggle shifted" id="sidebar-toggle" aria-label="Toggle navigation">&#9776;</button>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <a href="./" class="sidebar-title">The 131st<br>Amendment</a>
+    <div class="sidebar-sub">Women's reservation, Lok Sabha expansion, and the rewriting of India's delimitation rules.</div>
+    <div class="sidebar-section">Explore</div>
+    <a href="./"><span class="sidebar-num">&bull;</span> Simulator</a>
+    <div class="sidebar-section">Analysis</div>
+    <a href="bill.html"><span class="sidebar-num">01</span> What the Bill Does</a>
+    <a href="clauses.html"><span class="sidebar-num">02</span> The Seven Amendments</a>
+    <a href="history.html"><span class="sidebar-num">03</span> The 50-Year Freeze</a>
+    <a href="perspectives.html"><span class="sidebar-num">04</span> Four Perspectives</a>
+    <a href="sources.html"><span class="sidebar-num">05</span> Sources</a>
+    <div class="sidebar-brand"><a href="https://datachutney.io">DataChutney</a> &middot; April 2026</div>
+  </nav>
+  <div class="main-content">
+    <div class="page-header">
+      <div class="section-num">Section 01</div>
+      <h1>What the Bill Does</h1>
+      <div class="page-sub">Three objectives, one constitutional amendment.</div>
+    </div>
+    <div class="page-body"><div class="prose">
+
+      <p>On April 11, 2026, the government circulated the <strong>Constitution (One Hundred and Thirty-first Amendment) Bill</strong> to Members of Parliament. It is scheduled for formal introduction in Lok Sabha on April 16, during a special session. The bill does three things simultaneously:</p>
+
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-number">850</span><span class="stat-label">New Lok Sabha Cap</span></div>
+        <div class="stat-box"><span class="stat-number">33%</span><span class="stat-label">Women's Reservation</span></div>
+        <div class="stat-box"><span class="stat-number">7</span><span class="stat-label">Articles Amended</span></div>
+      </div>
+
+      <h3>1. Expand the Lok Sabha</h3>
+      <p>The bill raises the maximum number of elected Lok Sabha members from 550 (530 states + 20 UTs) to <strong>850</strong> (815 states + 35 UTs). This is a ceiling &mdash; the actual number will be determined by the Delimitation Commission. Reports indicate the plan is <strong>816 seats</strong>: the current 543 plus 273 new constituencies, all reserved for women.</p>
+
+      <h3>2. Activate women's reservation</h3>
+      <p>The 106th Amendment (2023), known as the <em>Nari Shakti Vandan Adhiniyam</em>, promised one-third reservation for women in the Lok Sabha and state assemblies. But it included a catch: the reservation would only take effect after a delimitation exercise based on the <em>first census taken after 2023</em>. Since no census has been conducted since 2011, the provision remained dormant.</p>
+      <p>This bill removes that requirement. It allows delimitation &mdash; and thus women's reservation &mdash; to proceed using the <strong>latest published census</strong>, which is currently the 2011 census.</p>
+
+      <h3>3. Rewrite the delimitation framework</h3>
+      <p>This is the component with the most far-reaching consequences. The bill amends the definition of "population" in six constitutional articles, replacing a fixed reference ("the last preceding census") with a flexible one ("such census as Parliament may by law determine"). It also deletes the constitutional freeze that has kept seat allocation based on 1971 census data for the past 50 years.</p>
+
+      <div class="bill-quote">
+        The proposed Bill would facilitate delimitation of territorial constituencies and put in operation, the provisions providing for reservation of seats for women in the House of the People and the Legislative Assemblies.
+        <span class="source">Statement of Objects and Reasons, Bill No. 107 of 2026, Para 7</span>
+      </div>
+
+      <h3>From the bill: Why delimitation and women's reservation are linked</h3>
+      <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;background:#fff;margin:1rem 0">
+        <div style="background:var(--navy);color:#aaa;padding:.3rem .75rem;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.05em;text-transform:uppercase">Statement of Objects &mdash; Bill page 4 &mdash; Demographic changes</div>
+        <img src="pdf-highlights/objects_demographic.png" alt="Statement of Objects - demographic changes" style="width:100%;display:block" loading="lazy">
+      </div>
+      <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;background:#fff;margin:1rem 0">
+        <div style="background:var(--navy);color:#aaa;padding:.3rem .75rem;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.05em;text-transform:uppercase">Statement of Objects &mdash; Bill page 4 &mdash; Women's reservation linked to delimitation</div>
+        <img src="pdf-highlights/objects_linked.png" alt="Statement of Objects - reservation linked to delimitation" style="width:100%;display:block" loading="lazy">
+      </div>
+
+      <div class="sidenote">
+        <span class="sidenote-label">Sources</span>
+        Bill text: <a href="https://www.barandbench.com/news/law-policy/union-government-proposes-constitution-amendment-bill-to-increase-lok-sabha-strength-to-850" target="_blank" rel="noopener">Bar &amp; Bench</a>. 816-seat plan: <a href="https://timesofindia.indiatimes.com/india/parliament-seats-may-be-increased-to-816-for-1/3rd-womens-reservation/articleshow/129764257.cms" target="_blank" rel="noopener">Times of India, Mar 24, 2026</a>. 106th Amendment: <a href="https://prsindia.org/billtrack/the-constitution-one-hundred-twenty-eighth-amendment-bill-2023" target="_blank" rel="noopener">PRS Legislative Research</a>.
+      </div>
+
+      <div class="page-nav">
+        <a href="./">&larr; Simulator</a>
+        <a href="clauses.html">02 Seven Amendments &rarr;</a>
+      </div>
+    </div></div>
+
+    <footer><a href="https://datachutney.io">DataChutney</a> &middot; April 2026 &middot; Independent and non-partisan.</footer>
+  </div>
+</div>
+<script>
+document.getElementById('sidebar-toggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('collapsed');document.getElementById('sidebar-toggle').classList.toggle('shifted')});
+</script>
+</body>
+</html>

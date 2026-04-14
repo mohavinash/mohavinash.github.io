@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four Perspectives &mdash; The 131st Amendment &mdash; DataChutney</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.app{display:flex;min-height:100vh}.sidebar{width:260px;flex-shrink:0;background:var(--navy);color:#ccc;padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;transition:margin-left .25s ease;z-index:50}.sidebar.collapsed{margin-left:-260px}.sidebar-title{display:block;font-size:1.3rem;font-weight:700;color:#fff;padding:1.25rem 1.25rem .5rem;text-decoration:none;line-height:1.2;font-family:Georgia,serif}.sidebar-title:hover{color:var(--gold-l)}.sidebar-sub{font-size:.65rem;color:#888;padding:0 1.25rem .75rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.08)}.sidebar-brand{margin-top:auto;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.1em;color:#555;padding:.75rem 1.25rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-brand a{color:#666;text-decoration:none}.sidebar-section{font-family:'Courier New',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.12em;color:#666;padding:.5rem 1.25rem .25rem}.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;color:#999;text-decoration:none;font-size:.78rem;border-left:3px solid transparent;transition:all .12s}.sidebar a:hover{color:#fff;background:rgba(255,255,255,.04)}.sidebar a.active{color:#fff;border-left-color:var(--gold);background:rgba(255,255,255,.06)}.sidebar-num{font-family:'Courier New',monospace;font-size:.5rem;color:var(--gold);font-weight:700;min-width:18px}.sidebar-toggle{position:fixed;top:.75rem;left:.75rem;z-index:60;width:32px;height:32px;background:var(--navy);color:var(--gold-l);border:1px solid rgba(255,255,255,.15);border-radius:4px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:left .25s ease}.sidebar-toggle.shifted{left:268px}.main-content{flex:1;min-width:0}@media(max-width:768px){.sidebar{position:fixed;height:100vh}}
+</style>
+</head>
+<body>
+<button class="sidebar-toggle shifted" id="sidebar-toggle" aria-label="Toggle navigation">&#9776;</button>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <a href="./" class="sidebar-title">The 131st<br>Amendment</a>
+    <div class="sidebar-sub">Women's reservation, Lok Sabha expansion, and the rewriting of India's delimitation rules.</div>
+    <div class="sidebar-section">Explore</div>
+    <a href="./"><span class="sidebar-num">&bull;</span> Simulator</a>
+    <div class="sidebar-section">Analysis</div>
+    <a href="bill.html"><span class="sidebar-num">01</span> What the Bill Does</a>
+    <a href="clauses.html"><span class="sidebar-num">02</span> The Seven Amendments</a>
+    <a href="history.html"><span class="sidebar-num">03</span> The 50-Year Freeze</a>
+    <a href="perspectives.html"><span class="sidebar-num">04</span> Four Perspectives</a>
+    <a href="sources.html"><span class="sidebar-num">05</span> Sources</a>
+    <div class="sidebar-brand"><a href="https://datachutney.io">DataChutney</a> &middot; April 2026</div>
+  </nav>
+  <div class="main-content">
+    <div class="page-header">
+      <div class="section-num">Section 05</div>
+      <h1>Four Perspectives</h1>
+      <div class="page-sub">The same bill, seen through four different lenses.</div>
+    </div>
+    <div class="page-body"><div class="wide" style="max-width:800px">
+
+      <p>This bill sits at the intersection of gender justice, federalism, electoral strategy, and constitutional process. Click each perspective to explore.</p>
+
+      <details class="perspective" open>
+        <summary><span class="perspective-num">1</span><span class="perspective-title">Women's Representation</span></summary>
+        <div class="perspective-body">
+          <p>India ranks <strong>143rd of 190 countries</strong> in women's parliamentary representation. The 106th Amendment (2023) promised one-third reservation but tied it to a future census &mdash; effectively making it contingent on an event that hadn't been scheduled.</p>
+          <p>This bill breaks that deadlock. By allowing delimitation based on the latest published census, it makes women's reservation actionable before the 2029 elections.</p>
+          <p><strong>The counterargument:</strong> women's reservation could have been implemented within the existing 543 seats, without tying it to seat expansion or delimitation. The 106th Amendment's original design &mdash; linking reservation to a new census &mdash; was deliberate.</p>
+          <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;background:#fff;margin:1rem 0">
+            <div style="background:var(--navy);color:#aaa;padding:.3rem .75rem;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.05em;text-transform:uppercase">Original Article 334A (106th Amendment, 2023) &mdash; What this bill replaces</div>
+            <img src="pdf-highlights/original_art334a.png" alt="Original Article 334A text" style="width:100%;display:block" loading="lazy">
+          </div>
+          <div class="sidenote"><span class="sidenote-label">Source</span> IPU rankings. 106th Amendment: <a href="https://prsindia.org/billtrack/the-constitution-one-hundred-twenty-eighth-amendment-bill-2023" target="_blank" rel="noopener">PRS</a>.</div>
+        </div>
+      </details>
+
+      <details class="perspective">
+        <summary><span class="perspective-num">2</span><span class="perspective-title">Federal Balance: North vs. South</span></summary>
+        <div class="perspective-body">
+          <p>For 50 years, a constitutional compact ensured states that controlled population growth would not lose political power. Southern states &mdash; Tamil Nadu (TFR 1.8), Kerala (1.8) &mdash; invested in family planning. Northern states &mdash; UP (2.4), Bihar (3.0) &mdash; did not achieve the same results.</p>
+          <p>Under pure population-based allocation using 2011 data at 816 seats:</p>
+          <ul style="margin:.5rem 0 1rem 1.5rem;font-size:.85rem;line-height:1.8">
+            <li>Tamil Nadu's <em>share of Parliament</em> drops from 7.2% to 5.8% &mdash; a 19% reduction in influence</li>
+            <li>Kerala's share falls from 3.7% to 2.7% &mdash; a 27% reduction</li>
+            <li>UP's share rises from 14.7% to 15.6%</li>
+          </ul>
+          <p>Whether this is "fair representation" or a "population penalty" depends on your theory of federalism. <a href="history.html">Explore the numbers yourself &rarr;</a></p>
+          <div class="sidenote"><span class="sidenote-label">Sources</span> TFR: NFHS-5. Analysis: <a href="https://thesquirrels.in/politics/india-2026-delimitation-demographic-penalty-south-11257598" target="_blank" rel="noopener">The Squirrels</a>. <a href="https://www.isas.nus.edu.sg/papers/delimitation-of-constituencies-in-india-southern-states-up-in-arms/" target="_blank" rel="noopener">NUS ISAS</a>.</div>
+        </div>
+      </details>
+
+      <details class="perspective">
+        <summary><span class="perspective-num">3</span><span class="perspective-title">Constitutional Process</span></summary>
+        <div class="perspective-body">
+          <p>Currently, the choice of which census determines seat allocation is embedded in the Constitution (Articles 81, 82, 170). Changing it requires a <strong>constitutional amendment</strong>: two-thirds majority plus ratification by half the state legislatures.</p>
+          <p>The bill replaces "the last preceding census" with "such census as Parliament may by law determine." After this passes, the census choice becomes <strong>ordinary legislation</strong> &mdash; simple majority, no state ratification.</p>
+          <p>This is a one-way change. Future governments can pick whichever census suits them without amending the Constitution again. The same structural change also affects SC/ST reservation (Art. 330) and Presidential election vote weighting (Art. 55).</p>
+          <div class="sidenote"><span class="sidenote-label">Source</span> Article 368, Constitution. <a href="https://rsisinternational.org/journals/ijriss/articles/north-south-divide-constitutional-challenges-and-federal-implications-of-indias-2026-delimitation-exercise/" target="_blank" rel="noopener">IJRISS</a>.</div>
+        </div>
+      </details>
+
+      <details class="perspective">
+        <summary><span class="perspective-num">4</span><span class="perspective-title">Future Governments &amp; the Delimitation Commission</span></summary>
+        <div class="perspective-body">
+          <p>This bill doesn't directly allocate seats. It creates a framework: a Delimitation Commission (chaired by a Supreme Court judge) will draw boundaries. Its orders have the force of law and <strong>cannot be challenged in court</strong>.</p>
+          <p>The critical question is what happens <em>after</em> this bill becomes law:</p>
+          <ul style="margin:.5rem 0 1rem 1.5rem;font-size:.85rem;line-height:1.8">
+            <li>Any future government can choose which census to use &mdash; by simple majority</li>
+            <li>The 850-seat cap is a ceiling, not a mandate &mdash; the actual number is decided later</li>
+            <li>Women's reservation expires 15 years from 2023 unless Parliament extends it</li>
+          </ul>
+          <p>A different government in 2034 could choose a different census, resize the house, or let women's reservation lapse. The bill creates the mechanism; politics determines how it's used.</p>
+          <div class="sidenote"><span class="sidenote-label">Source</span> <a href="https://www.livelaw.in/top-stories/centre-proposes-constitution-amendment-to-increase-lok-sabha-seats-to-850-to-allow-delimitation-before-2026-census-530262" target="_blank" rel="noopener">LiveLaw</a>. Bill clause 8 (Art. 334A).</div>
+        </div>
+      </details>
+
+      <div class="page-nav">
+        <a href="history.html">&larr; 03 The 50-Year Freeze</a>
+        <a href="sources.html">05 Sources &rarr;</a>
+      </div>
+    </div></div>
+
+    <footer><a href="https://datachutney.io">DataChutney</a> &middot; April 2026 &middot; Independent and non-partisan.</footer>
+  </div>
+</div>
+<script>
+document.getElementById('sidebar-toggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('collapsed');document.getElementById('sidebar-toggle').classList.toggle('shifted')});
+</script>
+</body>
+</html>

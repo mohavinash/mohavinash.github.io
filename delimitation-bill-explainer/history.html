@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 50-Year Freeze &mdash; The 131st Amendment &mdash; DataChutney</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.app{display:flex;min-height:100vh}.sidebar{width:260px;flex-shrink:0;background:var(--navy);color:#ccc;padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;transition:margin-left .25s ease;z-index:50}.sidebar.collapsed{margin-left:-260px}.sidebar-title{display:block;font-size:1.3rem;font-weight:700;color:#fff;padding:1.25rem 1.25rem .5rem;text-decoration:none;line-height:1.2;font-family:Georgia,serif}.sidebar-title:hover{color:var(--gold-l)}.sidebar-sub{font-size:.65rem;color:#888;padding:0 1.25rem .75rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.08)}.sidebar-brand{margin-top:auto;font-family:'Courier New',monospace;font-size:.5rem;letter-spacing:.1em;color:#555;padding:.75rem 1.25rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-brand a{color:#666;text-decoration:none}.sidebar-section{font-family:'Courier New',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.12em;color:#666;padding:.5rem 1.25rem .25rem}.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;color:#999;text-decoration:none;font-size:.78rem;border-left:3px solid transparent;transition:all .12s}.sidebar a:hover{color:#fff;background:rgba(255,255,255,.04)}.sidebar a.active{color:#fff;border-left-color:var(--gold);background:rgba(255,255,255,.06)}.sidebar-num{font-family:'Courier New',monospace;font-size:.5rem;color:var(--gold);font-weight:700;min-width:18px}.sidebar-toggle{position:fixed;top:.75rem;left:.75rem;z-index:60;width:32px;height:32px;background:var(--navy);color:var(--gold-l);border:1px solid rgba(255,255,255,.15);border-radius:4px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:left .25s ease}.sidebar-toggle.shifted{left:268px}.main-content{flex:1;min-width:0}@media(max-width:768px){.sidebar{position:fixed;height:100vh}}
+</style>
+</head>
+<body>
+<button class="sidebar-toggle shifted" id="sidebar-toggle" aria-label="Toggle navigation">&#9776;</button>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <a href="./" class="sidebar-title">The 131st<br>Amendment</a>
+    <div class="sidebar-sub">Women's reservation, Lok Sabha expansion, and the rewriting of India's delimitation rules.</div>
+    <div class="sidebar-section">Explore</div>
+    <a href="./"><span class="sidebar-num">&bull;</span> Simulator</a>
+    <div class="sidebar-section">Analysis</div>
+    <a href="bill.html"><span class="sidebar-num">01</span> What the Bill Does</a>
+    <a href="clauses.html"><span class="sidebar-num">02</span> The Seven Amendments</a>
+    <a href="history.html"><span class="sidebar-num">03</span> The 50-Year Freeze</a>
+    <a href="perspectives.html"><span class="sidebar-num">04</span> Four Perspectives</a>
+    <a href="sources.html"><span class="sidebar-num">05</span> Sources</a>
+    <div class="sidebar-brand"><a href="https://datachutney.io">DataChutney</a> &middot; April 2026</div>
+  </nav>
+  <div class="main-content">
+    <div class="page-header">
+      <div class="section-num">Section 03</div>
+      <h1>The 50-Year Freeze</h1>
+      <div class="page-sub">How a constitutional compact protected states that controlled population growth &mdash; and why this bill ends it.</div>
+    </div>
+    <div class="page-body"><div class="prose">
+
+      <p>Since 1976, India has maintained a deliberate constitutional bargain: <strong>states that control population growth will not lose political power for doing so.</strong> To understand what the 131st Amendment undoes, you need to understand what was built.</p>
+
+      <div class="timeline" id="timeline"></div>
+
+      <h3>The demographic divergence</h3>
+      <p>The freeze worked. Southern states invested in education, healthcare, and family planning. Their fertility rates dropped below replacement. Northern states did not achieve the same results.</p>
+
+      <div class="stat-row">
+        <div class="stat-box" style="background:var(--rs)"><span class="stat-number">1.8</span><span class="stat-label">Tamil Nadu TFR</span></div>
+        <div class="stat-box" style="background:var(--rs)"><span class="stat-number">1.8</span><span class="stat-label">Kerala TFR</span></div>
+        <div class="stat-box" style="background:var(--rn)"><span class="stat-number">2.4</span><span class="stat-label">UP TFR</span></div>
+        <div class="stat-box" style="background:var(--rn)"><span class="stat-number">3.0</span><span class="stat-label">Bihar TFR</span></div>
+      </div>
+
+      <p>Between 1971 and 2024, Uttar Pradesh's population grew by <strong>180%</strong>. Tamil Nadu's grew by <strong>89%</strong>. Kerala's by <strong>67%</strong>. The freeze ensured this divergence didn't translate into a transfer of political power from states that succeeded to states that didn't.</p>
+
+      <p>The 131st Amendment Bill deletes the freeze &mdash; and with it, the 50-year compact.</p>
+
+      <div class="sidenote">
+        <span class="sidenote-label">Sources</span>
+        TFR: NFHS-5 (2019-21). Population: Census 1971 &amp; 2011 + NCP projections (2020). Constitutional amendments: 42nd (1976), 84th (2001), 87th (2003). Analysis: <a href="https://thesquirrels.in/politics/india-2026-delimitation-demographic-penalty-south-11257598" target="_blank" rel="noopener">The Squirrels</a>.
+      </div>
+
+      <div class="page-nav">
+        <a href="clauses.html">&larr; 02 Seven Amendments</a>
+        <a href="perspectives.html">04 Four Perspectives &rarr;</a>
+      </div>
+    </div></div>
+
+    <footer><a href="https://datachutney.io">DataChutney</a> &middot; April 2026 &middot; Independent and non-partisan.</footer>
+  </div>
+</div>
+<script src="js/data.js"></script>
+<script>
+document.getElementById('sidebar-toggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('collapsed');document.getElementById('sidebar-toggle').classList.toggle('shifted')});
+const tl = document.getElementById('timeline');
+if (tl && window.DATA) {
+  tl.innerHTML = window.DATA.TIMELINE.map(t => `
+    <div class="tl-item ${t.type}">
+      <div class="tl-dot"></div>
+      <div class="tl-year">${t.year}</div>
+      <div class="tl-title">${t.title}</div>
+      <div class="tl-desc">${t.desc}</div>
+    </div>`).join('');
+}
+</script>
+</body>
+</html>
