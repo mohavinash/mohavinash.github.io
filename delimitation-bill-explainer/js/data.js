@@ -119,6 +119,25 @@ const TIMELINE = [
 // ─── Allocation Engine ─────────────────────────────────────────
 function allocateSeats(totalSeats, popKey, formula, devWeight) {
   const w = devWeight || 0.3;
+
+  // Proportionate formula: scale each state's current seats by the same ratio
+  if (formula === 'proportionate') {
+    const currentTotal = STATES.reduce((s, d) => s + d.seats, 0);
+    const ratio = totalSeats / currentTotal;
+    // Use largest remainder on scaled values
+    let raw = STATES.map(d => {
+      const exact = d.seats * ratio;
+      return { ...d, rawSeats: exact, floor: Math.max(1, Math.floor(exact)) };
+    });
+    let assigned = raw.reduce((s, d) => s + d.floor, 0);
+    let remainder = raw.map((d, i) => ({ i, r: d.rawSeats - d.floor })).sort((a, b) => b.r - a.r);
+    let left = totalSeats - assigned;
+    for (let k = 0; k < left && k < remainder.length; k++) {
+      raw[remainder[k].i].floor++;
+    }
+    return raw.map(d => ({ ...d, newSeats: d.floor }));
+  }
+
   const states = STATES.filter(s => s.region !== "UT");
   const uts = STATES.filter(s => s.region === "UT");
 
