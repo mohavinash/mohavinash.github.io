@@ -124,13 +124,14 @@
         d3.select(this).attr('stroke', '#1a1a2e').attr('stroke-width', 1.5);
       })
       .on('mousemove', function(event) {
-        // Position tooltip using fixed viewport coords — renders over everything
+        const tw = 220, th = 90;
         let x = event.clientX + 16;
         let y = event.clientY - 80;
-        // Flip left if too close to right edge
-        if (x + 220 > window.innerWidth) x = event.clientX - 230;
-        // Flip down if too close to top
-        if (y < 10) y = event.clientY + 16;
+        // Clamp to viewport on all sides
+        if (x + tw > window.innerWidth - 8) x = window.innerWidth - tw - 8;
+        if (x < 8) x = 8;
+        if (y < 8) y = event.clientY + 16;
+        if (y + th > window.innerHeight - 8) y = window.innerHeight - th - 8;
         tooltip.style.left = x + 'px';
         tooltip.style.top = y + 'px';
       })

@@ -96,8 +96,10 @@
 .map-tooltip{position:fixed;background:var(--navy);color:#fff;padding:.4rem .65rem;border-radius:4px;font-size:.65rem;font-family:'Courier New',monospace;pointer-events:none;opacity:0;transition:opacity .12s;z-index:999;max-width:220px;line-height:1.4}
 
 @media(max-width:900px){
-  .sim-body{grid-template-columns:1fr;grid-template-rows:300px 1fr}
-  .sim-map{border-right:none;border-bottom:1px solid var(--border)}
+  .main-content{height:auto;overflow:auto}
+  .sim-body{grid-template-columns:1fr;grid-template-rows:auto auto;overflow:visible}
+  .sim-map{border-right:none;border-bottom:1px solid var(--border);min-height:350px;height:60vw;max-height:500px}
+  .sim-table-area{overflow-x:auto;max-height:none}
   .sim-bar{padding:.5rem 1rem;gap:.75rem}
 }
 @media(max-width:768px){.sidebar{position:fixed;height:100vh}}
