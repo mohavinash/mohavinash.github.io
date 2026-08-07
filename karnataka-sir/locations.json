@@ -1,0 +1,1297 @@
+{
+  "snapshot_id": "538339a93ab7884573e3",
+  "districts": [
+    {
+      "name": "BAGALKOT",
+      "constituencies": [
+        {
+          "number": 19,
+          "name": "Mudhol",
+          "data_available": true
+        },
+        {
+          "number": 20,
+          "name": "Terdal",
+          "data_available": true
+        },
+        {
+          "number": 21,
+          "name": "Jamkhandi",
+          "data_available": true
+        },
+        {
+          "number": 22,
+          "name": "Bilgi",
+          "data_available": true
+        },
+        {
+          "number": 23,
+          "name": "Badami",
+          "data_available": true
+        },
+        {
+          "number": 24,
+          "name": "Bagalkot",
+          "data_available": true
+        },
+        {
+          "number": 25,
+          "name": "Hungund",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BALLARI",
+      "constituencies": [
+        {
+          "number": 91,
+          "name": "Kampli",
+          "data_available": true
+        },
+        {
+          "number": 92,
+          "name": "Siraguppa",
+          "data_available": true
+        },
+        {
+          "number": 93,
+          "name": "Bellary",
+          "data_available": true
+        },
+        {
+          "number": 94,
+          "name": "Bellary City",
+          "data_available": true
+        },
+        {
+          "number": 95,
+          "name": "Sandur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BANGALORE RURAL",
+      "constituencies": [
+        {
+          "number": 178,
+          "name": "Hosakote",
+          "data_available": true
+        },
+        {
+          "number": 179,
+          "name": "Devanahalli",
+          "data_available": true
+        },
+        {
+          "number": 180,
+          "name": "Doddaballapur",
+          "data_available": true
+        },
+        {
+          "number": 181,
+          "name": "Nelamangala",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BANGALORE URBAN",
+      "constituencies": [
+        {
+          "number": 150,
+          "name": "Yelahanka",
+          "data_available": true
+        },
+        {
+          "number": 152,
+          "name": "Byatarayanapura",
+          "data_available": true
+        },
+        {
+          "number": 153,
+          "name": "Yeshwanthapura",
+          "data_available": true
+        },
+        {
+          "number": 155,
+          "name": "Dasarahalli",
+          "data_available": true
+        },
+        {
+          "number": 174,
+          "name": "Mahadevapura",
+          "data_available": true
+        },
+        {
+          "number": 176,
+          "name": "Bangalore South",
+          "data_available": true
+        },
+        {
+          "number": 177,
+          "name": "Anekal",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BBMP CENTRAL",
+      "constituencies": [
+        {
+          "number": 154,
+          "name": "Rajarajeshwarinagar",
+          "data_available": true
+        },
+        {
+          "number": 162,
+          "name": "Shivajinagar",
+          "data_available": true
+        },
+        {
+          "number": 163,
+          "name": "Shantinagar",
+          "data_available": true
+        },
+        {
+          "number": 164,
+          "name": "Gandhinagar",
+          "data_available": true
+        },
+        {
+          "number": 165,
+          "name": "Rajajinagar",
+          "data_available": true
+        },
+        {
+          "number": 168,
+          "name": "Chamrajapet",
+          "data_available": true
+        },
+        {
+          "number": 169,
+          "name": "Chickpet",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BBMP NORTH",
+      "constituencies": [
+        {
+          "number": 151,
+          "name": "K.R. Pura",
+          "data_available": true
+        },
+        {
+          "number": 156,
+          "name": "Mahalakshmi Layout",
+          "data_available": true
+        },
+        {
+          "number": 157,
+          "name": "Malleshwaram",
+          "data_available": true
+        },
+        {
+          "number": 158,
+          "name": "Hebbal",
+          "data_available": true
+        },
+        {
+          "number": 159,
+          "name": "Pulakeshinagar",
+          "data_available": true
+        },
+        {
+          "number": 160,
+          "name": "Sarvagnanagar",
+          "data_available": true
+        },
+        {
+          "number": 161,
+          "name": "C.V. RamannNagar",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BBMP SOUTH",
+      "constituencies": [
+        {
+          "number": 166,
+          "name": "Govindarajanagar",
+          "data_available": true
+        },
+        {
+          "number": 167,
+          "name": "Vijayanagar",
+          "data_available": true
+        },
+        {
+          "number": 170,
+          "name": "Basavanagudi",
+          "data_available": true
+        },
+        {
+          "number": 171,
+          "name": "Padmanabanagar",
+          "data_available": true
+        },
+        {
+          "number": 172,
+          "name": "B.T.M Layout",
+          "data_available": true
+        },
+        {
+          "number": 173,
+          "name": "Jayanagar",
+          "data_available": true
+        },
+        {
+          "number": 175,
+          "name": "Bommanahalli",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BELGAUM",
+      "constituencies": [
+        {
+          "number": 1,
+          "name": "Nippani",
+          "data_available": true
+        },
+        {
+          "number": 2,
+          "name": "Chikkodi-Sadalga",
+          "data_available": true
+        },
+        {
+          "number": 3,
+          "name": "Athani",
+          "data_available": true
+        },
+        {
+          "number": 4,
+          "name": "Kagwad",
+          "data_available": true
+        },
+        {
+          "number": 5,
+          "name": "Kudachi",
+          "data_available": true
+        },
+        {
+          "number": 6,
+          "name": "Raybag",
+          "data_available": true
+        },
+        {
+          "number": 7,
+          "name": "Hukkeri",
+          "data_available": true
+        },
+        {
+          "number": 8,
+          "name": "Arabhavi",
+          "data_available": true
+        },
+        {
+          "number": 9,
+          "name": "Gokak",
+          "data_available": true
+        },
+        {
+          "number": 10,
+          "name": "Yemkanamardi",
+          "data_available": true
+        },
+        {
+          "number": 11,
+          "name": "Belgaum Uttar",
+          "data_available": true
+        },
+        {
+          "number": 12,
+          "name": "Belgaum Dakshin",
+          "data_available": true
+        },
+        {
+          "number": 13,
+          "name": "Belgaum Rural",
+          "data_available": true
+        },
+        {
+          "number": 14,
+          "name": "Khanapur",
+          "data_available": true
+        },
+        {
+          "number": 15,
+          "name": "Kittur",
+          "data_available": true
+        },
+        {
+          "number": 16,
+          "name": "Bailahongal",
+          "data_available": true
+        },
+        {
+          "number": 17,
+          "name": "Saundatti Yellamma",
+          "data_available": true
+        },
+        {
+          "number": 18,
+          "name": "Ramdurg",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BIDAR",
+      "constituencies": [
+        {
+          "number": 47,
+          "name": "Basavakalyan",
+          "data_available": true
+        },
+        {
+          "number": 48,
+          "name": "Humnabad",
+          "data_available": true
+        },
+        {
+          "number": 49,
+          "name": "Bidar South",
+          "data_available": true
+        },
+        {
+          "number": 50,
+          "name": "Bidar",
+          "data_available": true
+        },
+        {
+          "number": 51,
+          "name": "Bhalki",
+          "data_available": true
+        },
+        {
+          "number": 52,
+          "name": "Aurad",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "BIJAPUR",
+      "constituencies": [
+        {
+          "number": 26,
+          "name": "Muddebihal",
+          "data_available": true
+        },
+        {
+          "number": 27,
+          "name": "Devara Hippargi",
+          "data_available": true
+        },
+        {
+          "number": 28,
+          "name": "Basavana Bagevadi",
+          "data_available": true
+        },
+        {
+          "number": 29,
+          "name": "Babaleshwar",
+          "data_available": true
+        },
+        {
+          "number": 30,
+          "name": "Bijapur City",
+          "data_available": true
+        },
+        {
+          "number": 31,
+          "name": "Nagthan",
+          "data_available": true
+        },
+        {
+          "number": 32,
+          "name": "Indi",
+          "data_available": true
+        },
+        {
+          "number": 33,
+          "name": "Sindgi",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "CHAMARAJNAGAR",
+      "constituencies": [
+        {
+          "number": 221,
+          "name": "Hanur",
+          "data_available": true
+        },
+        {
+          "number": 222,
+          "name": "Kollegal",
+          "data_available": true
+        },
+        {
+          "number": 223,
+          "name": "Chamarajanagar",
+          "data_available": true
+        },
+        {
+          "number": 224,
+          "name": "Gundlupet",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "CHIKKABALLAPUR",
+      "constituencies": [
+        {
+          "number": 139,
+          "name": "Gauribidanur",
+          "data_available": true
+        },
+        {
+          "number": 140,
+          "name": "Bagepalli",
+          "data_available": true
+        },
+        {
+          "number": 141,
+          "name": "Chikkaballapur",
+          "data_available": true
+        },
+        {
+          "number": 142,
+          "name": "Sidlaghatta",
+          "data_available": true
+        },
+        {
+          "number": 143,
+          "name": "Chintamani",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "CHIKKMAGALUR",
+      "constituencies": [
+        {
+          "number": 123,
+          "name": "Sringeri",
+          "data_available": true
+        },
+        {
+          "number": 124,
+          "name": "Mudigere",
+          "data_available": true
+        },
+        {
+          "number": 125,
+          "name": "Chickamagalur",
+          "data_available": true
+        },
+        {
+          "number": 126,
+          "name": "Tarikere",
+          "data_available": true
+        },
+        {
+          "number": 127,
+          "name": "Kadur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "CHITRADURGA",
+      "constituencies": [
+        {
+          "number": 97,
+          "name": "Molakalmuru",
+          "data_available": true
+        },
+        {
+          "number": 98,
+          "name": "Challakere (ST)",
+          "data_available": false
+        },
+        {
+          "number": 99,
+          "name": "Chitradurga",
+          "data_available": true
+        },
+        {
+          "number": 100,
+          "name": "Hiriyur",
+          "data_available": true
+        },
+        {
+          "number": 101,
+          "name": "Hosadurga",
+          "data_available": true
+        },
+        {
+          "number": 102,
+          "name": "Holalkere",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "DAKSHINA KANNADA",
+      "constituencies": [
+        {
+          "number": 200,
+          "name": "Belthangady",
+          "data_available": true
+        },
+        {
+          "number": 201,
+          "name": "Moodabidri",
+          "data_available": true
+        },
+        {
+          "number": 202,
+          "name": "Mangalore City North",
+          "data_available": true
+        },
+        {
+          "number": 203,
+          "name": "Mangalore City South",
+          "data_available": true
+        },
+        {
+          "number": 204,
+          "name": "Mangalore",
+          "data_available": true
+        },
+        {
+          "number": 205,
+          "name": "Bantwal",
+          "data_available": true
+        },
+        {
+          "number": 206,
+          "name": "Puttur",
+          "data_available": true
+        },
+        {
+          "number": 207,
+          "name": "Sullia",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "DAVANGERE",
+      "constituencies": [
+        {
+          "number": 103,
+          "name": "Jagalur",
+          "data_available": true
+        },
+        {
+          "number": 105,
+          "name": "Harihar",
+          "data_available": true
+        },
+        {
+          "number": 106,
+          "name": "Davanagere North",
+          "data_available": true
+        },
+        {
+          "number": 107,
+          "name": "Davanagere South",
+          "data_available": true
+        },
+        {
+          "number": 108,
+          "name": "Mayakonda",
+          "data_available": true
+        },
+        {
+          "number": 109,
+          "name": "Channagiri",
+          "data_available": true
+        },
+        {
+          "number": 110,
+          "name": "Honnali",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "DHARWAD",
+      "constituencies": [
+        {
+          "number": 69,
+          "name": "Navalgund",
+          "data_available": true
+        },
+        {
+          "number": 70,
+          "name": "Kundgol",
+          "data_available": true
+        },
+        {
+          "number": 71,
+          "name": "Dharwad",
+          "data_available": true
+        },
+        {
+          "number": 72,
+          "name": "Hubli-Dharwad-East",
+          "data_available": true
+        },
+        {
+          "number": 73,
+          "name": "Hubli-Dharwad-Central",
+          "data_available": true
+        },
+        {
+          "number": 74,
+          "name": "Hubli-Dharwad-West",
+          "data_available": true
+        },
+        {
+          "number": 75,
+          "name": "Kalaghatgi",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "GADAG",
+      "constituencies": [
+        {
+          "number": 65,
+          "name": "Shirahatti",
+          "data_available": true
+        },
+        {
+          "number": 66,
+          "name": "Gadag",
+          "data_available": true
+        },
+        {
+          "number": 67,
+          "name": "Ron",
+          "data_available": true
+        },
+        {
+          "number": 68,
+          "name": "Nargund",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "GULBARGA",
+      "constituencies": [
+        {
+          "number": 34,
+          "name": "Afzalpur",
+          "data_available": true
+        },
+        {
+          "number": 35,
+          "name": "Jevargi",
+          "data_available": true
+        },
+        {
+          "number": 40,
+          "name": "Chittapur",
+          "data_available": true
+        },
+        {
+          "number": 41,
+          "name": "Sedam",
+          "data_available": true
+        },
+        {
+          "number": 42,
+          "name": "Chincholi",
+          "data_available": true
+        },
+        {
+          "number": 43,
+          "name": "Gulbarga Rural",
+          "data_available": true
+        },
+        {
+          "number": 44,
+          "name": "Gulbarga Dakshin",
+          "data_available": true
+        },
+        {
+          "number": 45,
+          "name": "Gulbarga Uttar",
+          "data_available": true
+        },
+        {
+          "number": 46,
+          "name": "Aland",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "HASSAN",
+      "constituencies": [
+        {
+          "number": 193,
+          "name": "Shravanabelagola",
+          "data_available": true
+        },
+        {
+          "number": 194,
+          "name": "Arsikere",
+          "data_available": true
+        },
+        {
+          "number": 195,
+          "name": "Belur",
+          "data_available": true
+        },
+        {
+          "number": 196,
+          "name": "Hassan",
+          "data_available": true
+        },
+        {
+          "number": 197,
+          "name": "Holenarasipur",
+          "data_available": true
+        },
+        {
+          "number": 198,
+          "name": "Arakalgud",
+          "data_available": true
+        },
+        {
+          "number": 199,
+          "name": "Sakaleshpur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "HAVERI",
+      "constituencies": [
+        {
+          "number": 82,
+          "name": "Hangal",
+          "data_available": true
+        },
+        {
+          "number": 83,
+          "name": "Shiggaon",
+          "data_available": true
+        },
+        {
+          "number": 84,
+          "name": "Haveri",
+          "data_available": true
+        },
+        {
+          "number": 85,
+          "name": "Byadgi",
+          "data_available": true
+        },
+        {
+          "number": 86,
+          "name": "Hirekerur",
+          "data_available": true
+        },
+        {
+          "number": 87,
+          "name": "Ranebennur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "KODAGU",
+      "constituencies": [
+        {
+          "number": 208,
+          "name": "Madikeri",
+          "data_available": true
+        },
+        {
+          "number": 209,
+          "name": "Virajpet",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "KOLAR",
+      "constituencies": [
+        {
+          "number": 144,
+          "name": "Srinivasapur",
+          "data_available": true
+        },
+        {
+          "number": 145,
+          "name": "Mulbagal",
+          "data_available": true
+        },
+        {
+          "number": 146,
+          "name": "Kolar Gold Field",
+          "data_available": true
+        },
+        {
+          "number": 147,
+          "name": "Bangarapet",
+          "data_available": true
+        },
+        {
+          "number": 148,
+          "name": "Kolar",
+          "data_available": true
+        },
+        {
+          "number": 149,
+          "name": "Malur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "KOPPAL",
+      "constituencies": [
+        {
+          "number": 60,
+          "name": "Kushtagi",
+          "data_available": true
+        },
+        {
+          "number": 61,
+          "name": "Kanakagiri",
+          "data_available": true
+        },
+        {
+          "number": 62,
+          "name": "Gangavathi",
+          "data_available": true
+        },
+        {
+          "number": 63,
+          "name": "Yelburga",
+          "data_available": true
+        },
+        {
+          "number": 64,
+          "name": "Koppal",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "MANDYA",
+      "constituencies": [
+        {
+          "number": 186,
+          "name": "Malavalli",
+          "data_available": true
+        },
+        {
+          "number": 187,
+          "name": "Maddur",
+          "data_available": true
+        },
+        {
+          "number": 188,
+          "name": "Melukote",
+          "data_available": true
+        },
+        {
+          "number": 189,
+          "name": "Mandya",
+          "data_available": true
+        },
+        {
+          "number": 190,
+          "name": "Shrirangapattana",
+          "data_available": true
+        },
+        {
+          "number": 191,
+          "name": "Nagamangala",
+          "data_available": true
+        },
+        {
+          "number": 192,
+          "name": "Krishnarajpet",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "MYSORE",
+      "constituencies": [
+        {
+          "number": 210,
+          "name": "Piriyapatna",
+          "data_available": true
+        },
+        {
+          "number": 211,
+          "name": "Krishnarajanagara",
+          "data_available": true
+        },
+        {
+          "number": 212,
+          "name": "Hunsur",
+          "data_available": true
+        },
+        {
+          "number": 213,
+          "name": "Heggadadevankote",
+          "data_available": true
+        },
+        {
+          "number": 214,
+          "name": "Nanjangud",
+          "data_available": true
+        },
+        {
+          "number": 215,
+          "name": "Chamundeshwari",
+          "data_available": true
+        },
+        {
+          "number": 216,
+          "name": "Krishnaraja",
+          "data_available": true
+        },
+        {
+          "number": 217,
+          "name": "Chamaraja",
+          "data_available": true
+        },
+        {
+          "number": 218,
+          "name": "Narasimharaja",
+          "data_available": true
+        },
+        {
+          "number": 219,
+          "name": "Varuna",
+          "data_available": true
+        },
+        {
+          "number": 220,
+          "name": "T. Narasipur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "RAICHUR",
+      "constituencies": [
+        {
+          "number": 53,
+          "name": "Raichur Rural",
+          "data_available": true
+        },
+        {
+          "number": 54,
+          "name": "Raichur",
+          "data_available": true
+        },
+        {
+          "number": 55,
+          "name": "Manvi (ST)",
+          "data_available": true
+        },
+        {
+          "number": 56,
+          "name": "Devadurga",
+          "data_available": true
+        },
+        {
+          "number": 57,
+          "name": "Lingsugur",
+          "data_available": true
+        },
+        {
+          "number": 58,
+          "name": "Sindhanur",
+          "data_available": true
+        },
+        {
+          "number": 59,
+          "name": "Maski",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "RAMANAGARAM",
+      "constituencies": [
+        {
+          "number": 182,
+          "name": "Magadi",
+          "data_available": true
+        },
+        {
+          "number": 183,
+          "name": "Ramanagaram",
+          "data_available": true
+        },
+        {
+          "number": 184,
+          "name": "Kanakapura",
+          "data_available": true
+        },
+        {
+          "number": 185,
+          "name": "Channapatna",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "SHIMOGA",
+      "constituencies": [
+        {
+          "number": 111,
+          "name": "Shimoga Rural",
+          "data_available": true
+        },
+        {
+          "number": 112,
+          "name": "Bhadravathi",
+          "data_available": true
+        },
+        {
+          "number": 113,
+          "name": "Shimoga",
+          "data_available": true
+        },
+        {
+          "number": 114,
+          "name": "Tirthahalli",
+          "data_available": true
+        },
+        {
+          "number": 115,
+          "name": "Shikaripura",
+          "data_available": true
+        },
+        {
+          "number": 116,
+          "name": "Sorab",
+          "data_available": true
+        },
+        {
+          "number": 117,
+          "name": "Sagar",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "TUMKUR",
+      "constituencies": [
+        {
+          "number": 128,
+          "name": "Chikknayakanhalli",
+          "data_available": true
+        },
+        {
+          "number": 129,
+          "name": "Tiptur",
+          "data_available": true
+        },
+        {
+          "number": 130,
+          "name": "Turuvekere",
+          "data_available": false
+        },
+        {
+          "number": 131,
+          "name": "Kunigal",
+          "data_available": false
+        },
+        {
+          "number": 132,
+          "name": "Tumkur City",
+          "data_available": true
+        },
+        {
+          "number": 133,
+          "name": "Tumkur Rural",
+          "data_available": true
+        },
+        {
+          "number": 134,
+          "name": "Koratagere",
+          "data_available": true
+        },
+        {
+          "number": 135,
+          "name": "Gubbi",
+          "data_available": true
+        },
+        {
+          "number": 136,
+          "name": "Sira",
+          "data_available": true
+        },
+        {
+          "number": 137,
+          "name": "Pavagada",
+          "data_available": true
+        },
+        {
+          "number": 138,
+          "name": "Madhugiri",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "UDUPI",
+      "constituencies": [
+        {
+          "number": 118,
+          "name": "Baindur",
+          "data_available": true
+        },
+        {
+          "number": 119,
+          "name": "Kundapur",
+          "data_available": true
+        },
+        {
+          "number": 120,
+          "name": "Udupi",
+          "data_available": true
+        },
+        {
+          "number": 121,
+          "name": "Kaup",
+          "data_available": true
+        },
+        {
+          "number": 122,
+          "name": "Karkala",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "UTTARA KANNADA",
+      "constituencies": [
+        {
+          "number": 76,
+          "name": "Haliyal",
+          "data_available": true
+        },
+        {
+          "number": 77,
+          "name": "Karwar",
+          "data_available": true
+        },
+        {
+          "number": 78,
+          "name": "Kumta",
+          "data_available": true
+        },
+        {
+          "number": 79,
+          "name": "Bhatkal",
+          "data_available": true
+        },
+        {
+          "number": 80,
+          "name": "Sirsi",
+          "data_available": true
+        },
+        {
+          "number": 81,
+          "name": "Yellapur",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "VIJAYANAGARA",
+      "constituencies": [
+        {
+          "number": 88,
+          "name": "Hadagali",
+          "data_available": true
+        },
+        {
+          "number": 89,
+          "name": "Hagaribommanahalli",
+          "data_available": true
+        },
+        {
+          "number": 90,
+          "name": "Vijayanagara",
+          "data_available": true
+        },
+        {
+          "number": 96,
+          "name": "Kudligi",
+          "data_available": true
+        },
+        {
+          "number": 104,
+          "name": "Harapanahalli",
+          "data_available": true
+        }
+      ]
+    },
+    {
+      "name": "YADGIR",
+      "constituencies": [
+        {
+          "number": 36,
+          "name": "Shorapur",
+          "data_available": true
+        },
+        {
+          "number": 37,
+          "name": "Shahapur",
+          "data_available": true
+        },
+        {
+          "number": 38,
+          "name": "Yadgir",
+          "data_available": true
+        },
+        {
+          "number": 39,
+          "name": "Gurmitkal",
+          "data_available": true
+        }
+      ]
+    }
+  ],
+  "expected_constituencies": 224,
+  "available_constituencies": 221
+}

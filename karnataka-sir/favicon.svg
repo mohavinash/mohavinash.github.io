@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DataChutney">
+  <rect width="64" height="64" rx="8" fill="#181927"/>
+  <path d="M17 16h15c11 0 18 6 18 16s-7 16-18 16H17V16Zm14 24c6 0 10-3 10-8s-4-8-10-8h-5v16h5Z" fill="#f7f3ec"/>
+  <circle cx="49" cy="16" r="5" fill="#a87508"/>
+</svg>
