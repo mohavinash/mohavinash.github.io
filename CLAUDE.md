@@ -25,10 +25,16 @@ mohavinash.github.io/
 │   ├── data/                          # Chart and CRT experiment data
 │   ├── og-image.png                   # Social sharing image
 │   └── favicon.svg, favicon-32.png, apple-touch-icon.png
-└── delhi-excise-case-explainer/
-    ├── index.html                     # Delhi Excise Policy case explainer
-    ├── cover.jpg                      # Social sharing image
-    └── *.png                          # Explainer screenshots
+├── delhi-excise-case-explainer/
+│   ├── index.html                     # Delhi Excise Policy case explainer
+│   ├── cover.jpg                      # Social sharing image
+│   └── *.png                          # Explainer screenshots
+└── karnataka-sir/
+    ├── index.html                     # Karnataka SIR Source Navigator (illustrated office-counter UI)
+    ├── app.js, styles.css, config.js  # Copied from the source repo — do not edit here
+    ├── locations.json                 # District/AC options snapshot
+    ├── assets/                        # Scene art, sign, paper grain, bundled fonts
+    └── favicon.svg, social-preview.png
 ```
 
 ## Publishing Workflow
@@ -53,6 +59,31 @@ git push origin main
 ```
 
 GitHub Pages deploys automatically on push. Changes are live within 1-2 minutes.
+
+### Karnataka SIR Search
+
+`karnataka-sir/` is the static frontend of the Karnataka SIR Source Navigator (live at datachutney.io/karnataka-sir/). Its source of truth is a separate repo — **never edit it here**; publish by copying:
+
+```bash
+# 1. Edit in the source repo
+cd "/Users/avinash/AICodeLab/KA SIR/karnataka-sir-search/frontend"
+
+# 2. Copy the page files and only the assets the page uses
+DST=/Users/avinash/AICodeLab/mohavinash.github.io/karnataka-sir
+cp index.html app.js styles.css config.js locations.json favicon.svg social-preview.png "$DST/"
+cp assets/asddo-counter-sign-v3-bilingual.png assets/form-paper-grain.svg \
+   assets/sarkari-office-hero.png assets/sarkari-office-mobile.png "$DST/assets/"
+cp assets/fonts/* "$DST/assets/fonts/"
+
+# 3. Commit and push (main is the only served branch)
+cd /Users/avinash/AICodeLab/mohavinash.github.io
+git add karnataka-sir/ && git commit -m "update karnataka sir" && git push origin main
+```
+
+Notes:
+- The page talks to a Railway backend (`api-production-f3ad.up.railway.app`); backend and database deploys are documented in the source repo's `README.md` (Runbooks section). Frontend and backend can be released independently unless the API contract changed.
+- `index.html` references `styles.css`/`app.js` with a `?v=` cache-buster — the source repo bumps it on every change; just make sure the copied files carry the new value.
+- Do not copy the historical `asddo-counter-sign` v1/v2 assets or `assets/fonts/README.md`'s siblings beyond the three .ttf files — keeps the deploy ~6 MB.
 
 ### Other Stories
 
