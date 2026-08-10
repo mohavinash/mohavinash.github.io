@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f3ec">
+  <meta name="theme-color" content="#123c3d">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Check whether a voter appears in Karnataka's 2026 SIR ASDDO records and open the matching source page.">
   <meta name="author" content="DataChutney">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta property="og:title" content="Karnataka SIR Source Navigator | DataChutney">
-  <meta property="og:description" content="Choose a district and Assembly constituency, then search by Voter ID or name. Every result links to the published source page.">
+  <meta property="og:description" content="Search by Voter ID or name at an illustrated public-service counter. Every result links to the published source page.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://datachutney.io/karnataka-sir/">
   <meta property="og:site_name" content="DataChutney">
@@ -21,12 +21,14 @@
   <meta property="og:image:alt" content="DataChutney Karnataka SIR ASDDO search. Search by name or Voter ID after choosing a district and Assembly constituency.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Karnataka SIR Source Navigator | DataChutney">
-  <meta name="twitter:description" content="Choose a district and Assembly constituency, then search by Voter ID or name. Every result links to the published source page.">
+  <meta name="twitter:description" content="Search by Voter ID or name at an illustrated public-service counter. Every result links to the published source page.">
   <meta name="twitter:image" content="https://datachutney.io/karnataka-sir/social-preview.png">
   <meta name="twitter:image:alt" content="DataChutney Karnataka SIR ASDDO search. Search by name or Voter ID after choosing a district and Assembly constituency.">
   <link rel="canonical" href="https://datachutney.io/karnataka-sir/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="assets/sarkari-office-hero.png" as="image" media="(min-width: 901px)" fetchpriority="high">
+  <link rel="preload" href="assets/sarkari-office-mobile.png" as="image" media="(max-width: 900px)" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css?v=20260810-sheet9">
   <title>Karnataka SIR Source Navigator | DataChutney</title>
   <script defer src="https://umami-production-daa4.up.railway.app/script.js" data-website-id="c412f3c1-880b-4977-bdd6-33e193b2e7aa"></script>
   <script type="application/ld+json">
@@ -47,207 +49,224 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#search">Skip to search</a>
-
-  <header class="site-header">
-    <a class="wordmark" href="https://datachutney.io" aria-label="DataChutney home">Data<span>Chutney</span></a>
-    <span class="header-label">Independent public-data tool</span>
-  </header>
+  <a class="skip-link" href="#search-form">Skip to the search counter</a>
 
   <main>
-    <section class="search-panel search-panel--primary" id="search" aria-labelledby="page-title">
-      <div class="panel-heading">
-        <div class="panel-meta">
-          <p class="eyebrow">Karnataka SIR 2026 · ASDDO search</p>
-          <p class="updated-date"><time datetime="2026-08-09">Last updated on 9 August 2026</time></p>
-        </div>
-        <h1 id="page-title">Check Karnataka’s SIR ASDDO records</h1>
-        <p class="lede">Search by name or Voter ID.</p>
-      </div>
+    <section class="office-hero" id="search" aria-labelledby="page-title">
+      <header class="scene-header">
+        <a class="wordmark" href="https://datachutney.io" aria-label="DataChutney home">
+          <span class="wordmark-mark" aria-hidden="true">DC</span>
+          <span>DataChutney</span>
+        </a>
+        <label class="language-toggle" for="language-toggle">
+          <span>English</span>
+          <input id="language-toggle" type="checkbox" role="switch" aria-label="Switch between English and Kannada">
+          <span class="toggle-track" aria-hidden="true"><i></i></span>
+          <span lang="kn">ಕನ್ನಡ</span>
+        </label>
+      </header>
 
-      <form id="search-form" novalidate autocomplete="off">
-        <div class="query-group">
-          <div class="mode-switch" aria-label="Choose a search method">
-            <button class="mode-button is-active" id="name-mode-button" type="button" aria-pressed="true" data-mode="name">Search by name</button>
-            <button class="mode-button" id="epic-mode-button" type="button" aria-pressed="false" data-mode="epic">Search by Voter ID</button>
+      <div class="scene-stage">
+        <picture class="scene-picture">
+          <source media="(max-width: 900px)" srcset="assets/sarkari-office-mobile.png" width="941" height="1672">
+          <img
+            class="scene-art"
+            src="assets/sarkari-office-hero.png"
+            alt="An illustrated Karnataka public-service office with a clerk seated behind a counter window"
+            width="1672"
+            height="941"
+            fetchpriority="high"
+          >
+        </picture>
+        <div class="scene-vignette" aria-hidden="true"></div>
+
+        <div class="clerk-bubble" id="clerk-bubble">
+          <h1 id="page-title" data-copy="title">Is your name at risk of deletion? Ee form fill maadi to check.</h1>
+        </div>
+
+        <svg class="bubble-form-arrow" viewBox="0 0 132 68" aria-hidden="true" focusable="false">
+          <path class="bubble-form-arrow__line" d="M8 58 C39 61 73 46 111 18"></path>
+          <path class="bubble-form-arrow__tip" d="M96 17 L116 14 L110 34"></path>
+        </svg>
+
+        <img
+          class="counter-nameboard"
+          src="assets/asddo-counter-sign-v3-bilingual.png"
+          alt="ASDDO Voter Verification Centre — ASDDO ಮತದಾರರ ದೃಢೀಕರಣ ಕೇಂದ್ರ"
+          width="1686"
+          height="420"
+        >
+
+        <article class="counter-panel" aria-label="Search ASDDO records">
+          <form id="search-form" novalidate autocomplete="off">
+            <p class="form-instruction" data-copy="formInstruction">Please fill this form carefully.</p>
+          <div class="query-group">
+            <div class="mode-switch" aria-label="Choose a search method">
+              <button class="mode-button is-active" id="epic-mode-button" type="button" aria-pressed="true" data-mode="epic">
+                <span data-copy="epicMode">EPIC ID</span>
+              </button>
+              <button class="mode-button" id="name-mode-button" type="button" aria-pressed="false" data-mode="name">
+                <span data-copy="nameMode">By name</span>
+              </button>
+            </div>
+
+            <div class="query-fields" id="name-query-fields" hidden>
+              <div class="field field--query">
+                <label for="voter-name" data-copy="nameLabel">Voter name (as per EPIC ID, minimum three letters required)</label>
+                <div class="letter-entry" data-letter-entry>
+                  <input class="letter-input" id="voter-name" name="name" type="text" maxlength="120" minlength="3" autocomplete="off" autocapitalize="words" spellcheck="false">
+                  <span class="letter-grid" data-letter-grid aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="field field--query">
+                <label for="relative-name" data-copy="relativeLabel">Relative’s name (optional — helps narrow the match)</label>
+                <div class="letter-entry" data-letter-entry>
+                  <input class="letter-input" id="relative-name" name="relative_name" type="text" maxlength="120" autocomplete="off" autocapitalize="words" spellcheck="false">
+                  <span class="letter-grid" data-letter-grid aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="query-fields query-fields--single" id="epic-query-fields">
+              <div class="field field--query">
+                <label for="voter-id" data-copy="epicLabel">EPIC ID (combination of three letters and seven digits)</label>
+                <div class="letter-entry letter-entry--epic" data-letter-entry data-box-count="10">
+                  <input class="letter-input" id="voter-id" name="voter_id" type="text" inputmode="text" maxlength="10" autocomplete="off" autocapitalize="characters" spellcheck="false">
+                  <span class="letter-grid" data-letter-grid aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="query-fields" id="name-query-fields">
-            <div class="field field--query">
-              <label for="voter-name">Voter name</label>
-              <input id="voter-name" name="name" type="text" maxlength="120" minlength="3" autocapitalize="words" spellcheck="false" placeholder="Enter at least 3 letters">
+          <fieldset class="location-group" hidden>
+            <legend class="visually-hidden">Voter location</legend>
+            <div class="location-fields">
+              <div class="field">
+                <label for="district" data-copy="districtLabel">District</label>
+                <select id="district" name="district" required>
+                  <option value="">Loading districts…</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="constituency" data-copy="constituencyLabel">Assembly constituency</label>
+                <select id="constituency" name="constituency_number" required disabled>
+                  <option value="">Select a district first</option>
+                </select>
+              </div>
             </div>
-            <div class="field field--query">
-              <label for="relative-name">Relative’s name <span>(optional)</span></label>
-              <input id="relative-name" name="relative_name" type="text" maxlength="120" autocapitalize="words" spellcheck="false" placeholder="Name printed beside the voter">
-            </div>
+            <div class="coverage-warning" id="coverage-warning" role="status" hidden></div>
+          </fieldset>
+
+          <div class="bot-field" aria-hidden="true">
+            <label for="contact-field">Leave this field empty</label>
+            <input id="contact-field" name="contact" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <div class="query-fields query-fields--single" id="epic-query-fields" hidden>
-            <div class="field field--query">
-              <label for="voter-id">Voter ID <span>(EPIC)</span></label>
-              <input id="voter-id" name="voter_id" type="text" inputmode="text" maxlength="40" autocapitalize="characters" spellcheck="false" placeholder="For example, ABC1234567">
+          <div class="form-message" id="form-message" role="alert" hidden></div>
+
+          </form>
+
+          <div class="board-results" id="board-results" hidden aria-live="polite" aria-busy="false">
+            <div class="sheet-head">
+              <h2 id="results-title" data-copy="resultsTitle">Matches in this snapshot</h2>
+              <button class="text-button" id="new-search" type="button" data-copy="startOver">Start over ↺</button>
             </div>
+            <div id="result-summary"></div>
+            <div class="result-table-heading" id="result-table-heading" hidden aria-hidden="true">
+              <span data-copy="rowVoter">Voter</span><span data-copy="rowRelative">Relative</span><span data-copy="rowReason">Reason</span><span data-copy="rowOpen">Open</span>
+            </div>
+            <div class="result-list" id="result-list"></div>
+            <div class="sheet-detail" id="sheet-detail" hidden>
+              <button class="text-button sheet-back" id="sheet-back" type="button" data-copy="backToList">← Back to the list</button>
+              <div id="sheet-detail-body"></div>
+            </div>
+            <nav class="pagination" id="pagination" aria-label="Search result pages" hidden></nav>
           </div>
+        </article>
+
+        <div class="board-chalk">
+          <p class="chalk-line chalk-line--big"><strong id="indexed-count">9,991,690</strong> <span data-copy="chalkIndexed">voters indexed</span></p>
+          <p class="chalk-line" data-copy="chalkSnapshot">Snapshot 9 Aug 2026 · 218 of 224 constituencies</p>
         </div>
 
-        <fieldset class="location-group">
-          <legend>Choose the voter’s location</legend>
-          <div class="location-fields">
-            <div class="field">
-              <label for="district">District</label>
-              <select id="district" name="district" required aria-describedby="location-help">
-                <option value="">Loading districts…</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="constituency">Assembly constituency</label>
-              <select id="constituency" name="constituency_number" required disabled>
-                <option value="">Select a district first</option>
-              </select>
-            </div>
-          </div>
-          <p class="field-help" id="location-help">District and constituency are required.</p>
-          <div class="coverage-warning" id="coverage-warning" role="status" hidden></div>
-        </fieldset>
-
-        <div class="bot-field" aria-hidden="true">
-          <label for="contact-field">Leave this field empty</label>
-          <input id="contact-field" name="contact" type="text" tabindex="-1" autocomplete="off">
+        <div class="wall-action">
+          <button class="search-button" id="search-button" type="submit" form="search-form">
+            <span class="button-label" data-copy="searchButton">Search maadi</span>
+            <span class="button-stamp" aria-hidden="true">→</span>
+          </button>
         </div>
-
-        <div class="form-message" id="form-message" role="alert" hidden></div>
-
-        <button class="search-button" id="search-button" type="submit">
-          <span class="button-label">Search records</span>
-          <span class="button-arrow" aria-hidden="true">→</span>
-        </button>
-        <p class="privacy-note">Name results show brief summaries. Open one record to view its Voter ID and source. Search terms stay out of the page address.</p>
-
-        <aside class="accuracy-notice" aria-labelledby="accuracy-notice-title">
-          <strong id="accuracy-notice-title">Read this search as a guide to the source files</strong>
-          <p>A match means this tool found a similar entry in the ASDDO files it indexed. An empty result means only that this search could not verify a match. It gives no finding about your current enrolment or verification status.</p>
-          <p>For accurate information, check the <a href="https://ceo.karnataka.gov.in/asddo.html" target="_blank" rel="noopener noreferrer">CEO Karnataka ASDDO page</a> and the <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer">ECI electoral search</a>. Your ERO can confirm the current official status.</p>
-        </aside>
-      </form>
-    </section>
-
-    <section class="results" id="results" aria-live="polite" aria-busy="false" hidden>
-      <div class="results-heading">
-        <div>
-          <p class="step-label">Search results</p>
-          <h2 id="results-title">Matches in this snapshot</h2>
-        </div>
-        <button class="text-button" id="new-search" type="button">Clear search</button>
-      </div>
-      <div id="result-summary"></div>
-      <div class="result-table-heading" id="result-table-heading" hidden aria-hidden="true">
-        <span>Voter</span><span>Relative</span><span>Reason</span><span>Open record</span>
-      </div>
-      <div class="result-list" id="result-list"></div>
-      <nav class="pagination" id="pagination" aria-label="Search result pages" hidden></nav>
-    </section>
-
-    <aside class="essential-note" aria-labelledby="note-title">
-      <div class="note-marker" aria-hidden="true">i</div>
-      <div>
-        <h2 id="note-title">How to read a result</h2>
-        <p>ASDDO records were marked during Karnataka’s 2026 Special Intensive Revision. The source page shows the reason recorded at that stage. Your ERO and the current electoral roll provide the official status.</p>
-        <p>DataChutney built this independent navigator from public files. Source gaps, spelling changes, missing fields and PDF extraction can affect a match.</p>
-      </div>
-    </aside>
-
-    <section class="schedule" aria-labelledby="schedule-title">
-      <p class="step-label">Schedule checked 9 August 2026</p>
-      <h2 id="schedule-title">Dates to keep in view</h2>
-      <p class="schedule-intro">CEO Karnataka’s 29 July update set 8 August as the target for BLO house visits and digitisation of Enumeration Forms; that target has now passed. ECI’s 14 May schedule places claims and objections from 5 August to 4 September. Ask your ERO or Voter Facilitation Centre to confirm what action is available for your record today.</p>
-      <div class="date-grid">
-        <div><time datetime="2026-08-08">8 Aug 2026</time><span>Target for BLO house visits and digitisation in the CEO Karnataka update; this date has passed.</span></div>
-        <div><span class="date-label">5 Aug to 4 Sep 2026</span><span>ECI’s published schedule places claims and objections in this window.</span></div>
-        <div><time datetime="2026-10-03">3 Oct 2026</time><span>EROs complete notice work and decide claims by this target in ECI’s schedule.</span></div>
-        <div><time datetime="2026-10-07">7 Oct 2026</time><span>ECI’s published schedule says the final electoral roll will appear on this date.</span></div>
-      </div>
-      <div class="schedule-sources">
-        <a href="https://ceo.karnataka.gov.in/uploads/Press%20Note%20-%2029.07.2026.pdf" target="_blank" rel="noopener noreferrer">CEO update, 29 July <span aria-hidden="true">↗</span></a>
-        <a href="https://ceo.karnataka.gov.in/uploads/media_to_upload1778750754.pdf" target="_blank" rel="noopener noreferrer">ECI schedule, 14 May <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
-    <section class="next-steps" aria-labelledby="next-steps-title">
-      <p class="step-label">If your search finds a source entry</p>
-      <h2 id="next-steps-title">Your next steps</h2>
-      <ol>
-        <li>
-          <span class="list-number">01</span>
-          <div><strong>Start with the source page.</strong> Compare the Voter ID first. Then read the names, part, serial number and reason as printed.</div>
-        </li>
-        <li>
-          <span class="list-number">02</span>
-          <div><strong>Reach your local officer.</strong> Ask the BLO or ERO what the entry means for the record today. CEO Karnataka’s Voter Facilitation Centre page provides current contact details.</div>
-        </li>
-        <li>
-          <span class="list-number">03</span>
-          <div><strong>If an Enumeration Form is still pending, contact the BLO or ERO now.</strong> The CEO Karnataka target was 8 August. Ask which filing route remains available, submit through the official channel they identify, and keep the acknowledgement.</div>
-        </li>
-        <li>
-          <span class="list-number">04</span>
-          <div><strong>Use the claims route for a missing draft-roll entry.</strong> File Form 6 with the prescribed SIR Declaration during the active claims window. Your ERO will tell you which supporting papers apply.</div>
-        </li>
-        <li>
-          <span class="list-number">05</span>
-          <div><strong>A move uses Form 8.</strong> Submit it through the ECI portal or to the ERO serving your new address. The form covers shifts within and across constituencies.</div>
-        </li>
-        <li>
-          <span class="list-number">06</span>
-          <div><strong>Respond to any notice.</strong> Use ECI’s notice service for the requested documents. Attend the hearing time given by the officer and retain your copies.</div>
-        </li>
-      </ol>
-      <div class="official-links">
-        <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer">Official electoral search <span aria-hidden="true">↗</span></a>
-        <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener noreferrer">ECI Voters’ Service Portal <span aria-hidden="true">↗</span></a>
-        <a href="https://voters.eci.gov.in/home/forms" target="_blank" rel="noopener noreferrer">Official forms <span aria-hidden="true">↗</span></a>
-        <a href="https://ceo.karnataka.gov.in/asddo.html" target="_blank" rel="noopener noreferrer">CEO Karnataka ASDDO page <span aria-hidden="true">↗</span></a>
-        <a href="https://ceo.karnataka.gov.in/vfc/details/" target="_blank" rel="noopener noreferrer">Find BLO and ERO contacts <span aria-hidden="true">↗</span></a>
-        <a href="https://ceo.karnataka.gov.in/" target="_blank" rel="noopener noreferrer">CEO Karnataka <span aria-hidden="true">↗</span></a>
-      </div>
-      <p class="helpline-note">Karnataka voter helplines: <a href="tel:1950">1950</a> and <a href="tel:180042551950">1800 4255 1950</a>.</p>
-    </section>
+    <section class="counter-guide" id="counter-guide" aria-labelledby="guide-title">
+      <article class="notice notice--lead">
+        <p class="notice-eyebrow" data-copy="panicEyebrow">If your name appeared here</p>
+        <h2 id="guide-title" data-copy="panicTitle">Do not panic.</h2>
+        <p class="notice-copy" data-copy="panicCopy">An ASDDO entry is a publication record from Karnataka’s 2026 Special Intensive Revision — not a final deletion. The current electoral roll and your ERO decide the official status. These counters tell you what to do next.</p>
+      </article>
 
-    <section class="methodology" aria-labelledby="methodology-title">
-      <p class="step-label">About this index</p>
-      <h2 id="methodology-title">What this index contains</h2>
-      <div class="stats" aria-label="Dataset summary">
-        <div><strong id="indexed-count">9,991,690</strong><span>records with a stated reason</span></div>
-        <div><strong>54,528</strong><span>electoral parts represented</span></div>
-        <div><strong>218 / 224</strong><span>Assembly constituencies in the snapshot</span></div>
-        <div><strong>10</strong><span>upstream folder listings inaccessible during refresh</span></div>
-      </div>
-      <div class="method-grid">
-        <div>
-          <h3>Records in search</h3>
-          <p>The index keeps one canonical entry for each Assembly constituency, part, prior-roll serial number and Voter ID when the source carries a stated reason.</p>
+      <article class="notice">
+        <h3 class="notice-title" data-copy="stepsTitle">Your next steps</h3>
+        <ol class="notice-steps">
+          <li><strong data-copy="step1Lead">Start with the source page.</strong> <span data-copy="step1Body">Compare the Voter ID first. Then read the names, part, serial number and reason as printed.</span></li>
+          <li><strong data-copy="step2Lead">Reach your local officer.</strong> <span data-copy="step2Body">Ask the BLO or ERO what the entry means for the record today. CEO Karnataka’s Voter Facilitation Centre page provides current contact details.</span></li>
+          <li><strong data-copy="step3Lead">If an Enumeration Form is still pending, contact the BLO or ERO now.</strong> <span data-copy="step3Body">The CEO Karnataka target was 8 August. Ask which filing route remains available, submit through the official channel they identify, and keep the acknowledgement.</span></li>
+          <li><strong data-copy="step4Lead">Use the claims route for a missing draft-roll entry.</strong> <span data-copy="step4Body">File Form 6 with the prescribed SIR Declaration during the active claims window. Your ERO will tell you which supporting papers apply.</span></li>
+          <li><strong data-copy="step5Lead">A move uses Form 8.</strong> <span data-copy="step5Body">Submit it through the ECI portal or to the ERO serving your new address. The form covers shifts within and across constituencies.</span></li>
+          <li><strong data-copy="step6Lead">Respond to any notice.</strong> <span data-copy="step6Body">Use ECI’s notice service for the requested documents. Attend the hearing time given by the officer and retain your copies.</span></li>
+        </ol>
+      </article>
+
+      <article class="notice">
+        <p class="notice-eyebrow" data-copy="datesEyebrow">Schedule checked 9 August 2026</p>
+        <h3 class="notice-title" data-copy="datesTitle">Dates to keep in view</h3>
+        <div class="notice-dates">
+          <div><span class="notice-date" data-copy="d1Label">8 Aug 2026</span><span data-copy="d1Body">Target for BLO house visits and digitisation in the CEO Karnataka update; this date has passed.</span></div>
+          <div><span class="notice-date" data-copy="d2Label">5 Aug – 4 Sep 2026</span><span data-copy="d2Body">ECI’s published schedule places claims and objections in this window.</span></div>
+          <div><span class="notice-date" data-copy="d3Label">3 Oct 2026</span><span data-copy="d3Body">EROs complete notice work and decide claims by this target in ECI’s schedule.</span></div>
+          <div><span class="notice-date" data-copy="d4Label">7 Oct 2026</span><span data-copy="d4Body">ECI’s published schedule says the final electoral roll will appear on this date.</span></div>
         </div>
-        <div>
-          <h3>Rows outside search</h3>
-          <p>The search focuses on records carrying a printed reason. It leaves out 424,791 mapping-only rows; no current canonical rows have an unresolved status.</p>
+        <div class="official-links notice-sources">
+          <a href="https://ceo.karnataka.gov.in/uploads/Press%20Note%20-%2029.07.2026.pdf" target="_blank" rel="noopener noreferrer"><span data-copy="ceoUpdate">CEO update, 29 July</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/uploads/media_to_upload1778750754.pdf" target="_blank" rel="noopener noreferrer"><span data-copy="eciSchedule">ECI schedule, 14 May</span> <span aria-hidden="true">↗</span></a>
         </div>
-        <div>
-          <h3>Coverage gaps</h3>
-          <p>The snapshot covers 218 of 224 constituencies; its manifest lists AC 36, 37, 38, 39, 98 and 154 as gaps. Ten upstream folder listings were inaccessible during this refresh, and PDF text can carry spelling or extraction errors.</p>
+      </article>
+
+      <article class="notice">
+        <h3 class="notice-title" data-copy="methodTitle">What this index contains</h3>
+        <div class="notice-dates">
+          <div><span class="notice-date">9,991,690</span><span data-copy="stat1">records carrying a stated reason in this snapshot.</span></div>
+          <div><span class="notice-date">54,528</span><span data-copy="stat2">electoral parts represented.</span></div>
+          <div><span class="notice-date">218 / 224</span><span data-copy="stat3">Assembly constituencies covered; the snapshot manifest lists AC 36, 37, 38, 39, 98 and 154 as gaps.</span></div>
+          <div><span class="notice-date">424,791</span><span data-copy="stat4">mapping-only rows stay outside the search; ten upstream folder listings were inaccessible during the refresh.</span></div>
         </div>
-        <div>
-          <h3>Official authority</h3>
-          <p>This index describes publication records. The ERO’s process and the current electoral roll determine enrolment status, while each source link lets you inspect the published entry.</p>
+        <p class="notice-copy notice-copy--small" data-copy="methodNote">The index keeps one canonical entry for each Assembly constituency, part, prior-roll serial number and Voter ID when the source carries a stated reason. Source files carry publication dates from 17 July to 8 August 2026; the index was prepared on 9 August 2026. PDF text can carry spelling or extraction errors.</p>
+      </article>
+
+      <article class="notice">
+        <h3 class="notice-title" data-copy="countersTitle">Official counters</h3>
+        <div class="official-links">
+          <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer"><span data-copy="officialSearch">Official electoral search</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener noreferrer"><span data-copy="eciPortal">ECI Voters’ Service Portal</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://voters.eci.gov.in/home/forms" target="_blank" rel="noopener noreferrer"><span data-copy="officialForms">Official forms</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/asddo.html" target="_blank" rel="noopener noreferrer"><span data-copy="ceoPage">CEO Karnataka ASDDO page</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/vfc/details/" target="_blank" rel="noopener noreferrer"><span data-copy="contacts">Find BLO / ERO contacts</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/" target="_blank" rel="noopener noreferrer"><span data-copy="ceoHome">CEO Karnataka</span> <span aria-hidden="true">↗</span></a>
         </div>
-      </div>
-      <p class="snapshot-note">Source files in this snapshot carry publication dates from 17 July to 8 August 2026. The index was prepared on 9 August 2026. DataChutney publishes this as an independent, unofficial project.</p>
+        <p class="helpline-note"><span data-copy="helpline">Karnataka voter helplines:</span> <a href="tel:1950">1950</a> · <a href="tel:180042551950">1800 4255 1950</a></p>
+      </article>
+
+      <p class="about-line" data-copy="aboutIndex">DataChutney built this independent, unofficial index from public ASDDO files. Source gaps, spelling changes and PDF extraction can affect a match — the source page, the current roll and your ERO have the final word.</p>
     </section>
   </main>
 
   <footer>
-    <a class="wordmark wordmark--footer" href="https://datachutney.io">Data<span>Chutney</span></a>
-    <p>Independent tools for navigating public information.</p>
-    <p class="footer-caution">Use the linked source as a starting point. Your ERO and the current electoral roll provide the official status.</p>
+    <a class="wordmark wordmark--footer" href="https://datachutney.io">
+      <span class="wordmark-mark" aria-hidden="true">DC</span>
+      <span>DataChutney</span>
+    </a>
+    <p data-copy="footerLine">Independent tools for navigating public information.</p>
+    <p class="footer-caution" data-copy="previewLine">Use the linked source as a starting point. Your ERO and the current electoral roll provide the official status.</p>
   </footer>
 
   <template id="result-card-template">
@@ -259,7 +278,7 @@
       <h3 class="result-name"></h3>
       <p class="relative-line"></p>
       <dl class="result-facts">
-        <div><dt>Voter ID</dt><dd class="result-epic"></dd></div>
+        <div><dt>EPIC ID</dt><dd class="result-epic"></dd></div>
         <div><dt>Reason printed</dt><dd class="result-status"></dd></div>
         <div><dt>District / publication unit</dt><dd class="result-district"></dd></div>
         <div><dt>Assembly constituency</dt><dd class="result-ac"></dd></div>
@@ -276,17 +295,16 @@
 
   <template id="result-row-template">
     <article class="compact-result">
-      <button class="result-row" type="button" aria-expanded="false">
+      <button class="result-row" type="button">
         <span class="row-voter"><strong class="row-name"></strong><small class="row-match"></small></span>
         <span class="row-relative"></span>
         <span class="row-status"></span>
-        <span class="row-toggle" aria-hidden="true">+</span>
+        <span class="row-toggle" aria-hidden="true">→</span>
       </button>
-      <div class="row-detail" hidden></div>
     </article>
   </template>
 
   <script src="config.js"></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=20260810-sheet9" defer></script>
 </body>
 </html>
