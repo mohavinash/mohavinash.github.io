@@ -363,6 +363,24 @@
       padding: clamp(90px, 12vw, 150px) 0 0;
     }
     .level-heading { max-width: 860px; margin-bottom: 42px; }
+    .level-heading.has-sprite {
+      position: relative;
+      min-height: 220px;
+      max-width: 1180px;
+      padding-right: clamp(190px, 23vw, 300px);
+    }
+    .level-heading.has-sprite h2 { max-width: 860px; }
+    .section-sprite {
+      position: absolute;
+      right: 14px;
+      bottom: -8px;
+      width: clamp(165px, 19vw, 245px);
+      max-height: 220px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      filter: drop-shadow(7px 7px 0 var(--ink));
+    }
+    .section-sprite.modi-sprite { width: clamp(145px, 17vw, 215px); }
     .level-badge {
       display: inline-flex;
       align-items: center;
@@ -413,6 +431,19 @@
     }
     .promise-card.growth::after { content: '₹'; }
     .promise-card.governance::after { content: '§'; }
+    .promise-card.with-modi { padding-right: 185px; }
+    .promise-modi {
+      position: absolute;
+      right: 10px;
+      bottom: -4px;
+      z-index: 0;
+      width: 160px;
+      max-height: 205px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+    .promise-card.with-modi::after { display: none; }
+    .promise-card.with-modi > :not(.promise-modi) { position: relative; z-index: 1; }
     .promise-card .stat-chip {
       display: inline-block;
       margin-bottom: 22px;
@@ -682,6 +713,10 @@
     .outcome-menu-head p { margin: 0; color: var(--muted); font-size: .8rem; }
     .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
     .outcome-button {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
       min-height: 58px;
       padding: 8px 9px;
       border: 3px solid var(--ink);
@@ -694,11 +729,27 @@
       text-align: left;
       cursor: pointer;
     }
-    .outcome-button::before { content: attr(data-icon); display: block; margin-bottom: 2px; color: var(--orange-dark); font-family: var(--pixel); font-size: .92rem; font-weight: 400; }
+    .outcome-icon {
+      display: block;
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
     .outcome-button:hover { background: var(--yellow); }
     .outcome-button[aria-pressed="true"] { background: var(--orange); transform: translate(3px, 3px); box-shadow: none; }
     .outcome-dashboard { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(270px, .65fr); gap: 18px 22px; align-items: start; }
-    .outcome-header { min-width: 0; }
+    .outcome-header { position: relative; min-width: 0; min-height: 104px; padding-right: 108px; }
+    .outcome-hero-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 var(--cream-2));
+    }
     .outcome-header h3 { margin-top: 6px; font-size: clamp(1.55rem, 2.5vw, 2.2rem); }
     .gap-ticket { width: fit-content; min-width: 145px; margin-top: 13px; padding: 10px 12px; border: 3px solid var(--ink); background: var(--yellow); text-align: left; }
     .gap-ticket span { display: block; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
@@ -798,7 +849,18 @@
       background: var(--ink-2);
       color: var(--white);
     }
-    .bonus-inner { width: min(100%, var(--content)); margin: 0 auto; }
+    .bonus-inner { position: relative; width: min(100%, var(--content)); margin: 0 auto; }
+    .bonus-inner > h2, .bonus-inner > .bonus-intro { padding-right: 245px; }
+    .bonus-sprite {
+      position: absolute;
+      top: -18px;
+      right: 8px;
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      filter: drop-shadow(7px 7px 0 #0c0925);
+    }
     .bonus-level .level-badge { color: var(--ink); background: var(--pink); }
     .bonus-level h2 { max-width: 980px; }
     .bonus-intro { max-width: 790px; margin: 18px 0 0; color: #e8e1ff; font-size: 1.18rem; }
@@ -938,6 +1000,17 @@
       .research-status { margin-top: 38px; }
       .level { width: calc(100% - 24px); padding-top: 94px; }
       .level-heading { margin-bottom: 30px; }
+      .level-heading.has-sprite { min-height: 0; padding-right: 0; }
+      .section-sprite, .section-sprite.modi-sprite {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        display: block;
+        width: 140px;
+        height: 128px;
+        margin: 18px 8px 0 auto;
+        object-fit: contain;
+      }
       h2 { font-size: clamp(2.7rem, 13vw, 4.3rem); }
       .promise-grid, .result-summary { grid-template-columns: 1fr; }
       .score-game, .quadrant-game { grid-template-columns: 1fr; }
@@ -973,6 +1046,8 @@
       .outcome-grid { display: flex; gap: 7px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 0 7px; }
       .outcome-button { flex: 0 0 148px; scroll-snap-align: start; }
       .outcome-dashboard { grid-template-columns: 1fr; }
+      .outcome-header { min-height: 88px; padding-right: 84px; }
+      .outcome-hero-icon { width: 76px; height: 76px; }
       .gap-ticket { width: fit-content; text-align: left; }
       .outcome-meta { grid-template-columns: 110px 1fr; align-items: stretch; }
       .outcome-meta .gap-ticket { width: auto; min-width: 0; margin-top: 0; }
@@ -988,6 +1063,8 @@
       .guide-step { min-height: 0; }
       .caveat-grid { grid-template-columns: 1fr; }
       .bonus-level { padding: 54px 12px; }
+      .bonus-inner > h2, .bonus-inner > .bonus-intro { padding-right: 0; }
+      .bonus-sprite { position: relative; top: auto; right: auto; display: block; width: 160px; height: 150px; margin: 18px 0 -4px auto; }
       .election-switcher { gap: 20px; }
       .seat-matchup { grid-template-columns: 1fr auto 1fr; gap: 8px; }
       .seat-team { min-width: 0; padding: 11px 8px; }
@@ -1007,7 +1084,10 @@
       .mode-switch { width: 100%; }
       .score-row { grid-template-columns: 75px 1fr 36px; gap: 7px; }
       .outcome-grid { gap: 6px; }
-      .outcome-button { min-height: 72px; padding: 7px; font-size: .75rem; }
+      .outcome-button { grid-template-columns: 34px minmax(0, 1fr); min-height: 72px; padding: 7px; font-size: .75rem; }
+      .outcome-icon { width: 34px; height: 34px; }
+      .promise-card.with-modi { padding-right: 28px; padding-bottom: 148px; }
+      .promise-modi { right: 50%; bottom: -4px; width: 132px; height: 146px; transform: translateX(50%); }
       .dialog-head { padding: 10px 12px; font-size: 1.05rem; }
       .dialog-body { padding: 12px; }
       .citation-card { grid-template-columns: 1fr; }
@@ -1068,10 +1148,11 @@
 
   <main id="main">
     <section class="level" id="baseline" data-section="baseline">
-      <div class="level-heading reveal">
+      <div class="level-heading has-sprite reveal">
         <span class="level-badge"><b>01</b> Start with the promise</span>
         <h2>Has Modi kept his promise?</h2>
         <p class="level-intro">The paper tries to measure two things: <strong>how well the economy grew</strong> and <strong>whether the quality of governance improved.</strong> But improvement by itself does not tell us whether India did as well as it reasonably could have.</p>
+        <img class="section-sprite" src="assets/pixel/sprites/story/school-comparison.png" alt="Pixel-art school with two report cards, one improving more than the other" width="458" height="411">
       </div>
 
       <div class="promise-grid reveal">
@@ -1080,10 +1161,11 @@
           <h3>Make India grow faster</h3>
           <p>The “Gujarat Model” was presented as proof that a Modi government could accelerate development—not simply keep India growing at its old pace.</p>
         </article>
-        <article class="promise-card governance">
+        <article class="promise-card governance with-modi">
           <span class="stat-chip">Promise 2 / Governance</span>
           <h3>Make government work better</h3>
           <p>“Minimum government, maximum governance” promised cleaner, more capable government and stronger public institutions.</p>
+          <img class="promise-modi" src="assets/pixel/sprites/story/modi-promises.png" alt="Pixel-art Narendra Modi holding two promise cards at a podium" width="396" height="356">
         </article>
       </div>
 
@@ -1118,10 +1200,11 @@
     </section>
 
     <section class="level" id="build" data-section="build">
-      <div class="level-heading reveal">
+      <div class="level-heading has-sprite reveal">
         <span class="level-badge"><b>02</b> Build a fair comparison</span>
         <h2>You cannot become Vishwa Guru without comparing yourself with the Vishwa</h2>
         <p class="level-intro">No single country is similar enough to India. So the authors mix small and large shares of several broadly comparable countries until the combination behaves a lot like India before 2014. The paper calls this <strong>synthetic India.</strong> Here, we will call it <strong>Bhagwan Bharose India.</strong></p>
+        <img class="section-sprite" src="assets/pixel/sprites/story/comparison-machine.png" alt="Pixel-art mixing machine combining five country pieces into one comparison India" width="419" height="357">
       </div>
 
       <div class="build-machine reveal">
@@ -1247,10 +1330,11 @@
     </section>
 
     <section class="level" id="results" data-section="results">
-      <div class="level-heading reveal">
+      <div class="level-heading has-sprite reveal">
         <span class="level-badge"><b>03</b> Make your prediction</span>
         <h2>Before we reveal it: how do you think real India did?</h2>
         <p class="level-intro">Did the economy do better or worse than Bhagwan Bharose India? Did governance do better or worse? Pick the combination you think is right. Remember: this compares <strong>real India with its made-up twin</strong>, not 2023 with 2013.</p>
+        <img class="section-sprite modi-sprite" src="assets/pixel/sprites/story/modi-crossroads.png" alt="Pixel-art Narendra Modi considering two diverging paths" width="454" height="388">
       </div>
 
       <div class="quadrant-game reveal">
@@ -1305,20 +1389,21 @@
           <div class="outcome-menu">
             <div class="outcome-menu-head"><span class="micro-label">Choose a governance measure</span><p>The paper uses ten measures from a global democracy dataset called V-Dem. Pick one to see what it asks and how India compares.</p></div>
             <div class="outcome-grid" role="group" aria-label="Governance outcomes">
-              <button class="outcome-button" data-outcome="polyarchy" data-icon="VOTE" type="button" aria-pressed="true">Electoral democracy</button>
-              <button class="outcome-button" data-outcome="liberalDemocracy" data-icon="RIGHTS" type="button" aria-pressed="false">Liberal democracy</button>
-              <button class="outcome-button" data-outcome="legislative" data-icon="HOUSE" type="button" aria-pressed="false">Parliament checks</button>
-              <button class="outcome-button" data-outcome="judicial" data-icon="COURT" type="button" aria-pressed="false">Court checks</button>
-              <button class="outcome-button" data-outcome="corruption" data-icon="CLEAN?" type="button" aria-pressed="false">Political corruption</button>
-              <button class="outcome-button" data-outcome="equality" data-icon="LAW" type="button" aria-pressed="false">Equality before law</button>
-              <button class="outcome-button" data-outcome="association" data-icon="GROUP" type="button" aria-pressed="false">Freedom to organise</button>
-              <button class="outcome-button" data-outcome="expression" data-icon="SPEAK" type="button" aria-pressed="false">Freedom to speak</button>
-              <button class="outcome-button" data-outcome="religion" data-icon="FAITH" type="button" aria-pressed="false">Freedom of religion</button>
-              <button class="outcome-button" data-outcome="protection" data-icon="EQUAL" type="button" aria-pressed="false">Equal protection</button>
+              <button class="outcome-button" data-outcome="polyarchy" type="button" aria-pressed="true"><img class="outcome-icon" src="assets/pixel/sprites/governance/electoral-democracy.png" alt="" aria-hidden="true">Electoral democracy</button>
+              <button class="outcome-button" data-outcome="liberalDemocracy" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/liberal-democracy.png" alt="" aria-hidden="true">Liberal democracy</button>
+              <button class="outcome-button" data-outcome="legislative" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/parliament-checks.png" alt="" aria-hidden="true">Parliament checks</button>
+              <button class="outcome-button" data-outcome="judicial" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/court-checks.png" alt="" aria-hidden="true">Court checks</button>
+              <button class="outcome-button" data-outcome="corruption" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/political-corruption.png" alt="" aria-hidden="true">Political corruption</button>
+              <button class="outcome-button" data-outcome="equality" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/equality-before-law.png" alt="" aria-hidden="true">Equality before law</button>
+              <button class="outcome-button" data-outcome="association" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/freedom-to-organise.png" alt="" aria-hidden="true">Freedom to organise</button>
+              <button class="outcome-button" data-outcome="expression" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/freedom-to-speak.png" alt="" aria-hidden="true">Freedom to speak</button>
+              <button class="outcome-button" data-outcome="religion" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/freedom-of-religion.png" alt="" aria-hidden="true">Freedom of religion</button>
+              <button class="outcome-button" data-outcome="protection" type="button" aria-pressed="false"><img class="outcome-icon" src="assets/pixel/sprites/governance/equal-protection.png" alt="" aria-hidden="true">Equal protection</button>
             </div>
           </div>
           <div class="outcome-dashboard" aria-live="polite">
             <div class="outcome-header">
+              <img class="outcome-hero-icon" id="outcome-hero-icon" src="assets/pixel/sprites/governance/electoral-democracy.png" alt="" aria-hidden="true" width="261" height="292">
               <p class="micro-label" id="outcome-domain">Elections</p>
               <h3 id="outcome-question">Are elections and political competition healthy?</h3>
               <p class="outcome-definition" id="outcome-definition">This measure covers fair elections, voting rights, elected leaders and the freedom to compete for power.</p>
@@ -1351,10 +1436,11 @@
     </section>
 
     <section class="level" id="checks" data-section="checks">
-      <div class="level-heading reveal">
+      <div class="level-heading has-sprite reveal">
         <span class="level-badge"><b>04</b> Check whether the comparison holds up</span>
         <h2>The paper tries to show that this is not a fluke</h2>
         <p class="level-intro">Bhagwan Bharose India is made by an algorithm; it is not a country we can observe. So the authors ask three common-sense questions: did the two Indias match before 2014, is India’s later gap unusually large, and does the method see a gap when we deliberately give it the wrong starting year?</p>
+        <img class="section-sprite modi-sprite" src="assets/pixel/sprites/story/modi-checks.png" alt="Pixel-art Narendra Modi using a magnifying glass to inspect two lines on a chart" width="422" height="359">
       </div>
 
       <div class="checks-console reveal" id="checks-console">
@@ -1400,6 +1486,7 @@
         <span class="level-badge"><b>★</b> Bonus level / the political puzzle</span>
         <h2>If both missions failed, how did Modi keep winning?</h2>
         <p class="bonus-intro">This comparison cannot answer that question. The authors instead point to a durable Hindu-nationalist base and a divided opposition in India’s first-past-the-post electoral system.</p>
+        <img class="bonus-sprite" src="assets/pixel/sprites/story/modi-up-ballot.png" alt="Pixel-art Narendra Modi beside a ballot box and a map of Uttar Pradesh" width="401" height="369">
         <span class="interpretation-label">Authors’ interpretation · not a causal result from the model</span>
 
         <div class="election-switcher">
@@ -1567,6 +1654,19 @@
           source: 'Table 2 + Figure A10', figure: 'Figure A10', slug: 'equal-protection',
           donors: [['Argentina',68.8],['Sri Lanka',16],['Mexico',4.9],['Indonesia',3.9],['Malaysia',3.6],['Philippines',1.6],['Ghana',1.2]]
         }
+      };
+
+      const outcomeIcons = {
+        polyarchy: 'assets/pixel/sprites/governance/electoral-democracy.png',
+        liberalDemocracy: 'assets/pixel/sprites/governance/liberal-democracy.png',
+        legislative: 'assets/pixel/sprites/governance/parliament-checks.png',
+        judicial: 'assets/pixel/sprites/governance/court-checks.png',
+        corruption: 'assets/pixel/sprites/governance/political-corruption.png',
+        equality: 'assets/pixel/sprites/governance/equality-before-law.png',
+        association: 'assets/pixel/sprites/governance/freedom-to-organise.png',
+        expression: 'assets/pixel/sprites/governance/freedom-to-speak.png',
+        religion: 'assets/pixel/sprites/governance/freedom-of-religion.png',
+        protection: 'assets/pixel/sprites/governance/equal-protection.png'
       };
 
       const governanceEffects = {
@@ -1999,6 +2099,7 @@
         $('#outcome-note').textContent = data.note;
         $('#outcome-rank').textContent = 'No comparison-country rerun produces an overall gap as large as India’s.';
         $('#outcome-source').textContent = data.figure;
+        $('#outcome-hero-icon').src = outcomeIcons[key];
         renderDonors(data.donors);
         renderGovernanceChart();
       }
