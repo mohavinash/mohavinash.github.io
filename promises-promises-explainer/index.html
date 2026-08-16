@@ -1835,30 +1835,163 @@
         ], { duration: 260, easing: 'ease-out' });
       }
 
-      function animateEvidence(svg) {
-        if (!svg || prefersReducedMotion || !svg.animate) return;
+      let timelineRevealId = 0;
 
-        svg.querySelectorAll('.actual-series, .governance-series, .check-fit-india').forEach((path, index) => {
-          try {
-            const length = path.getTotalLength();
-            path.animate([
-              { strokeDasharray: `${length} ${length}`, strokeDashoffset: length, opacity: .35 },
-              { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0, opacity: 1 }
-            ], { duration: 820, delay: index * 90, easing: 'steps(18, end)' });
-          } catch (_) {}
+      function createTimelineLayer(svg, { left, right, height, gateX, animate }) {
+        const active = Boolean(animate && !prefersReducedMotion);
+        const id = `timeline-reveal-${timelineRevealId += 1}`;
+        const defs = makeSvg('defs');
+        const clip = makeSvg('clipPath', { id, clipPathUnits: 'userSpaceOnUse' });
+        const mask = makeSvg('rect', {
+          x: left,
+          y: '0',
+          width: active ? '0' : right - left,
+          height
         });
+        clip.appendChild(mask);
+        defs.appendChild(clip);
+        svg.appendChild(defs);
 
-        svg.querySelectorAll('.synthetic-series, .check-fit-synthetic').forEach(path => {
-          path.animate([{ opacity: .12 }, { opacity: 1 }], { duration: 540, easing: 'ease-out' });
+        const group = makeSvg('g', {
+          class: 'timeline-data-layer',
+          'clip-path': `url(#${id})`
         });
+        svg.appendChild(group);
 
+        return {
+          active,
+          group,
+          mask,
+          left,
+          gateWidth: Math.max(0, gateX - left),
+          totalWidth: Math.max(0, right - left)
+        };
+      }
+
+      function tweenSvgNumber(node, attribute, from, to, duration) {
+        return new Promise(resolve => {
+          let startedAt = null;
+          const tick = now => {
+            if (!node.isConnected) {
+              resolve();
+              return;
+            }
+            if (startedAt === null) startedAt = now;
+            const progress = Math.min(1, (now - startedAt) / duration);
+            const eased = 1 - ((1 - progress) ** 3);
+            node.setAttribute(attribute, String(from + ((to - from) * eased)));
+            if (progress < 1) requestAnimationFrame(tick);
+            else resolve();
+          };
+          requestAnimationFrame(tick);
+        });
+      }
+
+      function waitForStoryBeat(duration) {
+        return new Promise(resolve => setTimeout(resolve, duration));
+      }
+
+      async function animateTimelineLayer(svg, layer) {
+        if (!svg || !layer.active) return;
+        try {
+          // Act 1: reveal only the shared history, ending at the last pre-2014 year.
+          await tweenSvgNumber(layer.mask, 'width', 0, layer.gateWidth, 860);
+          if (!layer.mask.isConnected) return;
+
+          // The divider is the narrative hand-off, not just a visual annotation.
+          svg.querySelectorAll('.timeline-gate').forEach(node => {
+            if (!node.animate) return;
+            node.animate([
+              { opacity: 1 },
+              { opacity: .35 },
+              { opacity: 1 }
+            ], { duration: 240, easing: 'steps(2, end)' });
+          });
+          await waitForStoryBeat(260);
+          if (!layer.mask.isConnected) return;
+
+          // Act 2: only after the pause do the post-2014 results enter.
+          await tweenSvgNumber(layer.mask, 'width', layer.gateWidth, layer.totalWidth, 680);
+        } catch (_) {
+          if (layer.mask.isConnected) layer.mask.setAttribute('width', String(layer.totalWidth));
+        }
+      }
+
+      function animateYearBars(svg) {
+        if (!svg || prefersReducedMotion) return;
         svg.querySelectorAll('.fake-gap-bar, .false-gap-bar').forEach((bar, index) => {
           bar.style.transformBox = 'fill-box';
           bar.style.transformOrigin = '50% 0%';
           bar.animate([
-            { transform: 'scaleY(0)', opacity: .25 },
+            { transform: 'scaleY(0)', opacity: 0 },
             { transform: 'scaleY(1)', opacity: 1 }
-          ], { duration: 380, delay: index * 34, easing: 'steps(7, end)' });
+          ], {
+            duration: 180,
+            delay: index * 145,
+            easing: 'steps(4, end)',
+            fill: 'both'
+          });
+        });
+      }
+
+      const pendingChartAnimations = new Map();
+      const chartAnimationTimers = new WeakMap();
+      let chartAnimationObserver;
+
+      function chartStageIsVisible(stage) {
+        if (!stage || stage.closest('[hidden]')) return false;
+        const bounds = stage.getBoundingClientRect();
+        const visibleHeight = Math.max(0, Math.min(innerHeight, bounds.bottom) - Math.max(0, bounds.top));
+        return visibleHeight / Math.min(bounds.height || 1, innerHeight) >= .45;
+      }
+
+      function playChartAnimation(stage, renderer) {
+        const previousTimer = chartAnimationTimers.get(stage);
+        if (previousTimer) clearTimeout(previousTimer);
+        stage.dataset.chartAnimating = 'true';
+        delete stage.dataset.chartResizePending;
+        renderer(true);
+        const timer = setTimeout(() => {
+          delete stage.dataset.chartAnimating;
+          chartAnimationTimers.delete(stage);
+          if (stage.dataset.chartResizePending === 'true') {
+            delete stage.dataset.chartResizePending;
+            renderer(false);
+          }
+        }, 1900);
+        chartAnimationTimers.set(stage, timer);
+      }
+
+      function refreshChartAfterResize(stage, renderer) {
+        if (stage.dataset.chartAnimating === 'true') {
+          stage.dataset.chartResizePending = 'true';
+          return;
+        }
+        renderer(false);
+      }
+
+      function scheduleChartRender(stage, renderer, animate = true) {
+        if (!stage) return;
+        if (!animate || prefersReducedMotion) {
+          pendingChartAnimations.delete(stage);
+          if (chartAnimationObserver) chartAnimationObserver.unobserve(stage);
+          renderer(false);
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          if (chartStageIsVisible(stage)) {
+            pendingChartAnimations.delete(stage);
+            if (chartAnimationObserver) chartAnimationObserver.unobserve(stage);
+            playChartAnimation(stage, renderer);
+            return;
+          }
+
+          // Keep the latest requested chart state, but spend its animation only
+          // when the chart itself—not merely its surrounding section—is onscreen.
+          renderer(false);
+          pendingChartAnimations.set(stage, () => playChartAnimation(stage, renderer));
+          if (chartAnimationObserver) chartAnimationObserver.observe(stage);
         });
       }
 
@@ -1887,16 +2020,23 @@
           svg.appendChild(makeSvg('text', { x: x(year), y: height - 14, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 1984 ? 'start' : year === 2023 ? 'end' : 'middle' }, String(year)));
         });
         svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
-        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
-        svg.appendChild(makeSvg('text', { x: x(2013.5) + 7, y: margin.top + 14, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
-        svg.appendChild(makeSvg('path', { class: 'income-series synthetic-series', d: linePath(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
-        svg.appendChild(makeSvg('path', { class: 'income-series actual-series', d: linePath(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
-        svg.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
-        svg.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeActual.at(-1)) + 18, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
-        if (animate) requestAnimationFrame(() => animateEvidence(svg));
+        const timeline = createTimelineLayer(svg, {
+          left: margin.left,
+          right: width - margin.right,
+          height,
+          gateX: x(2013),
+          animate
+        });
+        timeline.group.appendChild(makeSvg('path', { class: 'income-series synthetic-series', d: linePath(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+        timeline.group.appendChild(makeSvg('path', { class: 'income-series actual-series', d: linePath(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+        timeline.group.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
+        timeline.group.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeActual.at(-1)) + 18, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
+        svg.appendChild(makeSvg('line', { class: 'timeline-gate', x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { class: 'timeline-gate', x: x(2013.5) + 7, y: margin.top + 14, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
+        if (animate) requestAnimationFrame(() => animateTimelineLayer(svg, timeline));
       }
 
-      function renderCheckFitChart(svg, width, height) {
+      function renderCheckFitChart(svg, width, height, animate = false) {
         const margin = { top: 24, right: 18, bottom: 36, left: 54 };
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
@@ -1914,12 +2054,20 @@
           svg.appendChild(makeSvg('text', { x: x(year), y: height - 13, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 1984 ? 'start' : year === 2023 ? 'end' : 'middle' }, String(year)));
         });
         svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
-        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
-        svg.appendChild(makeSvg('text', { x: x(2013.5) + 6, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
-        svg.appendChild(makeSvg('path', { class: 'check-series check-fit-synthetic', d: path(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
-        svg.appendChild(makeSvg('path', { class: 'check-series check-fit-india', d: path(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
-        svg.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
-        svg.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeActual.at(-1)) + 17, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
+        const timeline = createTimelineLayer(svg, {
+          left: margin.left,
+          right: width - margin.right,
+          height,
+          gateX: x(2013),
+          animate
+        });
+        timeline.group.appendChild(makeSvg('path', { class: 'check-series check-fit-synthetic', d: path(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
+        timeline.group.appendChild(makeSvg('path', { class: 'check-series check-fit-india', d: path(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
+        timeline.group.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
+        timeline.group.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeActual.at(-1)) + 17, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
+        svg.appendChild(makeSvg('line', { class: 'timeline-gate', x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { class: 'timeline-gate', x: x(2013.5) + 6, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
+        if (animate) requestAnimationFrame(() => animateTimelineLayer(svg, timeline));
       }
 
       function renderFakeCountryChart(svg, width, height) {
@@ -2000,8 +2148,8 @@
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
         if (state.check === 'placebos') renderFakeCountryChart(svg, width, height);
         else if (state.check === 'fakeDate') renderFalseStartChart(svg, width, height);
-        else renderCheckFitChart(svg, width, height);
-        if (animate) requestAnimationFrame(() => animateEvidence(svg));
+        else renderCheckFitChart(svg, width, height, animate);
+        if (animate && state.check !== 'fit') requestAnimationFrame(() => animateYearBars(svg));
       }
 
       function niceStep(span, count = 5) {
@@ -2059,34 +2207,41 @@
           svg.appendChild(makeSvg('text', { x: x(year), y: height - 14, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 2023 ? 'end' : 'middle' }, String(year)));
         });
         svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
-        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
-        svg.appendChild(makeSvg('text', { x: x(2013.5) + 7, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014'));
-        svg.appendChild(makeSvg('path', { class: 'governance-series', d: path, fill: 'none', stroke: '#ef6b3a', 'stroke-width': '4', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+        const timeline = createTimelineLayer(svg, {
+          left: margin.left,
+          right: width - margin.right,
+          height,
+          gateX: x(2013),
+          animate
+        });
+        timeline.group.appendChild(makeSvg('path', { class: 'governance-series', d: path, fill: 'none', stroke: '#ef6b3a', 'stroke-width': '4', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
 
         points.forEach(point => {
           const hit = makeSvg('circle', { class: 'governance-hit', cx: x(point.year), cy: y(point.value), r: '7', tabindex: '0', 'aria-label': `${point.year}: ${formatEffect(point.value, .001)}` });
           hit.appendChild(makeSvg('title', {}, `${point.year}: real India minus Bhagwan Bharose India = ${point.value.toFixed(3)}`));
-          svg.appendChild(hit);
+          timeline.group.appendChild(hit);
         });
 
         const end = points.at(-1);
         const labelY = Math.max(margin.top + 16, Math.min(height - margin.bottom - 14, y(end.value)));
-        svg.appendChild(makeSvg('circle', { cx: x(end.year), cy: y(end.value), r: '5', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '3' }));
-        svg.appendChild(makeSvg('rect', { x: width - margin.right - 120, y: labelY - 16, width: '116', height: '28', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '2' }));
-        svg.appendChild(makeSvg('text', { x: width - margin.right - 10, y: labelY + 3, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, `2023  ${formatEffect(end.value, .001)}`));
+        timeline.group.appendChild(makeSvg('circle', { cx: x(end.year), cy: y(end.value), r: '5', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '3' }));
+        timeline.group.appendChild(makeSvg('rect', { x: width - margin.right - 120, y: labelY - 16, width: '116', height: '28', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '2' }));
+        timeline.group.appendChild(makeSvg('text', { x: width - margin.right - 10, y: labelY + 3, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, `2023  ${formatEffect(end.value, .001)}`));
+        svg.appendChild(makeSvg('line', { class: 'timeline-gate', x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { class: 'timeline-gate', x: x(2013.5) + 7, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014'));
 
         const isCorruption = key === 'corruption';
         $('#governance-chart-takeaway').textContent = isCorruption
           ? 'After 2014, real India rises above its made-up twin. On this measure, moving upward means more political corruption.'
           : 'Before 2014, the line stays near zero. After 2014, real India falls behind its made-up twin.';
-        if (animate) requestAnimationFrame(() => animateEvidence(svg));
+        if (animate) requestAnimationFrame(() => animateTimelineLayer(svg, timeline));
       }
 
       function setPathView(view) {
         state.pathView = view;
         $$('.path-view-button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.pathView === view)));
         $$('[data-path-panel]').forEach(panel => { panel.hidden = panel.dataset.pathPanel !== view; });
-        if (view === 'chart') requestAnimationFrame(() => renderIncomeChart(true));
+        if (view === 'chart') scheduleChartRender($('.income-chart-stage'), renderIncomeChart, true);
       }
       $$('.path-view-button').forEach(button => button.addEventListener('click', () => setPathView(button.dataset.pathView)));
 
@@ -2176,7 +2331,7 @@
         $('#outcome-source').textContent = data.figure;
         $('#outcome-hero-icon').src = outcomeIcons[key];
         renderDonors(data.donors);
-        renderGovernanceChart(true);
+        scheduleChartRender($('.governance-chart-stage'), renderGovernanceChart, true);
         animateUpdate($('.outcome-header'));
       }
 
@@ -2203,7 +2358,7 @@
           step.append(title, document.createTextNode(copy));
           guide.appendChild(step);
         });
-        requestAnimationFrame(() => renderCheckChart(animate));
+        scheduleChartRender($('.check-chart-stage'), renderCheckChart, animate);
         if (animate) animateUpdate($('.check-copy'));
       }
       $$('.check-tab').forEach(button => button.addEventListener('click', () => setCheck(button.dataset.check)));
@@ -2244,10 +2399,10 @@
 
       if ('ResizeObserver' in window) {
         new ResizeObserver(() => {
-          if (state.pathView === 'chart') renderIncomeChart();
+          if (state.pathView === 'chart') refreshChartAfterResize($('.income-chart-stage'), renderIncomeChart);
         }).observe($('.income-chart-stage'));
-        new ResizeObserver(() => renderGovernanceChart()).observe($('.governance-chart-stage'));
-        new ResizeObserver(() => renderCheckChart()).observe($('.check-chart-stage'));
+        new ResizeObserver(() => refreshChartAfterResize($('.governance-chart-stage'), renderGovernanceChart)).observe($('.governance-chart-stage'));
+        new ResizeObserver(() => refreshChartAfterResize($('.check-chart-stage'), renderCheckChart)).observe($('.check-chart-stage'));
       }
 
       const progress = $('#quest-progress');
@@ -2272,12 +2427,21 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           entry.target.classList.add('story-active');
-          if (entry.target.id === 'governance-lab') renderGovernanceChart(true);
-          if (entry.target.id === 'checks-console') renderCheckChart(true);
           storyObserver.unobserve(entry.target);
         });
-      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+      }, { threshold: .32, rootMargin: '0px 0px -6% 0px' });
       $$('.story-sequence, .story-evidence').forEach(element => storyObserver.observe(element));
+
+      chartAnimationObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || entry.intersectionRatio < .45) return;
+          const play = pendingChartAnimations.get(entry.target);
+          if (!play) return;
+          pendingChartAnimations.delete(entry.target);
+          chartAnimationObserver.unobserve(entry.target);
+          play();
+        });
+      }, { threshold: [.45], rootMargin: '0px 0px -4% 0px' });
 
       const sectionObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -2289,8 +2453,9 @@
       $$('[data-section]').forEach(section => sectionObserver.observe(section));
 
       renderDonors(outcomes.polyarchy.donors);
-      renderGovernanceChart();
+      scheduleChartRender($('.governance-chart-stage'), renderGovernanceChart, true);
       setCheck('fit', false);
+      scheduleChartRender($('.check-chart-stage'), renderCheckChart, true);
       renderSeatPixels(elections[2014].pixels);
       useReadableNumerals();
       updateProgress();
