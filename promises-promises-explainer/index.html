@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promises, Promises: Modi, Growth and Governance | DataChutney</title>
+  <meta name="description" content="Has Modi kept his promise? A plain-English interactive guide to a working paper on India’s economic growth and quality of governance.">
+  <meta name="author" content="Avinash Mohan Chetty">
+  <meta name="keywords" content="Narendra Modi, BJP, India growth, governance, synthetic control, V-Dem, counterfactual, Kevin Grier, Robin Grier">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#24204f">
+  <meta name="google-site-verification" content="oeEvB4hLQBeqZbkOSB4GOCf_H9AUBiQKHC-dlHLYaaA">
+  <script defer src="https://umami-production-daa4.up.railway.app/script.js" data-website-id="c412f3c1-880b-4977-bdd6-33e193b2e7aa"></script>
+
+  <link rel="canonical" href="https://datachutney.io/promises-promises-explainer/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Geist+Pixel&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DataChutney">
+  <meta property="og:url" content="https://datachutney.io/promises-promises-explainer/">
+  <meta property="og:title" content="Promises, Promises: Has Modi kept his promise?">
+  <meta property="og:description" content="India grew. But did it grow as much as it could have—and did governance improve? A plain-English interactive guide.">
+  <meta property="og:image" content="https://datachutney.io/promises-promises-explainer/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Promises, Promises, a pixel-art interactive paper explainer">
+  <meta property="article:published_time" content="2026-08-15">
+  <meta property="article:modified_time" content="2026-08-16">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Promises, Promises: Has Modi kept his promise?">
+  <meta name="twitter:description" content="A plain-English interactive guide to a study of growth and governance in India under Modi and the BJP.">
+  <meta name="twitter:image" content="https://datachutney.io/promises-promises-explainer/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Promises, Promises: Modi, Growth and Governance",
+    "description": "A plain-English interactive guide to a working paper on economic growth and governance in India under Narendra Modi and the BJP.",
+    "url": "https://datachutney.io/promises-promises-explainer/",
+    "image": "https://datachutney.io/promises-promises-explainer/og-image.png",
+    "datePublished": "2026-08-15",
+    "dateModified": "2026-08-16",
+    "author": {"@type": "Person", "name": "Avinash Mohan Chetty"},
+    "publisher": {"@type": "Organization", "name": "DataChutney"},
+    "isBasedOn": {
+      "@type": "ScholarlyArticle",
+      "name": "Promises, Promises: Governance and Growth in India under Modi and the BJP",
+      "datePublished": "2026-08",
+      "author": [
+        {"@type": "Person", "name": "Kevin Grier", "affiliation": "Texas Tech University"},
+        {"@type": "Person", "name": "Robin Grier", "affiliation": "Texas Tech University"}
+      ],
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7248338"
+    }
+  }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    :root {
+      --cream: #fff4d2;
+      --cream-2: #f5e3b5;
+      --paper: #fffaf0;
+      --ink: #211d45;
+      --ink-2: #39336f;
+      --muted: #6f6688;
+      --orange: #ef6b3a;
+      --orange-dark: #b83f2c;
+      --yellow: #ffd44a;
+      --cyan: #53d8dd;
+      --cyan-dark: #167e9a;
+      --blue: #5a73d8;
+      --green: #58ae66;
+      --red: #d94d5c;
+      --pink: #f39bb6;
+      --white: #fffdf7;
+      --shadow: 7px 7px 0 var(--ink);
+      --shadow-small: 4px 4px 0 var(--ink);
+      --pixel: 'Geist Pixel', 'Arial Black', sans-serif;
+      --body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --content: 1180px;
+      --reading: 760px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(33, 29, 69, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(33, 29, 69, .035) 1px, transparent 1px),
+        var(--cream);
+      background-size: 16px 16px;
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: .05;
+      background: repeating-linear-gradient(0deg, transparent 0 3px, var(--ink) 3px 4px);
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+    .numeral { font-family: var(--mono); letter-spacing: 0; }
+    :focus-visible { outline: 4px solid var(--yellow); outline-offset: 4px; }
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 10px;
+      z-index: 2000;
+      padding: 10px 14px;
+      border: 3px solid var(--ink);
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: .75rem;
+    }
+    .skip-link:focus { top: 10px; }
+
+    #quest-progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      width: 0;
+      height: 6px;
+      z-index: 1200;
+      background: var(--yellow);
+      border-right: 3px solid var(--ink);
+    }
+
+    .hud {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      min-height: 74px;
+      border-bottom: 4px solid var(--ink);
+      background: rgba(255, 244, 210, .96);
+      backdrop-filter: blur(10px);
+    }
+    .hud-inner {
+      width: min(calc(100% - 32px), var(--content));
+      min-height: 70px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--pixel);
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+      box-shadow: inset 6px 0 var(--orange), inset 0 -6px var(--cyan);
+    }
+    .brand span { color: var(--orange-dark); }
+    .hud-links { display: flex; align-items: center; gap: 8px; }
+    .hud-link {
+      position: relative;
+      padding: 8px 9px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .035em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .hud-link::after {
+      content: '';
+      position: absolute;
+      left: 9px;
+      right: 9px;
+      bottom: 3px;
+      height: 3px;
+      background: transparent;
+    }
+    .hud-link:hover, .hud-link.active { color: var(--ink); }
+    .hud-link.active::after { background: var(--orange); }
+    .hud-paper {
+      padding: 9px 12px;
+      border: 3px solid var(--ink);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .hud-paper:active { transform: translate(3px, 3px); box-shadow: none; }
+
+    .hero {
+      width: min(calc(100% - 32px), 1320px);
+      margin: 28px auto 0;
+    }
+    .hero-game {
+      position: relative;
+      min-height: min(720px, calc(100vh - 120px));
+      overflow: hidden;
+      border: 5px solid var(--ink);
+      background: #f4c85b;
+      box-shadow: 10px 10px 0 var(--ink);
+      isolation: isolate;
+    }
+    .hero-scene {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+      z-index: -2;
+    }
+    .hero-game::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(255, 244, 210, .95) 0 32%, rgba(255, 244, 210, .35) 50%, transparent 72%);
+    }
+    .hero-copy {
+      width: min(640px, 53%);
+      margin: clamp(30px, 6vw, 76px);
+      padding: clamp(22px, 4vw, 38px);
+      border: 4px solid var(--ink);
+      background: rgba(255, 250, 240, .95);
+      box-shadow: var(--shadow);
+    }
+    .game-kicker, .level-kicker, .micro-label, .console-label {
+      margin: 0;
+      color: var(--orange-dark);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: 8px 0 0;
+      max-width: 620px;
+      font-family: var(--pixel);
+      font-size: clamp(4rem, 8vw, 7.4rem);
+      font-weight: 700;
+      letter-spacing: -.055em;
+      line-height: .78;
+      text-wrap: balance;
+    }
+    .hero h1 span { color: var(--orange-dark); }
+    .hero-deck {
+      max-width: 570px;
+      margin: 26px 0 0;
+      font-size: clamp(1.17rem, 2vw, 1.45rem);
+      font-weight: 700;
+      line-height: 1.33;
+    }
+    .hero-deck em { color: var(--orange-dark); font-style: normal; }
+    .hero-byline { margin: 18px 0 0; color: var(--muted); font-size: .91rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .pixel-button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 10px 15px;
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      background: var(--white);
+      box-shadow: var(--shadow-small);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .pixel-button.primary { background: var(--yellow); }
+    .pixel-button:hover { background: var(--cyan); }
+    .pixel-button:active { transform: translate(4px, 4px); box-shadow: none; }
+    .pixel-button .arrow { font-family: var(--pixel); font-size: 1.2rem; }
+    .hero-legend {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      border: 3px solid var(--ink);
+      background: rgba(255, 250, 240, .94);
+      box-shadow: var(--shadow-small);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .legend-item { display: flex; align-items: center; gap: 7px; }
+    .legend-pixel { width: 15px; height: 15px; border: 2px solid var(--ink); }
+    .legend-pixel.actual { background: var(--orange); }
+    .legend-pixel.ghost { background: var(--cyan); opacity: .8; }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 4px solid var(--ink);
+      border-top: 0;
+      background: var(--ink);
+      gap: 4px;
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .hero-stat { padding: 15px 20px; background: var(--white); }
+    .hero-stat strong { display: block; font-family: var(--mono); font-size: 1.35rem; line-height: 1; }
+    .hero-stat span { display: block; margin-top: 4px; color: var(--muted); font-size: .8rem; }
+
+    .research-status {
+      width: min(calc(100% - 32px), var(--reading));
+      margin: 48px auto 0;
+      padding: 14px 18px;
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+      box-shadow: var(--shadow-small);
+      font-family: var(--mono);
+      font-size: .75rem;
+      line-height: 1.55;
+    }
+    .research-status strong { font-family: var(--pixel); font-size: 1rem; }
+
+    main { overflow: clip; }
+    .level {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+      padding: clamp(90px, 12vw, 150px) 0 0;
+    }
+    .level-heading { max-width: 860px; margin-bottom: 42px; }
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 7px 10px;
+      border: 3px solid var(--ink);
+      background: var(--cyan);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .level-badge b { font-family: var(--mono); font-size: .85rem; }
+    h2, h3, h4 { margin: 0; font-family: var(--body); font-weight: 700; line-height: 1.05; }
+    h2 { max-width: 920px; font-size: clamp(2.8rem, 6vw, 5.5rem); letter-spacing: -.045em; text-wrap: balance; }
+    h3 { font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: -.025em; }
+    h4 { font-size: 1.35rem; }
+    .level-intro {
+      max-width: var(--reading);
+      margin: 20px 0 0;
+      color: var(--ink-2);
+      font-size: clamp(1.08rem, 2vw, 1.35rem);
+      line-height: 1.45;
+    }
+    .level-intro strong { color: var(--orange-dark); }
+
+    .promise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .promise-card {
+      position: relative;
+      min-height: 250px;
+      padding: 28px;
+      overflow: hidden;
+      border: 4px solid var(--ink);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .promise-card::after {
+      position: absolute;
+      right: 18px;
+      bottom: -25px;
+      color: var(--cream-2);
+      font-family: var(--body);
+      font-size: 8rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .promise-card.growth::after { content: '₹'; }
+    .promise-card.governance::after { content: '§'; }
+    .promise-card .stat-chip {
+      display: inline-block;
+      margin-bottom: 22px;
+      padding: 5px 8px;
+      border: 2px solid var(--ink);
+      background: var(--yellow);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .promise-card p { position: relative; z-index: 1; max-width: 500px; margin: 14px 0 0; color: var(--muted); }
+
+    .score-game {
+      margin-top: 72px;
+      display: grid;
+      grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+      gap: 0;
+      border: 5px solid var(--ink);
+      background: var(--ink);
+      box-shadow: 9px 9px 0 var(--ink);
+    }
+    .score-copy { padding: clamp(24px, 4vw, 42px); background: var(--yellow); }
+    .score-copy p { margin: 16px 0 0; }
+    .score-console { padding: clamp(24px, 4vw, 42px); background: var(--white); }
+    .mode-switch { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 3px; border: 3px solid var(--ink); background: var(--ink); }
+    .mode-button {
+      min-height: 42px;
+      padding: 7px 11px;
+      border: 0;
+      background: var(--cream-2);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .mode-button[aria-pressed="true"] { background: var(--cyan); }
+    .scoreboard { display: grid; gap: 18px; margin-top: 28px; }
+    .score-row { display: grid; grid-template-columns: 120px 1fr 55px; gap: 12px; align-items: center; }
+    .score-name { font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .score-track { height: 28px; border: 3px solid var(--ink); background: var(--cream-2); overflow: hidden; }
+    .score-fill { display: block; height: 100%; width: var(--value); background: var(--orange); transition: width .5s steps(6); }
+    .score-row.peer .score-fill { background: var(--cyan-dark); }
+    .score-number { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; text-align: right; }
+    .score-verdict {
+      margin-top: 24px;
+      padding: 14px 16px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      font-family: var(--mono);
+      font-size: .8rem;
+      font-weight: 600;
+    }
+    .score-verdict strong { color: var(--orange-dark); }
+    .bridge-message {
+      position: relative;
+      width: min(900px, calc(100% - 24px));
+      margin: 68px auto 0;
+      padding: 24px 30px;
+      border: 4px solid var(--ink);
+      background: var(--cyan);
+      box-shadow: var(--shadow);
+      font-family: var(--body);
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+      font-weight: 600;
+      line-height: 1.08;
+      text-align: center;
+    }
+    .bridge-message::before { content: '▼'; position: absolute; left: 50%; bottom: -38px; transform: translateX(-50%); color: var(--ink); font-size: 1.5rem; }
+
+    .build-machine {
+      border: 5px solid var(--ink);
+      background: var(--ink);
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .machine-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 20px;
+      background: var(--yellow);
+    }
+    .machine-lights { display: flex; gap: 8px; }
+    .machine-light { width: 16px; height: 16px; border: 2px solid var(--ink); background: var(--paper); }
+    .machine-light:nth-child(1) { background: var(--red); }
+    .machine-light:nth-child(2) { background: var(--yellow); }
+    .machine-light:nth-child(3) { background: var(--green); }
+    .why-grid { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr); gap: 4px; }
+    .method-gates, .recipe-panel { padding: clamp(24px, 4vw, 40px); background: var(--white); }
+    .method-gates h3, .recipe-panel h3 { margin-top: 8px; }
+    .method-gate { display: grid; grid-template-columns: 48px 1fr; gap: 14px; margin-top: 22px; align-items: start; }
+    .gate-number { display: grid; width: 44px; height: 44px; place-items: center; border: 3px solid var(--ink); background: var(--cyan); font-family: var(--mono); font-size: 1.15rem; font-weight: 700; }
+    .method-gate strong { display: block; font-family: var(--body); font-size: 1.15rem; line-height: 1.1; }
+    .method-gate p { margin: 6px 0 0; color: var(--muted); font-size: .88rem; }
+    .pool-details { margin: 22px 0 0 62px; border-top: 2px dashed var(--ink); }
+    .pool-details summary { padding: 11px 0; font-family: var(--mono); font-size: .75rem; font-weight: 600; cursor: pointer; text-transform: uppercase; }
+    .pool-details p { margin: 0 0 10px; color: var(--muted); font-size: .78rem; }
+    .recipe-explain { margin: 12px 0 0; color: var(--muted); }
+    .mix-stack { display: flex; min-height: 96px; margin-top: 22px; border: 3px solid var(--ink); overflow: hidden; }
+    .mix-piece {
+      display: grid;
+      place-items: center;
+      min-width: 8px;
+      padding: 8px 3px;
+      border-right: 2px solid var(--ink);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: clamp(.75rem, 1.2vw, .82rem);
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      transition: flex-basis .6s steps(8);
+    }
+    .mix-piece:last-child { border-right: 0; }
+    .mix-piece:nth-child(1) { background: var(--orange); }
+    .mix-piece:nth-child(2) { background: var(--yellow); }
+    .mix-piece:nth-child(3) { background: var(--cyan); }
+    .mix-piece:nth-child(4) { background: var(--pink); }
+    .mix-piece:nth-child(5) { background: var(--green); }
+    .mix-legend { margin: 9px 0 0; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .fit-readout { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .fit-stat { padding: 13px; border: 3px solid var(--ink); background: var(--cream); }
+    .fit-stat strong { display: block; font-family: var(--mono); font-size: 1.35rem; line-height: 1; }
+    .fit-stat span { display: block; margin-top: 5px; color: var(--muted); font-size: .77rem; }
+
+    .audit-console { display: grid; grid-template-columns: minmax(240px, .45fr) minmax(0, 1.55fr); gap: 4px; margin-top: 38px; padding: 4px; border: 5px solid var(--ink); background: var(--ink); box-shadow: var(--shadow); }
+    .audit-topbar { grid-column: 1 / -1; padding: 6px 16px; background: var(--cyan); }
+    .audit-topbar h3 { margin-top: 6px; }
+    .audit-tabs { display: grid; grid-template-columns: 1fr; gap: 4px; background: var(--ink); }
+    .audit-tab { min-height: 104px; padding: 15px 18px; border: 0; background: var(--cream-2); text-align: left; cursor: pointer; }
+    .audit-tab span { display: block; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .audit-tab strong { display: block; margin-top: 7px; font-family: var(--body); font-size: 1.05rem; line-height: 1.12; }
+    .audit-tab:hover { background: var(--yellow); }
+    .audit-tab[aria-pressed="true"] { background: var(--orange); }
+    .audit-body { display: grid; grid-template-columns: minmax(240px, .68fr) minmax(0, 1.32fr); gap: 4px; background: var(--ink); align-items: stretch; }
+    .audit-copy, .audit-screen { padding: 22px; background: var(--white); }
+    .audit-copy h3 { margin-top: 8px; }
+    .audit-copy p { margin: 14px 0 0; }
+    .audit-verdict { margin-top: 22px; padding: 14px; border: 3px solid var(--ink); background: var(--yellow); }
+    .audit-verdict strong { display: block; font-family: var(--body); font-size: 1.2rem; line-height: 1.1; }
+    .audit-verdict span { display: block; margin-top: 5px; color: var(--ink-2); font-size: .78rem; }
+    .audit-source { color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .match-table { border: 3px solid var(--ink); }
+    .match-table-head, .match-row { display: grid; grid-template-columns: 70px 1fr 1fr 72px; gap: 10px; align-items: center; }
+    .match-table-head { padding: 8px 12px; border-bottom: 3px solid var(--ink); background: var(--cream-2); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .match-row { min-height: 56px; padding: 8px 12px; border-bottom: 2px solid var(--ink); }
+    .match-row:last-child { border-bottom: 0; }
+    .match-year { font-family: var(--mono); font-size: .9rem; font-weight: 700; }
+    .match-value span { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; text-transform: uppercase; }
+    .match-value strong { display: block; font-family: var(--mono); font-size: .8rem; }
+    .match-gap { padding: 4px; border: 2px solid var(--ink); background: var(--cyan); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-align: center; }
+    .audit-note { margin: 9px 0 0; color: var(--muted); font-size: .75rem; }
+    .trait-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .trait-card { padding: 15px; border: 3px solid var(--ink); background: var(--cream); }
+    .trait-card h4 { font-size: 1.15rem; }
+    .trait-values { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .trait-value { padding: 9px; border: 2px solid var(--ink); background: var(--white); }
+    .trait-value span { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; text-transform: uppercase; }
+    .trait-value strong { display: block; margin-top: 3px; font-family: var(--mono); font-size: 1rem; line-height: 1; }
+    .ethiopia-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .ethiopia-card { padding: 14px; border: 3px solid var(--ink); background: var(--cream); }
+    .ethiopia-card.challenged { background: var(--pink); }
+    .ethiopia-card h4 { margin-top: 7px; }
+    .challenge-stat { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+    .challenge-stat div { padding: 9px; border: 2px solid var(--ink); background: var(--white); }
+    .challenge-stat span { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; text-transform: uppercase; }
+    .challenge-stat strong { display: block; margin-top: 3px; font-family: var(--mono); font-size: 1rem; line-height: 1; }
+    .ethiopia-card p { margin: 13px 0 0; font-size: .8rem; }
+    .missing-data { display: inline-block; margin-top: 12px; padding: 4px 6px; border: 2px solid var(--ink); background: var(--yellow); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .path-view-switch { display: flex; width: fit-content; margin-bottom: 10px; padding: 3px; background: var(--ink); }
+    .path-view-button { padding: 7px 10px; border: 0; background: var(--cream-2); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; cursor: pointer; }
+    .path-view-button[aria-pressed="true"] { background: var(--yellow); }
+    .income-chart-stage { height: 346px; border: 3px solid var(--ink); background: var(--white); overflow: hidden; }
+    #income-custom-chart { display: block; width: 100%; height: 100%; }
+    .income-chart-key { display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0 0; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .income-chart-key span { display: inline-flex; align-items: center; gap: 6px; }
+    .income-chart-key i { width: 22px; border-top: 3px solid var(--orange); }
+    .income-chart-key .synthetic-key i { border-color: var(--cyan-dark); border-top-style: dashed; }
+    .income-chart-source { margin: 7px 0 0; color: var(--muted); font-size: .75rem; }
+
+    .quadrant-game {
+      display: grid;
+      grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr);
+      gap: 30px;
+      align-items: center;
+    }
+    .quadrant-instructions {
+      padding: 28px;
+      border: 4px solid var(--ink);
+      background: var(--yellow);
+      box-shadow: var(--shadow);
+    }
+    .quadrant-instructions p { margin: 16px 0 0; }
+    .quadrant-feedback { margin-top: 22px; padding: 13px; border: 3px solid var(--ink); background: var(--white); font-family: var(--mono); font-size: .75rem; }
+    .quadrant-wrap { position: relative; padding: 34px 0 0 38px; }
+    .axis-label { position: absolute; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .axis-label.governance { top: 0; left: calc(50% + 18px); transform: translateX(-50%); }
+    .axis-label.economy { left: -45px; top: calc(50% + 15px); transform: rotate(-90deg); }
+    .axis-markers { display: flex; justify-content: space-between; margin: 0 4px 6px; color: var(--muted); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--ink); }
+    .quadrant {
+      position: relative;
+      min-height: 142px;
+      padding: 18px;
+      border: 0;
+      background: var(--white);
+      text-align: left;
+      cursor: pointer;
+    }
+    .quadrant:hover { background: var(--cream-2); }
+    .quadrant.selected { background: var(--pink); }
+    .quadrant.answer { background: var(--orange); }
+    .quadrant.answer::after {
+      content: 'PAPER\2019S ANSWER';
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      padding: 3px 6px;
+      border: 2px solid var(--ink);
+      background: var(--yellow);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .quadrant strong { display: block; font-family: var(--body); font-size: 1.25rem; line-height: 1.1; }
+    .quadrant span { display: block; margin-top: 11px; color: var(--muted); font-size: .82rem; }
+    .quadrant.answer span { color: var(--ink); }
+    .quadrant-code { margin-bottom: 8px; color: var(--orange-dark) !important; font-family: var(--mono); font-size: .75rem !important; font-weight: 600; }
+
+    .result-reveal {
+      width: fit-content;
+      max-width: 780px;
+      margin: 34px auto 0;
+      padding: 14px 18px;
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+      box-shadow: var(--shadow-small);
+      font-size: 1.05rem;
+      text-align: center;
+    }
+    .result-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+    .result-card { padding: 28px; border: 4px solid var(--ink); background: var(--white); box-shadow: var(--shadow); }
+    .result-card.growth-result { border-top: 12px solid var(--orange); }
+    .result-card.governance-result { border-top: 12px solid var(--cyan-dark); }
+    .quest-objective { color: var(--muted); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .result-card h3 { margin-top: 10px; }
+    .result-big { margin-top: 18px; color: var(--orange-dark); font-family: var(--mono); font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 700; line-height: .9; }
+    .governance-result .result-big { color: var(--cyan-dark); }
+    .result-card p { margin: 16px 0 0; }
+    .health-track { height: 26px; margin-top: 22px; border: 3px solid var(--ink); background: var(--cream-2); }
+    .health-fill { height: 100%; background: var(--orange); }
+    .growth-result .health-fill { width: 90%; }
+    .governance-result .health-fill { width: 4%; background: var(--cyan-dark); }
+    .health-labels { display: flex; justify-content: space-between; margin-top: 6px; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .result-footnote { padding-top: 14px; border-top: 2px dashed var(--ink); color: var(--muted); font-size: .78rem; }
+
+    .evidence-lab { margin-top: 68px; border: 5px solid var(--ink); background: var(--ink); box-shadow: var(--shadow); }
+    .lab-titlebar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 16px; border-bottom: 4px solid var(--ink); background: var(--cyan); }
+    .lab-titlebar p { margin: 0; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .lab-redraw-note { color: var(--ink); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .overview-button { border: 0; border-bottom: 2px solid var(--ink); background: transparent; font-family: var(--mono); font-size: .75rem; font-weight: 600; cursor: pointer; }
+    .lab-body { display: grid; grid-template-columns: minmax(280px, .55fr) minmax(0, 1.45fr); gap: 4px; padding: 4px; }
+    .outcome-menu, .outcome-dashboard { padding: clamp(14px, 1.8vw, 20px); background: var(--white); }
+    .outcome-menu-head { display: grid; gap: 5px; }
+    .outcome-menu-head p { margin: 0; color: var(--muted); font-size: .8rem; }
+    .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
+    .outcome-button {
+      min-height: 58px;
+      padding: 8px 9px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: left;
+      cursor: pointer;
+    }
+    .outcome-button::before { content: attr(data-icon); display: block; margin-bottom: 2px; color: var(--orange-dark); font-family: var(--pixel); font-size: .92rem; font-weight: 400; }
+    .outcome-button:hover { background: var(--yellow); }
+    .outcome-button[aria-pressed="true"] { background: var(--orange); transform: translate(3px, 3px); box-shadow: none; }
+    .outcome-dashboard { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(270px, .65fr); gap: 18px 22px; align-items: start; }
+    .outcome-header { min-width: 0; }
+    .outcome-header h3 { margin-top: 6px; font-size: clamp(1.55rem, 2.5vw, 2.2rem); }
+    .gap-ticket { width: fit-content; min-width: 145px; margin-top: 13px; padding: 10px 12px; border: 3px solid var(--ink); background: var(--yellow); text-align: left; }
+    .gap-ticket span { display: block; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .gap-ticket strong { display: block; margin-top: 4px; font-family: var(--mono); font-size: 1.2rem; line-height: 1; }
+    .outcome-definition { margin: 10px 0 0; font-size: .92rem; }
+    .outcome-note { margin: 7px 0 0; color: var(--muted); font-size: .8rem; }
+    .outcome-meta { display: grid; gap: 10px; }
+    .meta-tile { padding: 11px; border: 2px solid var(--ink); background: var(--cream); }
+    .meta-tile span { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .meta-tile strong { display: block; margin-top: 4px; font-size: .8rem; }
+    .fake-country-explain { padding: 12px; border: 3px solid var(--ink); background: var(--cream); }
+    .fake-country-explain span { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .fake-country-explain strong { display: block; margin-top: 5px; font-size: .84rem; line-height: 1.35; }
+    .governance-chart-panel { grid-column: 1 / -1; padding-top: 14px; border-top: 3px solid var(--ink); }
+    .governance-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+    .governance-chart-head span { color: var(--muted); font-size: .78rem; }
+    .governance-chart-stage { height: 236px; margin-top: 7px; border: 3px solid var(--ink); background: var(--white); overflow: hidden; }
+    #governance-custom-chart { display: block; width: 100%; height: 100%; }
+    .governance-hit { fill: transparent; stroke: transparent; stroke-width: 3; cursor: crosshair; }
+    .governance-hit:hover, .governance-hit:focus { fill: var(--yellow); stroke: var(--ink); outline: none; }
+    .governance-chart-takeaway { margin: 8px 0 0; font-weight: 700; }
+    .governance-chart-key { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 5px; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .governance-chart-key span { display: inline-flex; align-items: center; gap: 6px; }
+    .governance-chart-key i { width: 20px; border-top: 3px solid var(--orange); }
+    .governance-chart-key .zero-key i { border-color: var(--ink); }
+    .governance-chart-key .gate-key i { border-color: var(--ink); border-top-style: dashed; }
+    .donor-recipe { grid-column: 1 / -1; border-top: 2px dashed var(--ink); }
+    .donor-recipe summary { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 0 0; list-style: none; cursor: pointer; }
+    .donor-recipe summary::-webkit-details-marker { display: none; }
+    .donor-recipe summary::before { content: '＋'; font-family: var(--mono); font-size: .8rem; font-weight: 600; }
+    .donor-recipe[open] summary::before { content: '−'; }
+    .donor-recipe-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+    .donor-recipe-head span { color: var(--muted); font-size: .78rem; }
+    .donor-summary { color: var(--muted); font-family: var(--mono); font-size: .75rem; overflow-wrap: anywhere; }
+    .donor-stack { display: flex; height: 34px; margin-top: 9px; border: 3px solid var(--ink); overflow: hidden; }
+    .donor-segment { display: grid; min-width: 3px; place-items: center; border-right: 2px solid var(--ink); color: var(--ink); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-align: center; }
+    .donor-segment-label { display: none; white-space: nowrap; }
+    .donor-segment:last-child { border-right: 0; }
+    .donor-legend { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 9px; font-family: var(--mono); font-size: .75rem; }
+    .donor-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .donor-legend i { width: 11px; height: 11px; border: 2px solid var(--ink); }
+    .outcome-source-line { margin: 6px 0 0; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+
+    .checks-console {
+      display: grid;
+      grid-template-columns: minmax(240px, .45fr) minmax(0, 1.55fr);
+      gap: 4px;
+      padding: 4px;
+      border: 5px solid var(--ink);
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+    .check-tabs { display: grid; grid-template-columns: 1fr; gap: 4px; background: var(--ink); }
+    .check-tab {
+      min-height: 104px;
+      padding: 15px 18px;
+      border: 0;
+      background: var(--cream-2);
+      text-align: left;
+      cursor: pointer;
+    }
+    .check-tab:hover { background: var(--yellow); }
+    .check-tab[aria-pressed="true"] { background: var(--orange); }
+    .check-tab span { display: block; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .check-tab strong { display: block; margin-top: 7px; font-family: var(--body); font-size: 1.05rem; line-height: 1.12; }
+    .check-screen { display: grid; grid-template-columns: minmax(290px, .82fr) minmax(0, 1.18fr); gap: 4px; background: var(--ink); align-items: stretch; }
+    .check-copy, .check-visual { padding: clamp(20px, 2.6vw, 30px); background: var(--white); }
+    .check-copy h3 { margin-top: 9px; font-size: clamp(1.55rem, 2.5vw, 2.25rem); }
+    .check-copy p { margin: 16px 0 0; }
+    .check-stat { margin-top: 20px; padding: 13px; border: 3px solid var(--ink); background: var(--cyan); }
+    .check-stat strong { display: block; font-family: var(--mono); font-size: 1.35rem; line-height: 1; }
+    .check-stat span { display: block; margin-top: 6px; font-size: .8rem; }
+    .check-source { margin-top: 18px !important; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .check-visual { display: grid; align-content: center; }
+    .check-chart-stage { height: 310px; border: 3px solid var(--ink); background: white; overflow: hidden; }
+    #check-custom-chart { display: block; width: 100%; height: 100%; }
+    .check-chart-hit { fill: transparent; stroke: transparent; cursor: crosshair; }
+    .check-chart-hit:hover, .check-chart-hit:focus { fill: var(--yellow); stroke: var(--ink); outline: none; }
+    .chart-reading-guide { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+    .guide-step { min-height: 62px; padding: 8px 9px; border: 2px solid var(--ink); background: var(--cream); font-size: .75rem; line-height: 1.28; }
+    .guide-step strong { display: block; margin-bottom: 3px; color: var(--orange-dark); font-family: var(--mono); font-size: .75rem; text-transform: uppercase; }
+    .check-caption { margin: 7px 0 0; color: var(--muted); font-size: .75rem; }
+
+    .caveat-title { margin: 72px 0 24px; }
+    .caveat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .caveat-card { padding: 19px; border: 3px solid var(--ink); background: var(--white); box-shadow: var(--shadow-small); }
+    .caveat-card .warning { display: inline-grid; width: 28px; height: 28px; place-items: center; border: 2px solid var(--ink); background: var(--yellow); font-family: var(--pixel); font-weight: 700; }
+    .caveat-card h4 { margin-top: 13px; }
+    .caveat-card p { margin: 9px 0 0; color: var(--muted); font-size: .84rem; }
+    .pvalue-note { margin-top: 28px; padding: 18px 20px; border-left: 8px solid var(--orange); background: var(--white); font-size: .86rem; }
+    .pvalue-note strong { font-family: var(--mono); }
+
+    .bonus-level {
+      width: 100%;
+      margin: clamp(100px, 13vw, 170px) auto 0;
+      padding: clamp(52px, 7vw, 86px) 16px;
+      background: var(--ink-2);
+      color: var(--white);
+    }
+    .bonus-inner { width: min(100%, var(--content)); margin: 0 auto; }
+    .bonus-level .level-badge { color: var(--ink); background: var(--pink); }
+    .bonus-level h2 { max-width: 980px; }
+    .bonus-intro { max-width: 790px; margin: 18px 0 0; color: #e8e1ff; font-size: 1.18rem; }
+    .interpretation-label { display: inline-block; margin-top: 22px; padding: 6px 9px; border: 2px solid var(--white); color: var(--yellow); font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .election-switcher { display: grid; grid-template-columns: minmax(250px, .55fr) minmax(0, 1.45fr); gap: 24px; margin-top: 38px; align-items: start; }
+    .year-select-panel, .up-scoreboard { border: 4px solid var(--white); background: var(--ink); }
+    .year-select-panel { padding: 24px; }
+    .year-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 16px; padding: 4px; background: var(--white); }
+    .election-year { padding: 11px; border: 0; background: var(--ink-2); color: var(--white); font-family: var(--mono); font-size: 1rem; cursor: pointer; }
+    .election-year[aria-pressed="true"] { color: var(--ink); background: var(--yellow); }
+    .national-readout { margin-top: 22px; }
+    .national-readout strong { display: block; color: var(--yellow); font-family: var(--mono); font-size: 1.7rem; line-height: 1; }
+    .national-readout span { display: block; margin-top: 7px; color: #e8e1ff; font-size: .84rem; }
+    .up-scoreboard { padding: 24px; }
+    .up-scoreboard h3 { color: var(--yellow); }
+    .up-scoreboard > p { margin: 11px 0 0; color: #e8e1ff; }
+    .seat-matchup { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center; margin-top: 24px; }
+    .seat-team { padding: 18px; border: 3px solid var(--white); }
+    .seat-team span { display: block; color: #e8e1ff; font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .seat-team strong { display: block; margin-top: 8px; color: var(--yellow); font-family: var(--mono); font-size: 2.8rem; line-height: 1; }
+    .seat-team small { display: block; margin-top: 7px; color: #e8e1ff; }
+    .versus { color: var(--pink); font-family: var(--pixel); font-size: 1.5rem; }
+    .seat-pixels { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; margin-top: 18px; }
+    .seat-pixel { aspect-ratio: 1; background: #645d8c; }
+    .seat-pixel.bjp { background: var(--orange); }
+    .seat-pixel.opp { background: var(--cyan); }
+    .bonus-takeaway { margin: 26px 0 0; padding: 18px; border: 3px solid var(--white); background: var(--white); color: var(--ink); }
+    .bonus-takeaway strong { font-family: var(--body); font-size: 1.1rem; }
+    .up-scoreboard > .bonus-takeaway { color: var(--ink); }
+
+    .quest-complete {
+      display: grid;
+      grid-template-columns: .55fr 1.45fr;
+      gap: 4px;
+      margin-bottom: 72px;
+      border: 5px solid var(--ink);
+      background: var(--ink);
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .complete-flag { display: grid; place-items: center; padding: 36px; background: var(--green); text-align: center; }
+    .complete-flag strong { font-family: var(--pixel); font-size: clamp(2.7rem, 6vw, 5rem); line-height: .82; }
+    .complete-copy { padding: clamp(26px, 5vw, 48px); background: var(--white); }
+    .complete-copy h3 { margin-top: 8px; }
+    .memory-list { display: grid; gap: 14px; margin-top: 22px; }
+    .memory-item { display: grid; grid-template-columns: 42px 1fr; gap: 13px; align-items: start; }
+    .memory-number { display: grid; width: 38px; height: 38px; place-items: center; border: 3px solid var(--ink); background: var(--yellow); font-family: var(--mono); font-weight: 700; }
+    .memory-item p { margin: 2px 0 0; }
+
+    .source-inventory { display: grid; gap: 10px; }
+    .source-item { border: 3px solid var(--ink); background: var(--white); box-shadow: var(--shadow-small); }
+    .source-item summary { display: grid; grid-template-columns: 95px 1fr auto; gap: 14px; align-items: center; min-height: 66px; padding: 12px 16px; list-style: none; cursor: pointer; }
+    .source-item summary::-webkit-details-marker { display: none; }
+    .source-page { font-family: var(--mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+    .source-topic { font-family: var(--body); font-size: 1rem; font-weight: 700; }
+    .source-plus { display: grid; width: 30px; height: 30px; place-items: center; border: 2px solid var(--ink); background: var(--yellow); font-family: var(--pixel); font-size: 1.3rem; }
+    .source-item[open] .source-plus { background: var(--cyan); transform: rotate(45deg); }
+    .source-image { padding: 18px; border-top: 3px solid var(--ink); background: var(--cream); }
+    .source-image img { width: 100%; border: 2px solid var(--ink); background: white; }
+    .source-image p { margin: 8px 0 0; color: var(--muted); font-family: var(--mono); font-size: .75rem; }
+    .citation-card { display: grid; grid-template-columns: 150px 1fr; gap: 26px; align-items: center; margin-top: 44px; padding: 24px; border: 4px solid var(--ink); background: var(--yellow); box-shadow: var(--shadow); }
+    .citation-card img { border: 3px solid var(--ink); background: white; }
+    .citation-card p { margin: 12px 0 0; }
+    .citation-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
+    dialog {
+      width: min(920px, calc(100% - 28px));
+      max-height: calc(100svh - 40px);
+      padding: 0;
+      border: 5px solid var(--ink);
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--ink);
+      overflow: hidden;
+    }
+    dialog::backdrop { background: rgba(33, 29, 69, .8); }
+    .dialog-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 14px 18px; border-bottom: 4px solid var(--ink); background: var(--yellow); font-family: var(--pixel); font-size: 1.35rem; }
+    .dialog-close { display: grid; width: 38px; height: 38px; place-items: center; border: 3px solid var(--ink); background: var(--white); font-family: var(--pixel); font-size: 1.5rem; cursor: pointer; }
+    .dialog-body { max-height: calc(100svh - 112px); padding: 20px; overflow: hidden; }
+    .dialog-body img { width: auto; height: auto; max-width: 100%; max-height: calc(100svh - 176px); margin: 0 auto; border: 3px solid var(--ink); object-fit: contain; }
+    .dialog-body p { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    footer {
+      margin-top: 120px;
+      padding: 54px 20px;
+      border-top: 5px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      text-align: center;
+    }
+    footer p { max-width: 720px; margin: 0 auto; color: #e8e1ff; }
+    .footer-brand { margin-top: 22px; color: var(--yellow); font-family: var(--pixel); font-size: 2rem; font-weight: 700; }
+
+    .reveal { opacity: 1; transform: none; }
+    .js .reveal { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .hud-links .hud-link:nth-child(2), .hud-links .hud-link:nth-child(4) { display: none; }
+      .hero-game { min-height: 680px; }
+      .hero-copy { width: min(630px, calc(100% - 76px)); }
+      .hero-game::before { background: linear-gradient(90deg, rgba(255, 244, 210, .93) 0 48%, rgba(255, 244, 210, .15) 85%); }
+      .why-grid { grid-template-columns: 1fr; }
+      .audit-console, .checks-console { grid-template-columns: 1fr; }
+      .audit-topbar { grid-column: 1; }
+      .audit-tabs, .check-tabs { grid-template-columns: repeat(3, 1fr); }
+      .audit-body { grid-template-columns: minmax(220px, .68fr) minmax(0, 1.32fr); }
+      .check-screen { grid-template-columns: minmax(220px, .64fr) minmax(0, 1.36fr); }
+      .build-machine { border: 0; background: transparent; box-shadow: none; }
+      .machine-hud, .method-gates, .recipe-panel { border: 5px solid var(--ink); box-shadow: var(--shadow); }
+      .why-grid { gap: 20px; margin-top: 20px; }
+      .caveat-grid { grid-template-columns: 1fr 1fr; }
+      .election-switcher { grid-template-columns: 1fr; }
+      .quest-complete { grid-template-columns: 1fr; gap: 20px; border: 0; background: transparent; box-shadow: none; }
+      .complete-flag, .complete-copy { border: 5px solid var(--ink); box-shadow: var(--shadow); }
+      .complete-flag { min-height: 220px; }
+    }
+
+    @media (max-width: 760px) {
+      body { font-size: 17px; }
+      html { scroll-padding-top: 68px; }
+      .hud, .hud-inner { min-height: 62px; }
+      .hud-inner { width: min(calc(100% - 20px), var(--content)); gap: 8px; }
+      .brand { font-size: 1.05rem; }
+      .brand-mark { width: 20px; height: 20px; }
+      .hud-links { gap: 3px; }
+      .hud-link { display: none !important; }
+      .hud-paper { display: inline-flex !important; padding: 7px 9px; font-size: .75rem; }
+      .hero { width: calc(100% - 20px); margin-top: 14px; }
+      .hero-game { min-height: auto; overflow: visible; display: flex; flex-direction: column; background: var(--white); }
+      .hero-scene { position: relative; height: auto; aspect-ratio: 16 / 9; order: 1; object-fit: cover; border-bottom: 4px solid var(--ink); }
+      .hero-game::before { display: none; }
+      .hero-copy { width: auto; margin: 0; padding: 24px 20px 28px; border: 0; box-shadow: none; order: 2; background: var(--white); }
+      .hero h1 { font-size: clamp(3.5rem, 18vw, 5.3rem); }
+      .hero-deck { font-size: 1.12rem; }
+      .hero-legend { top: 12px; right: 12px; bottom: auto; flex-direction: column; font-size: .75rem; }
+      .hero-stats { grid-template-columns: 1fr; box-shadow: 7px 7px 0 var(--ink); }
+      .hero-stat { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: center; padding: 10px 14px; }
+      .hero-stat strong { font-size: 1.35rem; }
+      .hero-stat span { margin-top: 0; }
+      .research-status { margin-top: 38px; }
+      .level { width: calc(100% - 24px); padding-top: 94px; }
+      .level-heading { margin-bottom: 30px; }
+      h2 { font-size: clamp(2.7rem, 13vw, 4.3rem); }
+      .promise-grid, .result-summary { grid-template-columns: 1fr; }
+      .score-game, .quadrant-game { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 90px 1fr 44px; }
+      .machine-hud { align-items: flex-start; }
+      .fit-readout { grid-template-columns: 1fr; }
+      .mix-stack { min-height: 120px; }
+      .mix-piece { writing-mode: vertical-rl; transform: rotate(180deg); font-size: .75rem; }
+      .audit-console, .checks-console { display: block; padding: 0; border: 0; background: transparent; box-shadow: none; }
+      .audit-topbar, .audit-tabs, .check-tabs, .audit-copy, .audit-screen, .check-copy, .check-visual { border: 5px solid var(--ink); box-shadow: var(--shadow); }
+      .method-gates { padding: 16px; }
+      .method-gate { grid-template-columns: 42px 1fr; gap: 10px; margin-top: 16px; }
+      .gate-number { width: 38px; height: 38px; }
+      .pool-details { margin: 16px 0 0 52px; }
+      .audit-copy, .audit-screen { padding: 18px; }
+      .audit-tabs, .check-tabs { display: flex; gap: 4px; margin-top: 20px; padding: 4px; overflow-x: auto; scroll-snap-type: x mandatory; }
+      .audit-tab, .check-tab { flex: 0 0 82%; min-height: 82px; scroll-snap-align: start; }
+      .audit-body, .check-screen { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; padding: 0; border: 0; background: transparent; box-shadow: none; align-items: start; }
+      .match-table-head, .match-row { grid-template-columns: 54px 1fr 1fr 58px; gap: 6px; padding-left: 8px; padding-right: 8px; }
+      .trait-grid, .ethiopia-compare { grid-template-columns: 1fr; }
+      .quadrant-wrap { padding-left: 20px; }
+      .income-chart-stage { height: 280px; }
+      .quadrant { min-height: 126px; padding: 15px; }
+      .quadrant strong { font-size: 1.2rem; }
+      .axis-label.economy { display: none; }
+      .result-summary { margin-top: 52px; }
+      .evidence-lab { border: 0; background: transparent; box-shadow: none; }
+      .lab-titlebar { align-items: center; flex-direction: row; border: 5px solid var(--ink); box-shadow: var(--shadow); }
+      .lab-redraw-note { display: none; }
+      .lab-body { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; padding: 0; }
+      .outcome-menu, .outcome-dashboard { border: 5px solid var(--ink); box-shadow: var(--shadow); }
+      .outcome-menu-head p { display: none; }
+      .outcome-grid { display: flex; gap: 7px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 0 7px; }
+      .outcome-button { flex: 0 0 148px; scroll-snap-align: start; }
+      .outcome-dashboard { grid-template-columns: 1fr; }
+      .gap-ticket { width: fit-content; text-align: left; }
+      .outcome-meta { grid-template-columns: 110px 1fr; align-items: stretch; }
+      .outcome-meta .gap-ticket { width: auto; min-width: 0; margin-top: 0; }
+      .donor-recipe { grid-column: 1; }
+      .governance-chart-panel { grid-column: 1; }
+      .governance-chart-head { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .governance-chart-head > span:last-child, .governance-chart-key { display: none; }
+      .governance-chart-stage { height: 190px; }
+      .governance-chart-takeaway { font-size: .85rem; }
+      .donor-recipe summary { grid-template-columns: auto 1fr; }
+      .check-chart-stage { height: 250px; }
+      .chart-reading-guide { grid-template-columns: 1fr; }
+      .guide-step { min-height: 0; }
+      .caveat-grid { grid-template-columns: 1fr; }
+      .bonus-level { padding: 54px 12px; }
+      .election-switcher { gap: 20px; }
+      .seat-matchup { grid-template-columns: 1fr auto 1fr; gap: 8px; }
+      .seat-team { min-width: 0; padding: 11px 8px; }
+      .seat-team strong { font-size: 2.55rem; }
+      .seat-team small { overflow-wrap: anywhere; font-size: .75rem; }
+      .versus { font-size: 1rem; text-align: center; }
+      .up-scoreboard { padding: 18px 14px; }
+      .seat-pixels { grid-template-columns: repeat(13, 1fr); gap: 2px; }
+      .source-item summary { grid-template-columns: 70px 1fr auto; gap: 8px; padding: 10px; }
+      .source-topic { font-size: 1rem; }
+      .citation-card { grid-template-columns: 90px 1fr; gap: 16px; padding: 16px; }
+    }
+
+    @media (max-width: 430px) {
+      .hero-actions .pixel-button { width: 100%; }
+      .hero-legend { display: none; }
+      .mode-switch { width: 100%; }
+      .score-row { grid-template-columns: 75px 1fr 36px; gap: 7px; }
+      .outcome-grid { gap: 6px; }
+      .outcome-button { min-height: 72px; padding: 7px; font-size: .75rem; }
+      .dialog-head { padding: 10px 12px; font-size: 1.05rem; }
+      .dialog-body { padding: 12px; }
+      .citation-card { grid-template-columns: 1fr; }
+      .citation-card img { width: 120px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the explainer</a>
+  <div id="quest-progress" aria-hidden="true"></div>
+
+  <nav class="hud" aria-label="Article navigation">
+    <div class="hud-inner">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Data<span>Chutney</span></a>
+      <div class="hud-links">
+        <a class="hud-link active" href="#baseline" data-nav="baseline">01 Baseline</a>
+        <a class="hud-link" href="#build" data-nav="build">02 Build</a>
+        <a class="hud-link" href="#results" data-nav="results">03 Results</a>
+        <a class="hud-link" href="#checks" data-nav="checks">04 Checks</a>
+        <a class="hud-link" href="#sources" data-nav="sources">05 Sources</a>
+        <a class="hud-link hud-paper" href="paper.pdf">Paper PDF</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-game">
+      <img class="hero-scene" src="assets/pixel/counterfactual-railway.webp" alt="Pixel-art railway junction where real India and a made-up comparison India follow different paths" width="1536" height="1024">
+      <div class="hero-copy">
+        <p class="game-kicker">A plain-English paper guide / August 2026</p>
+        <h1><span>Promises,</span><br>Promises</h1>
+        <p class="hero-deck"><strong>Has Modi kept his promise?</strong> The paper asks two questions: did India’s economy grow as well as it could have, and did the quality of governance improve?</p>
+        <p class="hero-byline">A simplified guide to a working paper by <strong>Kevin Grier</strong> and <strong>Robin Grier</strong>, Texas Tech University.</p>
+        <div class="hero-actions">
+          <a class="pixel-button primary" href="#baseline">Read the story <span class="arrow" aria-hidden="true">▶</span></a>
+          <a class="pixel-button" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7248338" target="_blank" rel="noopener">Open on SSRN</a>
+        </div>
+      </div>
+      <div class="hero-legend" aria-label="Illustration legend">
+        <span class="legend-item"><i class="legend-pixel actual" aria-hidden="true"></i>Actual India</span>
+        <span class="legend-item"><i class="legend-pixel ghost" aria-hidden="true"></i>Bhagwan Bharose India</span>
+      </div>
+    </div>
+    <div class="hero-stats" aria-label="Study map">
+      <div class="hero-stat"><strong>30 years</strong><span>Used to find a fair comparison / 1984–2013</span></div>
+      <div class="hero-stat"><strong>10 years</strong><span>What happened after Modi took office / 2014–2023</span></div>
+      <div class="hero-stat"><strong>2 promises</strong><span>A stronger economy and better governance</span></div>
+    </div>
+  </header>
+
+  <p class="research-status" role="note"><strong>! A note before we begin:</strong> This is a deliberately simple reading of an August 2026 working paper—not a word-for-word translation or a substitute for the paper. “Bhagwan Bharose India” is this explainer’s nickname for what the authors call synthetic India. The study has not yet been journal-reviewed.</p>
+
+  <main id="main">
+    <section class="level" id="baseline" data-section="baseline">
+      <div class="level-heading reveal">
+        <span class="level-badge"><b>01</b> Start with the promise</span>
+        <h2>Has Modi kept his promise?</h2>
+        <p class="level-intro">The paper tries to measure two things: <strong>how well the economy grew</strong> and <strong>whether the quality of governance improved.</strong> But improvement by itself does not tell us whether India did as well as it reasonably could have.</p>
+      </div>
+
+      <div class="promise-grid reveal">
+        <article class="promise-card growth">
+          <span class="stat-chip">Promise 1 / Economy</span>
+          <h3>Make India grow faster</h3>
+          <p>The “Gujarat Model” was presented as proof that a Modi government could accelerate development—not simply keep India growing at its old pace.</p>
+        </article>
+        <article class="promise-card governance">
+          <span class="stat-chip">Promise 2 / Governance</span>
+          <h3>Make government work better</h3>
+          <p>“Minimum government, maximum governance” promised cleaner, more capable government and stronger public institutions.</p>
+        </article>
+      </div>
+
+      <div class="score-game reveal" aria-labelledby="score-game-title">
+        <div class="score-copy">
+          <p class="console-label">A simple example / two schools</p>
+          <h3 id="score-game-title">Going from 60 to 70 is better. But is it good enough?</h3>
+          <p>You become the principal of a school and its average score rises from 60 to 70. That is absolutely an improvement. But a similar school, starting from the same 60, reaches 80. Did your school improve as much as it could have?</p>
+        </div>
+        <div class="score-console">
+          <div class="mode-switch" role="group" aria-label="Score comparison view">
+            <button class="mode-button" type="button" data-score-mode="raw" aria-pressed="true">See only your school</button>
+            <button class="mode-button" type="button" data-score-mode="compare" aria-pressed="false">Compare a similar school</button>
+          </div>
+          <div class="scoreboard">
+            <div class="score-row">
+              <span class="score-name">Your school</span>
+              <span class="score-track"><span class="score-fill" style="--value:70%"></span></span>
+              <strong class="score-number">70</strong>
+            </div>
+            <div class="score-row peer" id="peer-score" hidden>
+              <span class="score-name">Similar school</span>
+              <span class="score-track"><span class="score-fill" style="--value:80%"></span></span>
+              <strong class="score-number">80</strong>
+            </div>
+          </div>
+          <div class="score-verdict" id="score-verdict" aria-live="polite">Yes, the score improved by <strong>10 points.</strong> But we still do not know whether the principal did a good enough job.</div>
+        </div>
+      </div>
+
+      <p class="bridge-message reveal">India has grown—there is no doubt about that. The harder question is whether it grew as much as it could have. There is no ready-made twin India to compare it with, so the paper builds one.</p>
+    </section>
+
+    <section class="level" id="build" data-section="build">
+      <div class="level-heading reveal">
+        <span class="level-badge"><b>02</b> Build a fair comparison</span>
+        <h2>You cannot become Vishwa Guru without comparing yourself with the Vishwa</h2>
+        <p class="level-intro">No single country is similar enough to India. So the authors mix small and large shares of several broadly comparable countries until the combination behaves a lot like India before 2014. The paper calls this <strong>synthetic India.</strong> Here, we will call it <strong>Bhagwan Bharose India.</strong></p>
+      </div>
+
+      <div class="build-machine reveal">
+        <div class="machine-hud">
+          <span class="console-label">How Bhagwan Bharose India is put together</span>
+          <span class="machine-lights" aria-hidden="true"><i class="machine-light"></i><i class="machine-light"></i><i class="machine-light"></i></span>
+        </div>
+        <div class="why-grid">
+          <div class="method-gates">
+            <p class="micro-label">The basic rules / set before seeing the answer</p>
+            <h3>Start with comparable countries. Let the numbers choose the mix.</h3>
+            <div class="method-gate">
+              <span class="gate-number">1</span>
+              <div><strong>Begin in the same broad neighbourhood</strong><p>The authors start with 14 large developing or emerging economies whose income is similar to, or below, India’s. That starting list is a judgment call.</p></div>
+            </div>
+            <div class="method-gate">
+              <span class="gate-number">2</span>
+              <div><strong>Mix until the old numbers line up</strong><p>The algorithm adjusts every country’s share until their combined income path and economic basics resemble pre-2014 India. The shares must total 100%.</p></div>
+            </div>
+            <div class="method-gate">
+              <span class="gate-number">3</span>
+              <div><strong>Avoid a country with its own big break</strong><p>A comparison country should not have its own 2014 turning point—such as regime change, war, famine or economic shock. The authors say none of the final five did.</p></div>
+            </div>
+            <details class="pool-details">
+              <summary>See the 14 countries the algorithm started with</summary>
+              <p>Bangladesh, Brazil, China, Egypt, Ethiopia, Indonesia, Malaysia, Mexico, Pakistan, the Philippines, South Africa, Thailand, Turkey and Vietnam.</p>
+            </details>
+          </div>
+          <div class="recipe-panel">
+            <p class="micro-label">What the algorithm settled on</p>
+            <h3>Five countries become one Bhagwan Bharose India</h3>
+            <p class="recipe-explain">None of these countries needs to be a “mini-India” by itself. What matters is whether the <em>combined mix</em> looks like India before 2014.</p>
+            <div class="mix-stack" aria-label="Country shares used to form Bhagwan Bharose India for the income comparison">
+              <span class="mix-piece" style="flex-basis:38%">Ethiopia<br>38%</span>
+              <span class="mix-piece" style="flex-basis:28%">China<br>28%</span>
+              <span class="mix-piece" style="flex-basis:25%">Bangladesh<br>25%</span>
+              <span class="mix-piece" style="flex-basis:7%">Pak<br>7%</span>
+              <span class="mix-piece" style="flex-basis:2%" title="Philippines, 2%" aria-label="Philippines, 2%"></span>
+            </div>
+            <p class="mix-legend">Ethiopia 38 · China 28 · Bangladesh 25 · Pakistan 7 · Philippines 2</p>
+            <div class="fit-readout">
+              <div class="fit-stat"><strong>About $59</strong><span>The paper’s measure of the typical pre-2014 income mismatch per person</span></div>
+              <div class="fit-stat"><strong>≈ 1%</strong><span>That mismatch as a share of India’s 2013 income level</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="audit-console reveal" id="audit-console">
+        <div class="audit-topbar">
+          <p class="micro-label">Before trusting the comparison</p>
+          <h3>Does Bhagwan Bharose India actually behave like real India?</h3>
+        </div>
+        <div class="audit-tabs" role="group" aria-label="Ways to check whether Bhagwan Bharose India is a fair comparison">
+          <button class="audit-tab" type="button" data-audit="path" aria-pressed="true"><span>Check 01 / income</span><strong>Do 30 years of income broadly line up?</strong></button>
+          <button class="audit-tab" type="button" data-audit="traits" aria-pressed="false"><span>Check 02 / basics</span><strong>Do the economic basics line up?</strong></button>
+          <button class="audit-tab" type="button" data-audit="ethiopia" aria-pressed="false"><span>Check 03 / remove one</span><strong>If a big ingredient goes, does the answer flip?</strong></button>
+        </div>
+        <div class="audit-body">
+          <div class="audit-copy" aria-live="polite">
+            <p class="micro-label" id="audit-label">Check 1 / income before Modi</p>
+            <h3 id="audit-title">For 30 years, the income paths mostly line up</h3>
+            <p id="audit-description">The paper shows six checkpoints between 1984 and 2013. At four of them, real India and Bhagwan Bharose India are less than 1% apart. The two largest gaps are about 5% and 3%.</p>
+            <div class="audit-verdict"><strong id="audit-verdict">Close enough to continue</strong><span id="audit-verdict-copy">Switch to “Every year” to see the full 30-year path in the same space.</span></div>
+            <p class="audit-source" id="audit-source">Source: Table 3 and Figure 6A, PDF pages 21–22</p>
+          </div>
+          <div class="audit-screen">
+            <div data-audit-panel="path">
+              <div class="path-view-switch" role="group" aria-label="Income path view">
+                <button class="path-view-button" type="button" data-path-view="table" aria-pressed="true">Six checkpoints</button>
+                <button class="path-view-button" type="button" data-path-view="chart" aria-pressed="false">Every year</button>
+              </div>
+              <div data-path-panel="table">
+                <div class="match-table" aria-label="Reported pre-2014 income checkpoints for real India and Bhagwan Bharose India">
+                  <div class="match-table-head"><span>Year</span><span>Real India</span><span>Bharose India</span><span>Gap</span></div>
+                  <div class="match-row"><span class="match-year">1986</span><span class="match-value"><span>Real India</span><strong>$1,333.15</strong></span><span class="match-value"><span>Bharose India</span><strong>$1,400.07</strong></span><span class="match-gap">5.0%</span></div>
+                  <div class="match-row"><span class="match-year">1991</span><span class="match-value"><span>Real India</span><strong>$1,597.10</strong></span><span class="match-value"><span>Bharose India</span><strong>$1,550.00</strong></span><span class="match-gap">3.0%</span></div>
+                  <div class="match-row"><span class="match-year">1996</span><span class="match-value"><span>Real India</span><strong>$1,976.40</strong></span><span class="match-value"><span>Bharose India</span><strong>$1,978.07</strong></span><span class="match-gap">&lt;0.1%</span></div>
+                  <div class="match-row"><span class="match-year">2001</span><span class="match-value"><span>Real India</span><strong>$2,422.66</strong></span><span class="match-value"><span>Bharose India</span><strong>$2,424.02</strong></span><span class="match-gap">&lt;0.1%</span></div>
+                  <div class="match-row"><span class="match-year">2006</span><span class="match-value"><span>Real India</span><strong>$3,462.68</strong></span><span class="match-value"><span>Bharose India</span><strong>$3,442.89</strong></span><span class="match-gap">0.6%</span></div>
+                  <div class="match-row"><span class="match-year">2011</span><span class="match-value"><span>Real India</span><strong>$5,113.89</strong></span><span class="match-value"><span>Bharose India</span><strong>$5,117.15</strong></span><span class="match-gap">&lt;0.1%</span></div>
+                </div>
+                <p class="audit-note">“Gap” simply shows how far the two numbers are apart, as a share of real India’s income at that checkpoint.</p>
+              </div>
+              <div data-path-panel="chart" hidden>
+                <div class="income-chart-stage">
+                  <svg id="income-custom-chart" role="img" aria-label="Real income per person for real India and Bhagwan Bharose India from 1984 to 2023"></svg>
+                </div>
+                <div class="income-chart-key" aria-hidden="true"><span><i></i>Real India</span><span class="synthetic-key"><i></i>Bhagwan Bharose India</span><span>Dashed line = 2014 begins</span></div>
+                <p class="income-chart-source">Custom redraw from Penn World Table 11.0 using the paper’s published country shares. The paper’s own calculation uses more precise shares than the rounded numbers it prints.</p>
+              </div>
+            </div>
+
+            <div data-audit-panel="traits" hidden>
+              <div class="trait-grid">
+                <article class="trait-card"><h4>Investment</h4><div class="trait-values"><div class="trait-value"><span>Real India</span><strong>0.22</strong></div><div class="trait-value"><span>Bharose India</span><strong>0.20</strong></div></div></article>
+                <article class="trait-card"><h4>Exports</h4><div class="trait-values"><div class="trait-value"><span>Real India</span><strong>0.04</strong></div><div class="trait-value"><span>Bharose India</span><strong>0.06</strong></div></div></article>
+                <article class="trait-card"><h4>Government consumption</h4><div class="trait-values"><div class="trait-value"><span>Real India</span><strong>0.14</strong></div><div class="trait-value"><span>Bharose India</span><strong>0.15</strong></div></div></article>
+                <article class="trait-card"><h4>Human capital</h4><div class="trait-values"><div class="trait-value"><span>Real India</span><strong>1.70</strong></div><div class="trait-value"><span>Bharose India</span><strong>1.63</strong></div></div></article>
+              </div>
+              <p class="audit-note">These four pre-2014 comparisons come from Table 3. They are close, but four indicators can never prove that the two Indias are alike in every possible way.</p>
+            </div>
+
+            <div data-audit-panel="ethiopia" hidden>
+              <div class="ethiopia-compare">
+                <article class="ethiopia-card">
+                  <p class="micro-label">Starting point / all five countries</p><h4>Original mix</h4>
+                  <div class="challenge-stat"><div><span>Typical old-path miss</span><strong>≈ $58</strong></div><div><span>Bangladesh share</span><strong>25%</strong></div></div>
+                  <p>The main calculation uses all five countries, with Ethiopia contributing the largest share.</p>
+                </article>
+                <article class="ethiopia-card challenged">
+                  <p class="micro-label">The paper’s one published removal test</p><h4>Ethiopia taken out</h4>
+                  <div class="challenge-stat"><div><span>Typical old-path miss</span><strong>≈ $132</strong></div><div><span>Bangladesh share</span><strong>76%</strong></div></div>
+                  <p>The match gets worse, but the estimated post-2014 shortfall becomes larger rather than changing direction.</p>
+                  <span class="missing-data">Full replacement mix + chart not published</span>
+                </article>
+              </div>
+              <p class="audit-note">This is the only one-country-out test the paper reports. It tells us the conclusion survives removing Ethiopia; it cannot tell us what would happen after removing every other country in turn.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="level" id="results" data-section="results">
+      <div class="level-heading reveal">
+        <span class="level-badge"><b>03</b> Make your prediction</span>
+        <h2>Before we reveal it: how do you think real India did?</h2>
+        <p class="level-intro">Did the economy do better or worse than Bhagwan Bharose India? Did governance do better or worse? Pick the combination you think is right. Remember: this compares <strong>real India with its made-up twin</strong>, not 2023 with 2013.</p>
+      </div>
+
+      <div class="quadrant-game reveal">
+        <div class="quadrant-instructions">
+          <p class="console-label">What do you think?</p>
+          <h3>Pick one square</h3>
+          <p>Economy better or worse? Governance better or worse?</p>
+          <div class="quadrant-feedback" id="quadrant-feedback" aria-live="polite">Make a choice to reveal the paper’s answer.</div>
+        </div>
+        <div class="quadrant-wrap">
+          <span class="axis-label governance">Governance →</span>
+          <span class="axis-label economy">Economy →</span>
+          <div class="axis-markers"><span>Improves</span><span>Declines</span></div>
+          <div class="quadrant-grid" role="group" aria-label="Four possible economy and governance outcomes">
+            <button class="quadrant" type="button" data-quadrant="promise"><span class="quadrant-code">Economy better / Governance better</span><strong>Both promises kept</strong><span>Faster growth and better government.</span></button>
+            <button class="quadrant" type="button" data-quadrant="strongman"><span class="quadrant-code">Economy better / Governance worse</span><strong>Growth wins, governance loses</strong><span>Faster growth, but weaker public institutions.</span></button>
+            <button class="quadrant" type="button" data-quadrant="paradox"><span class="quadrant-code">Economy worse / Governance better</span><strong>Governance wins, growth loses</strong><span>Better institutions, but disappointing growth.</span></button>
+            <button class="quadrant" type="button" data-quadrant="worst"><span class="quadrant-code">Economy worse / Governance worse</span><strong>Both promises missed</strong><span>Real India falls short on both measures.</span></button>
+          </div>
+        </div>
+      </div>
+
+      <p class="result-reveal reveal"><strong>Turns out:</strong> the paper says real India falls short on both the economy and governance.</p>
+
+      <div class="result-summary reveal" id="two-results">
+        <article class="result-card growth-result">
+          <span class="quest-objective">Economy / the paper’s 2023 estimate</span>
+          <h3>Real India grew—but Bhagwan Bharose India grew more</h3>
+          <div class="result-big">≈ 10% lower</div>
+          <p>By 2023, the authors estimate that real income per person was roughly <strong>$1,000 a year lower</strong> than in Bhagwan Bharose India.</p>
+          <div class="health-track" aria-label="Real India income estimated at about 90 percent of Bhagwan Bharose India income"><div class="health-fill"></div></div>
+          <div class="health-labels"><span>Real India ≈ 90</span><span>Bharose India = 100</span></div>
+          <p class="result-footnote">When the authors repeat the exercise on the other comparison countries, only one produces a larger final-year gap.</p>
+        </article>
+        <article class="result-card governance-result">
+          <span class="quest-objective">Governance / 10 measures across 10 years</span>
+          <h3>Governance also falls short</h3>
+          <div class="result-big">96 / 100</div>
+          <p>Across the 100 year-by-year comparisons, <strong>96 put real India below Bhagwan Bharose India.</strong> In 92, none of the comparison-country tests produces a gap as large.</p>
+          <div class="health-track" aria-label="Four of one hundred effects did not show underperformance"><div class="health-fill"></div></div>
+          <div class="health-labels"><span>4 other</span><span>96 underperform</span></div>
+          <p class="result-footnote">For each of the ten governance measures overall, India’s gap is larger than the gaps produced by all of the comparison-country reruns.</p>
+        </article>
+      </div>
+
+      <div class="evidence-lab reveal" id="governance-lab">
+        <div class="lab-titlebar">
+          <p>What “governance” means / inspect all ten measures</p>
+          <span class="lab-redraw-note">All charts rebuilt for this explainer</span>
+        </div>
+        <div class="lab-body">
+          <div class="outcome-menu">
+            <div class="outcome-menu-head"><span class="micro-label">Choose a governance measure</span><p>The paper uses ten measures from a global democracy dataset called V-Dem. Pick one to see what it asks and how India compares.</p></div>
+            <div class="outcome-grid" role="group" aria-label="Governance outcomes">
+              <button class="outcome-button" data-outcome="polyarchy" data-icon="VOTE" type="button" aria-pressed="true">Electoral democracy</button>
+              <button class="outcome-button" data-outcome="liberalDemocracy" data-icon="RIGHTS" type="button" aria-pressed="false">Liberal democracy</button>
+              <button class="outcome-button" data-outcome="legislative" data-icon="HOUSE" type="button" aria-pressed="false">Parliament checks</button>
+              <button class="outcome-button" data-outcome="judicial" data-icon="COURT" type="button" aria-pressed="false">Court checks</button>
+              <button class="outcome-button" data-outcome="corruption" data-icon="CLEAN?" type="button" aria-pressed="false">Political corruption</button>
+              <button class="outcome-button" data-outcome="equality" data-icon="LAW" type="button" aria-pressed="false">Equality before law</button>
+              <button class="outcome-button" data-outcome="association" data-icon="GROUP" type="button" aria-pressed="false">Freedom to organise</button>
+              <button class="outcome-button" data-outcome="expression" data-icon="SPEAK" type="button" aria-pressed="false">Freedom to speak</button>
+              <button class="outcome-button" data-outcome="religion" data-icon="FAITH" type="button" aria-pressed="false">Freedom of religion</button>
+              <button class="outcome-button" data-outcome="protection" data-icon="EQUAL" type="button" aria-pressed="false">Equal protection</button>
+            </div>
+          </div>
+          <div class="outcome-dashboard" aria-live="polite">
+            <div class="outcome-header">
+              <p class="micro-label" id="outcome-domain">Elections</p>
+              <h3 id="outcome-question">Are elections and political competition healthy?</h3>
+              <p class="outcome-definition" id="outcome-definition">This measure covers fair elections, voting rights, elected leaders and the freedom to compete for power.</p>
+              <p class="outcome-note" id="outcome-note">The final gap is shown relative to India’s own 2013 score.</p>
+            </div>
+            <div class="outcome-meta">
+              <div class="gap-ticket"><span>Final gap</span><strong id="outcome-gap">60.2% below</strong></div>
+              <div class="fake-country-explain">
+                <span>Could the method produce this by accident?</span>
+                <strong id="outcome-rank">No comparison-country rerun produces an overall gap as large as India’s.</strong>
+              </div>
+            </div>
+            <div class="governance-chart-panel">
+              <div class="governance-chart-head"><span class="micro-label">Every year / real India compared with Bhagwan Bharose India</span><span>At zero, the two Indias match</span></div>
+              <div class="governance-chart-stage">
+                <svg id="governance-custom-chart" role="img" aria-label="Yearly gap between real India and Bhagwan Bharose India for electoral democracy"></svg>
+              </div>
+              <p class="governance-chart-takeaway" id="governance-chart-takeaway">Before 2014, the line stays near zero. After 2014, real India falls behind its made-up twin.</p>
+              <div class="governance-chart-key" aria-hidden="true"><span><i></i>Difference each year</span><span class="zero-key"><i></i>The two Indias match</span><span class="gate-key"><i></i>2014 begins</span></div>
+              <p class="outcome-source-line">Data source: V-Dem, a global project that tracks democracy and governance. Custom redraw using the country shares in Table 1; final gap from Table 2; paper reference: <span id="outcome-source">Figure A1</span>.</p>
+            </div>
+            <details class="donor-recipe">
+              <summary><span class="micro-label">See the country mix behind this measure</span><span class="donor-summary" id="donor-summary">Argentina 61.1% + Sri Lanka 14.5% + Brazil 13.4% + Malaysia 7.7% + South Africa 3.3%</span></summary>
+              <div class="donor-stack" id="donor-stack" role="img" aria-label="Country shares used to form Bhagwan Bharose India for this governance measure"></div>
+              <div class="donor-legend" id="donor-legend"></div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="level" id="checks" data-section="checks">
+      <div class="level-heading reveal">
+        <span class="level-badge"><b>04</b> Check whether the comparison holds up</span>
+        <h2>The paper tries to show that this is not a fluke</h2>
+        <p class="level-intro">Bhagwan Bharose India is made by an algorithm; it is not a country we can observe. So the authors ask three common-sense questions: did the two Indias match before 2014, is India’s later gap unusually large, and does the method see a gap when we deliberately give it the wrong starting year?</p>
+      </div>
+
+      <div class="checks-console reveal" id="checks-console">
+        <div class="check-tabs" role="group" aria-label="Robustness challenges">
+          <button class="check-tab" type="button" data-check="fit" aria-pressed="true"><span>Question 01</span><strong>Did the two Indias match before 2014?</strong></button>
+          <button class="check-tab" type="button" data-check="placebos" aria-pressed="false"><span>Question 02</span><strong>Could the method make any country look bad?</strong></button>
+          <button class="check-tab" type="button" data-check="fakeDate" aria-pressed="false"><span>Question 03</span><strong>Does the method see a gap in the wrong year?</strong></button>
+        </div>
+        <div class="check-screen">
+          <div class="check-copy" aria-live="polite">
+            <p class="micro-label" id="check-label">Question 1 / the years before Modi</p>
+            <h3 id="check-title">First, the made-up India follows the real one</h3>
+            <p id="check-description">This is the basic test of whether the comparison is believable. Across the 30 years before Modi took office, the two income paths stay close.</p>
+            <div class="check-stat"><strong id="check-stat">30-year match</strong><span id="check-stat-copy">The algorithm uses 1984–2013 to build the comparison. It does not get to learn from what happened later.</span></div>
+            <p class="check-source" id="check-source">Source: Figure 6A and Table 3, PDF pages 21–22</p>
+          </div>
+          <div class="check-visual">
+            <div class="check-chart-stage">
+              <svg id="check-custom-chart" role="img" aria-label="Custom comparison of real India and Bhagwan Bharose India before and after 2014"></svg>
+            </div>
+            <div class="chart-reading-guide" id="check-guide" aria-live="polite">
+              <div class="guide-step"><strong>1 / Follow the two lines</strong>Orange is real India; blue dashed is Bhagwan Bharose India.</div>
+              <div class="guide-step"><strong>2 / Check before 2014</strong>The paths should run close before the gate.</div>
+              <div class="guide-step"><strong>3 / Then look after</strong>The split after the gate is the estimated shortfall.</div>
+            </div>
+            <p class="check-caption" id="check-caption">Custom redraw from the paper’s reported income data and published country shares.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="caveat-title reveal">What this comparison still cannot prove</h3>
+      <div class="caveat-grid reveal">
+        <article class="caveat-card"><span class="warning">!</span><h4>Working paper</h4><p>The study has not yet passed journal peer review. Methods, text and conclusions may change.</p></article>
+        <article class="caveat-card"><span class="warning">!</span><h4>Country choices</h4><p>The authors explain their starting list, but deciding which countries count as fair comparisons remains a judgment call.</p></article>
+        <article class="caveat-card"><span class="warning">!</span><h4>Expert-rated governance data</h4><p>The ten governance measures come from V-Dem and depend partly on expert assessments. The paper cannot rule out a bias specific to how India was rated.</p></article>
+        <article class="caveat-card"><span class="warning">!</span><h4>Modi’s decade as one bundle</h4><p>The calculation covers India under the Modi government as a whole. It cannot tell us which policy or event produced each gap.</p></article>
+      </div>
+      <p class="pvalue-note reveal"><strong>What the paper means by “p-value” here:</strong> it repeats the calculation on the comparison countries and asks how many produce a gap at least as large as India’s. A smaller number means India’s result is more unusual. A displayed 0.00 means “none of the other-country reruns was larger”—not “there is zero chance the result is wrong.” A value of 0.50 means India sits in the middle of the pack.</p>
+    </section>
+
+    <section class="bonus-level reveal" id="puzzle" data-section="puzzle">
+      <div class="bonus-inner">
+        <span class="level-badge"><b>★</b> Bonus level / the political puzzle</span>
+        <h2>If both missions failed, how did Modi keep winning?</h2>
+        <p class="bonus-intro">This comparison cannot answer that question. The authors instead point to a durable Hindu-nationalist base and a divided opposition in India’s first-past-the-post electoral system.</p>
+        <span class="interpretation-label">Authors’ interpretation · not a causal result from the model</span>
+
+        <div class="election-switcher">
+          <div class="year-select-panel">
+            <p class="console-label">Switch election</p>
+            <div class="year-buttons" role="group" aria-label="Compare election years">
+              <button class="election-year" type="button" data-election="2014" aria-pressed="true">2014</button>
+              <button class="election-year" type="button" data-election="2024" aria-pressed="false">2024</button>
+            </div>
+            <div class="national-readout"><strong id="national-vote">31.3% vote</strong><span id="national-status">BJP wins a single-party Lok Sabha majority while opposition votes are fragmented.</span></div>
+          </div>
+          <div class="up-scoreboard">
+            <p class="micro-label">Uttar Pradesh / the clearest example in the paper</p>
+            <h3>Almost the same BJP vote. Very different seats.</h3>
+            <p id="up-context">In 2014, SP and Congress often competed against each other as well as the BJP.</p>
+            <div class="seat-matchup">
+              <div class="seat-team"><span>BJP</span><strong id="bjp-seats">71</strong><small id="bjp-vote">42.3% vote</small></div>
+              <div class="versus">VS</div>
+              <div class="seat-team"><span>SP + Congress</span><strong id="opp-seats">7</strong><small id="opp-mode">fragmented</small></div>
+            </div>
+            <div class="seat-pixels" id="seat-pixels" aria-label="Relative Uttar Pradesh seat totals"></div>
+            <p class="bonus-takeaway"><strong>Paper’s reading:</strong> <span id="bonus-takeaway">a strong base plus opposition vote-splitting converted pluralities into a huge seat advantage.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="level" id="sources" data-section="sources">
+      <div class="quest-complete reveal">
+        <div class="complete-flag"><strong>THE<br>SHORT<br>VERSION</strong></div>
+        <div class="complete-copy">
+          <p class="micro-label">The whole argument in three steps</p>
+          <h3>What the paper is saying</h3>
+          <div class="memory-list">
+            <div class="memory-item"><span class="memory-number">1</span><p>India improved after 2014, but improvement alone is not the question. The question is whether India did as well as it reasonably could have.</p></div>
+            <div class="memory-item"><span class="memory-number">2</span><p>The authors build Bhagwan Bharose India from a mix of other countries that resembles real India before 2014.</p></div>
+            <div class="memory-item"><span class="memory-number">3</span><p>The paper’s answer is that real India falls short on both income and governance. That is still an estimate from a working paper—not an observed alternate history.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="level-heading reveal">
+        <span class="level-badge"><b>05</b> Check the original paper</span>
+        <h2>See where each claim comes from</h2>
+        <p class="level-intro">This explainer deliberately uses simpler language. These highlighted passages let you check the authors’ original wording and surrounding context.</p>
+      </div>
+
+      <div class="source-inventory reveal">
+        <details class="source-item">
+          <summary><span class="source-page">PDF page 1</span><span class="source-topic">The abstract’s claim</span><span class="source-plus">+</span></summary>
+          <div class="source-image"><img src="assets/excerpts/abstract.webp" alt="Highlighted abstract passage stating the paper's comparison findings" loading="lazy" width="1320" height="320"><p>Grier and Grier, 2026, abstract.</p></div>
+        </details>
+        <details class="source-item">
+          <summary><span class="source-page">PDF page 8</span><span class="source-topic">How the comparison India is formed</span><span class="source-plus">+</span></summary>
+          <div class="source-image"><img src="assets/excerpts/method.webp" alt="Highlighted passage explaining how the comparison country mix is built" loading="lazy" width="1320" height="634"><p>Grier and Grier, 2026, Section 4A.</p></div>
+        </details>
+        <details class="source-item">
+          <summary><span class="source-page">PDF page 15</span><span class="source-topic">The 96-of-100 governance result</span><span class="source-plus">+</span></summary>
+          <div class="source-image"><img src="assets/excerpts/governance.webp" alt="Highlighted passage reporting 96 of 100 governance effects" loading="lazy" width="1320" height="436"><p>Grier and Grier, 2026, Section 5A.</p></div>
+        </details>
+        <details class="source-item">
+          <summary><span class="source-page">PDF page 22</span><span class="source-topic">The final income estimate</span><span class="source-plus">+</span></summary>
+          <div class="source-image"><img src="assets/excerpts/income.webp" alt="Highlighted passage reporting the final per-person income gap" loading="lazy" width="1320" height="238"><p>Grier and Grier, 2026, Section 5B.</p></div>
+        </details>
+        <details class="source-item">
+          <summary><span class="source-page">PDF page 28</span><span class="source-topic">The false-start test</span><span class="source-plus">+</span></summary>
+          <div class="source-image"><img src="assets/excerpts/placebo.webp" alt="Highlighted passage reporting what happens when the authors use a false starting year" loading="lazy" width="1320" height="373"><p>Grier and Grier, 2026, Figure 8 discussion.</p></div>
+        </details>
+      </div>
+
+      <aside class="citation-card reveal">
+        <img src="assets/paper-cover.webp" alt="First page of Promises, Promises" loading="lazy" width="900" height="1165">
+        <div>
+          <p class="micro-label">Paper collected</p>
+          <h3>Promises, Promises</h3>
+          <p>Kevin Grier and Robin Grier. “Promises, Promises: Governance and Growth in India under Modi and the BJP.” Working paper, August 2026.</p>
+          <div class="citation-links">
+            <a class="pixel-button" href="paper.pdf">Download supplied PDF</a>
+            <a class="pixel-button" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7248338" target="_blank" rel="noopener">SSRN record</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>This page is an independent, simplified guide to a working paper. “Bhagwan Bharose India” is our nickname, not the authors’ term. Research credit belongs to Kevin Grier and Robin Grier; the supplied PDF contains their full method, references and appendices.</p>
+    <div class="footer-brand">DataChutney</div>
+  </footer>
+
+  <noscript><p class="research-status">JavaScript runs the school comparison, evidence switches, charts and election comparison. The main findings and source excerpts remain readable without it.</p></noscript>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const outcomes = {
+        polyarchy: {
+          domain: 'Elections', question: 'Are elections and political competition healthy?',
+          definition: 'This measure covers fair elections, voting rights, elected leaders and the freedom to compete for power.',
+          gap: '60.2% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A1', figure: 'Figure A1', slug: 'polyarchy',
+          donors: [['Argentina',61.1],['Sri Lanka',14.5],['Brazil',13.4],['Malaysia',7.7],['South Africa',3.3]]
+        },
+        liberalDemocracy: {
+          domain: 'Democracy and rights', question: 'Do rights and checks limit elected power?',
+          definition: 'This measure combines elections with civil rights, rule of law and limits on the people who run the government.',
+          gap: '69.1% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A2', figure: 'Figure A2', slug: 'liberal-democracy',
+          donors: [['Argentina',57.1],['Sri Lanka',20.7],['Brazil',17.5],['Colombia',4.7]]
+        },
+        legislative: {
+          domain: 'Parliament', question: 'Can Parliament question the government?',
+          definition: 'This measure asks whether Parliament and public watchdogs can question, investigate and monitor the government.',
+          gap: '28.8% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A3', figure: 'Figure A3', slug: 'legislative-constraints',
+          donors: [['Chile',43.1],['Colombia',30.2],['Philippines',15.3],['Sri Lanka',7.7],['Argentina',3.7]]
+        },
+        judicial: {
+          domain: 'Courts', question: 'Can courts act independently?',
+          definition: 'This measure asks whether the government follows court rulings and whether judges can work independently.',
+          gap: '12.7% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A4', figure: 'Figure A4', slug: 'judicial-constraints',
+          donors: [['Chile',39.4],['Sri Lanka',19.9],['Philippines',16],['Colombia',9.2],['Ghana',7.8],['Argentina',6.2],['Brazil',1.5]]
+        },
+        corruption: {
+          domain: 'Corruption', question: 'How widespread is political corruption?',
+          definition: 'This measure covers corruption among ministers, lawmakers, judges and public officials. A higher score means more corruption.',
+          gap: '46.8% higher', note: 'Unlike the other charts, moving upward is worse on this measure.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A5', figure: 'Figure A5', slug: 'corruption',
+          donors: [['Malaysia',54.5],['Sri Lanka',20.2],['Peru',17.8],['Argentina',5.7],['Chile',1.8]]
+        },
+        equality: {
+          domain: 'Rule of law', question: 'Does the law apply equally?',
+          definition: 'This measure asks whether laws are applied fairly and whether public officials must follow them too.',
+          gap: '30.4% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A6', figure: 'Figure A6', slug: 'equality-before-law',
+          donors: [['Malaysia',39.6],['Argentina',27.9],['Brazil',9.2],['Sri Lanka',9.1],['Colombia',5],['Mexico',4.7],['Philippines',3.7],['Peru',0.8]]
+        },
+        association: {
+          domain: 'Public groups', question: 'Can parties and groups organise?',
+          definition: 'This measure asks whether political parties can compete and whether citizen groups can work independently.',
+          gap: '29.6% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A7', figure: 'Figure A7', slug: 'freedom-association',
+          donors: [['Argentina',60.4],['Malaysia',23],['Sri Lanka',16.7]]
+        },
+        expression: {
+          domain: 'Speech and media', question: 'Can people and journalists speak freely?',
+          definition: 'This measure covers the press, political discussion, universities, art and culture.',
+          gap: '56.2% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A8', figure: 'Figure A8', slug: 'freedom-expression',
+          donors: [['Argentina',73.6],['Brazil',9.2],['South Africa',8.3],['Peru',4.7],['Sri Lanka',3.5],['Colombia',0.6]]
+        },
+        religion: {
+          domain: 'Religion', question: 'Can people practise the religion they choose?',
+          definition: 'This measure asks whether people can choose, change, practise and peacefully share their religion without state interference.',
+          gap: '1.407 points below', note: 'This measure can move below zero, so the paper reports the result in points rather than relying only on a percentage.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A9', figure: 'Figure A9', slug: 'freedom-religion',
+          donors: [['Argentina',53.6],['Malaysia',46.4]]
+        },
+        protection: {
+          domain: 'Equal treatment', question: 'Does the state protect all groups equally?',
+          definition: 'This measure asks whether different social groups receive equal protection for their rights and freedoms.',
+          gap: '26.1% below', note: 'The final gap is shown relative to India’s own 2013 score.', rank: 'India’s overall gap is the most extreme',
+          source: 'Table 2 + Figure A10', figure: 'Figure A10', slug: 'equal-protection',
+          donors: [['Argentina',68.8],['Sri Lanka',16],['Mexico',4.9],['Indonesia',3.9],['Malaysia',3.6],['Philippines',1.6],['Ghana',1.2]]
+        }
+      };
+
+      const governanceEffects = {
+        polyarchy: [-0.0004,0.0025,0.0048,-0.0065,-0.0275,-0.0269,-0.0127,0.0027,0.014,0.0182,0.0111,-0.0049,-0.0003,0.0013,0.0076,-0.0034,-0.0059,-0.0065,-0.0033,0.0051,0.0073,0.0096,0.0243,0.0238,0.0327,0.0009,-0.0085,-0.0104,-0.0313,-0.0492,-0.0851,-0.1695,-0.1759,-0.2103,-0.2425,-0.2805,-0.331,-0.3209,-0.3637,-0.3913],
+        liberalDemocracy: [0.005,0.0147,0.0059,-0.0018,-0.0318,-0.0365,-0.0027,0.0051,0.0105,0.0142,0.0116,-0.0003,0.0099,0.0128,0.0169,0.0066,-0.0099,-0.0122,-0.0064,0.0022,0.0027,0.0034,0.0123,0.0148,0.027,0.0014,-0.0078,-0.0075,-0.0196,-0.0311,-0.0697,-0.1625,-0.1766,-0.2074,-0.2277,-0.2362,-0.2652,-0.2556,-0.2944,-0.3604],
+        legislative: [null,null,null,null,null,null,null,0.0228,0.0049,0.0049,0.0024,0.0011,0.0021,0.0027,0.0081,-0.0009,-0.0043,-0.0051,0.0056,0.0056,0.021,0.001,0.0001,-0.0082,-0.0084,-0.007,0.0026,-0.0015,-0.0012,-0.0037,-0.0286,-0.1083,-0.0966,-0.1136,-0.1414,-0.1782,-0.1919,-0.1242,-0.2158,-0.242],
+        judicial: [null,null,null,null,null,null,null,0.0004,-0.0006,-0.0074,-0.0084,-0.0077,0.0044,0.0044,0.0039,0.0014,-0.0007,0,0.0025,0.002,-0.0008,-0.0018,0,0.0021,0.0046,0.0044,0.0025,-0.0026,-0.0017,-0.0004,-0.0117,-0.0688,-0.0647,-0.0821,-0.0526,-0.0621,-0.0505,-0.0738,-0.0644,-0.1047],
+        corruption: [-0.0149,-0.0213,-0.029,0.029,-0.0042,-0.0349,-0.0082,-0.019,0.0311,0.0089,0.0039,0,0,0,0.002,0.0026,0.0087,0.0438,0.0172,0.0133,0.0133,-0.0109,-0.0131,-0.0134,-0.0134,-0.0181,-0.0054,0.0071,0.0049,0.0114,0.0036,0.0744,0.0842,0.1271,0.2606,0.2447,0.1884,0.2098,0.2428,0.2724],
+        equality: [-0.0125,0.0189,0.0014,0.0067,-0.0005,-0.001,0.0026,0.004,-0.0056,0.001,-0.0072,-0.009,-0.001,0.0016,-0.0058,0.0078,0.0082,0.0057,0.0092,0.0042,-0.0049,-0.0057,-0.0029,-0.0033,-0.0025,0.0002,-0.0086,-0.0001,-0.0037,0.0286,0.0053,-0.026,-0.0251,-0.0584,-0.0966,-0.1126,-0.1312,-0.0981,-0.1373,-0.2209],
+        association: [-0.0107,-0.0017,0.012,0.014,0.0087,0.0068,-0.0041,0.0055,0.0085,0.0181,0.0128,0.0111,0.0019,-0.0021,0.0037,-0.0106,-0.0274,-0.0241,-0.0203,-0.0319,-0.01,-0.0173,-0.0221,-0.0227,-0.0075,0.0127,0.0167,0.0191,0.0131,0.0021,-0.0151,-0.064,-0.0726,-0.1073,-0.1316,-0.1738,-0.1663,-0.1782,-0.2229,-0.2399],
+        expression: [0.0428,0.0217,0.0098,0.0086,0.0021,0.0002,0.0037,-0.0018,0.021,0.0203,0.0059,0.001,0.0009,0.0009,0.0052,-0.0075,-0.033,-0.0434,-0.0333,-0.0006,-0.0139,-0.0031,0.0006,0.0064,0.0095,0.0125,0.014,0.0137,-0.0038,-0.0156,-0.0774,-0.2156,-0.2447,-0.2745,-0.3045,-0.3166,-0.4045,-0.3762,-0.4377,-0.4883],
+        religion: [0.1087,0.201,0.201,0.201,0.201,0.201,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,-0.15,-0.15,-0.15,-0.15,-0.15,0.039,-0.2036,-0.1256,-0.1256,-0.0449,-0.0449,-0.0449,-0.0449,-0.0449,-0.0449,-0.0654,-0.6114,-0.9094,-0.8054,-1.0641,-1.2024,-1.3934,-1.2782,-1.1972,-1.0642,-1.4069],
+        protection: [0.0023,0.0063,0.0001,0.0083,0.0111,0.0142,0.011,0.0026,0.0026,0.0005,-0.0004,-0.0004,-0.0006,-0.0006,-0.0016,-0.0159,0.0059,0.0085,-0.0069,0.0032,0.0032,0.0039,-0.0038,-0.0024,-0.0031,-0.0031,-0.0034,-0.0031,-0.0055,0.0481,0.038,0.0149,-0.0586,-0.0126,-0.062,-0.0843,-0.0275,0.0066,-0.0763,-0.1733]
+      };
+
+      const checks = {
+        fit: {
+          label: 'Question 1 / the years before Modi', title: 'First, the made-up India follows the real one',
+          description: 'This is the basic test of whether the comparison is believable. Across the 30 years before Modi took office, the two income paths stay close.',
+          stat: '30-year match', statCopy: 'The algorithm uses 1984–2013 to build the comparison. It does not get to learn from what happened later.',
+          source: 'Sources: Table 3 and Figure 6A, PDF pages 21–22',
+          caption: 'Custom redraw from Penn World Table 11.0 and the country shares published in the paper.',
+          guide: [
+            ['1 / Follow the two lines', 'Orange is real India; blue dashed is Bhagwan Bharose India.'],
+            ['2 / Check before 2014', 'The paths should run close before the gate.'],
+            ['3 / Then look after', 'The split after the gate is the estimated shortfall.']
+          ]
+        },
+        placebos: {
+          label: 'Question 2 / try it on other countries', title: 'Does the method make every country look this bad?',
+          description: 'The authors repeat the same exercise for each comparison country, pretending that country was the one that changed in 2014. If many of those reruns look worse than India, India’s result is not special. Here, only zero or one does in any year.',
+          stat: '0 or 1 worse', statCopy: 'India has the largest or second-largest gap in every year after 2014.',
+          source: 'Source: Figure 6B, PDF page 22',
+          caption: 'Custom redraw: yearly gaps come from the reconstructed income paths; the 0/1 ranks are those reported in Figure 6B.',
+          guide: [
+            ['1 / Read downward', 'A deeper orange bar means a larger annual income shortfall.'],
+            ['2 / Read the ticket', 'The 0 or 1 says how many other-country reruns had a bigger gap.'],
+            ['3 / Ask how unusual', 'Zero or one puts India at the extreme edge of the pack.']
+          ]
+        },
+        fakeDate: {
+          label: 'Question 3 / move the date', title: 'What if we tell the method that the change began in 2001?',
+          description: 'Modi did not become prime minister in 2001. The authors deliberately use that wrong date to see whether the method invents a dramatic result anyway. It produces a small wobble, but nothing unusual.',
+          stat: 'Middle of the pack', statCopy: 'About half the other-country reruns look at least this unusual. The paper calls this a p-value of 0.50.',
+          source: 'Source: Figure 8, PDF pages 27–28',
+          caption: 'Custom redraw from Figure 8. Annual bar heights are read from the published chart and rounded.',
+          guide: [
+            ['1 / Use the wrong year', 'This test deliberately pretends the change began in 2001.'],
+            ['2 / Watch the wobble', 'The bars show the small gaps after that invented start.'],
+            ['3 / Compare with others', 'About half the other-country reruns look as odd or odder. That is ordinary.']
+          ]
+        }
+      };
+
+      const audits = {
+        path: {
+          label: 'Check 1 / income before Modi', title: 'For 30 years, the income paths mostly line up',
+          description: 'The paper shows six checkpoints between 1984 and 2013. At four of them, real India and Bhagwan Bharose India are less than 1% apart. The two largest gaps are about 5% and 3%.',
+          verdict: 'Close enough to continue', verdictCopy: 'Switch to “Every year” to see the full 30-year path in the same space.',
+          source: 'Source: Table 3 and Figure 6A, PDF pages 21–22'
+        },
+        traits: {
+          label: 'Check 2 / the economic basics', title: 'The economic basics are in the same neighbourhood',
+          description: 'The authors also compare investment, exports, government consumption and human capital—the four economic indicators they use to build the income comparison.',
+          verdict: 'Broadly similar on all four', verdictCopy: 'That still cannot prove the two Indias are alike in every unmeasured way.',
+          source: 'Source: Table 3, PDF page 21'
+        },
+        ethiopia: {
+          label: 'Check 3 / remove a big ingredient', title: 'Take Ethiopia out. Does the story flip?',
+          description: 'One country should not be able to hold up the entire result. The paper publishes one test: it removes Ethiopia, the biggest ingredient in the income mix, and rebuilds Bhagwan Bharose India.',
+          verdict: 'No—the direction stays the same', verdictCopy: 'The old match gets worse, but the estimated post-2014 shortfall becomes larger rather than reversing.',
+          source: 'Source: footnote 15, PDF page 23'
+        }
+      };
+
+      const elections = {
+        2014: {
+          nationalVote: '31.3% vote', nationalStatus: 'BJP wins a single-party Lok Sabha majority while opposition votes are fragmented.',
+          bjpSeats: '71', bjpVote: '42.3% vote', oppSeats: '7', oppMode: 'SP + Congress, fragmented',
+          context: 'In 2014, SP and Congress often competed against each other as well as the BJP.',
+          takeaway: 'a strong base plus opposition vote-splitting converted pluralities into a huge seat advantage.', pixels: {bjp: 71, opp: 7}
+        },
+        2024: {
+          nationalVote: '36.6% vote', nationalStatus: 'BJP falls short of a single-party majority and governs through a coalition.',
+          bjpSeats: '33', bjpVote: '41.37% vote', oppSeats: '43', oppMode: 'SP + Congress, coordinated',
+          context: 'In 2024, SP and Congress divided the state’s constituencies between them instead of competing across the map.',
+          takeaway: 'coordination changed the seat result even though the BJP’s Uttar Pradesh vote share barely moved.', pixels: {bjp: 33, opp: 43}
+        }
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => [...document.querySelectorAll(selector)];
+      const state = { outcome: 'polyarchy', pathView: 'table', check: 'fit' };
+      const incomeYears = Array.from({ length: 40 }, (_, index) => 1984 + index);
+      const incomeActual = [1317.24,1306.06,1333.14,1372.90,1449.68,1517.37,1570.76,1597.10,1640.44,1703.87,1764.52,1865.30,1976.40,2028.98,2156.51,2257.39,2331.09,2422.66,2508.94,2674.59,2864.10,3157.96,3462.68,3836.88,3892.36,4246.31,4801.29,5113.89,5381.07,5473.42,5632.55,5945.86,6298.69,6537.90,7012.60,7390.25,7095.04,7935.57,8314.81,8723.44];
+      const incomeSynthetic = [1320.42,1387.89,1393.77,1420.10,1453.81,1466.56,1521.18,1542.52,1585.56,1673.94,1750.96,1863.99,1968.00,2054.77,2109.82,2189.76,2291.27,2414.49,2518.24,2661.43,2889.70,3199.86,3433.00,3784.22,3999.65,4296.93,4714.94,5107.52,5461.12,5656.38,6012.74,6371.02,6761.76,7063.62,7490.69,7966.63,8204.63,8925.19,9294.95,9716.34];
+      const incomeRankCounts = [0, 0, 1, 0, 1, 1, 1, 1, 1, 1];
+      const falseStartGaps = [-2, -7, -4, -8, -9, -6, -6, -26, -25, -23];
+      const donorColors = ['#ef6b3a', '#ffd44a', '#53d8dd', '#f39bb6', '#58ae66', '#7b8fe2', '#e2a95c', '#9dcab6'];
+
+      function makeSvg(name, attributes = {}, textContent = '') {
+        const node = document.createElementNS('http://www.w3.org/2000/svg', name);
+        Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
+        if (textContent) node.textContent = textContent;
+        return node;
+      }
+
+      function useReadableNumerals() {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const targets = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const parent = node.parentElement;
+          if (!parent || parent.closest('script, style, .numeral') || !/\d/.test(node.data)) continue;
+          if (getComputedStyle(parent).fontFamily.includes('Geist Pixel')) targets.push(node);
+        }
+        targets.forEach(node => {
+          const fragment = document.createDocumentFragment();
+          node.data.split(/(\d[\d.,]*(?:%|×)?)/g).filter(Boolean).forEach(part => {
+            if (/^\d/.test(part)) {
+              const span = document.createElement('span');
+              span.className = 'numeral';
+              span.textContent = part;
+              fragment.appendChild(span);
+            } else {
+              fragment.appendChild(document.createTextNode(part));
+            }
+          });
+          node.replaceWith(fragment);
+        });
+      }
+
+      function renderIncomeChart() {
+        const svg = $('#income-custom-chart');
+        if (!svg || svg.closest('[hidden]')) return;
+        const bounds = svg.getBoundingClientRect();
+        const width = Math.max(320, Math.round(bounds.width));
+        const height = Math.max(260, Math.round(bounds.height));
+        const margin = { top: 30, right: 22, bottom: 39, left: 58 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const x = year => margin.left + ((year - 1984) / (2023 - 1984)) * plotWidth;
+        const y = value => margin.top + plotHeight - ((value - 1000) / 9000) * plotHeight;
+        const linePath = values => values.map((value, index) => `${index ? 'L' : 'M'}${x(incomeYears[index]).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
+
+        svg.replaceChildren();
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.appendChild(makeSvg('rect', { x: x(2013.5), y: margin.top, width: width - margin.right - x(2013.5), height: plotHeight, fill: '#ffd44a', opacity: '.14' }));
+        [2000,4000,6000,8000,10000].forEach(value => {
+          svg.appendChild(makeSvg('line', { x1: margin.left, y1: y(value), x2: width - margin.right, y2: y(value), stroke: '#d9cfb5', 'stroke-width': '1' }));
+          svg.appendChild(makeSvg('text', { x: margin.left - 9, y: y(value) + 4, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': 'end' }, `$${value / 1000}k`));
+        });
+        [1984,1990,1996,2002,2008,2014,2020,2023].forEach(year => {
+          svg.appendChild(makeSvg('line', { x1: x(year), y1: height - margin.bottom, x2: x(year), y2: height - margin.bottom + 6, stroke: '#211d45', 'stroke-width': '2' }));
+          svg.appendChild(makeSvg('text', { x: x(year), y: height - 14, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 1984 ? 'start' : year === 2023 ? 'end' : 'middle' }, String(year)));
+        });
+        svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
+        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { x: x(2013.5) + 7, y: margin.top + 14, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
+        svg.appendChild(makeSvg('path', { class: 'income-series synthetic-series', d: linePath(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+        svg.appendChild(makeSvg('path', { class: 'income-series actual-series', d: linePath(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+        svg.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
+        svg.appendChild(makeSvg('text', { x: width - margin.right - 4, y: y(incomeActual.at(-1)) + 18, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
+      }
+
+      function renderCheckFitChart(svg, width, height) {
+        const margin = { top: 24, right: 18, bottom: 36, left: 54 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const x = year => margin.left + ((year - 1984) / 39) * plotWidth;
+        const y = value => margin.top + plotHeight - ((value - 1000) / 9000) * plotHeight;
+        const path = values => values.map((value, index) => `${index ? 'L' : 'M'}${x(incomeYears[index]).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
+
+        svg.setAttribute('aria-label', 'Real India and Bhagwan Bharose India income paths stay close before 2014, then Bhagwan Bharose India rises above real India.');
+        svg.appendChild(makeSvg('rect', { x: x(2013.5), y: margin.top, width: width - margin.right - x(2013.5), height: plotHeight, fill: '#ffd44a', opacity: '.18' }));
+        [2000, 6000, 10000].forEach(value => {
+          svg.appendChild(makeSvg('line', { x1: margin.left, y1: y(value), x2: width - margin.right, y2: y(value), stroke: '#d9cfb5', 'stroke-width': '1' }));
+          svg.appendChild(makeSvg('text', { x: margin.left - 8, y: y(value) + 4, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': 'end' }, `$${value / 1000}k`));
+        });
+        [1984, 2000, 2014, 2023].forEach(year => {
+          svg.appendChild(makeSvg('text', { x: x(year), y: height - 13, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 1984 ? 'start' : year === 2023 ? 'end' : 'middle' }, String(year)));
+        });
+        svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
+        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { x: x(2013.5) + 6, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014 begins'));
+        svg.appendChild(makeSvg('path', { class: 'check-series check-fit-synthetic', d: path(incomeSynthetic), fill: 'none', stroke: '#167e9a', 'stroke-width': '3', 'stroke-dasharray': '8 6', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
+        svg.appendChild(makeSvg('path', { class: 'check-series check-fit-india', d: path(incomeActual), fill: 'none', stroke: '#ef6b3a', 'stroke-width': '3', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
+        svg.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeSynthetic.at(-1)) - 7, fill: '#167e9a', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Bharose India'));
+        svg.appendChild(makeSvg('text', { x: width - margin.right - 3, y: y(incomeActual.at(-1)) + 17, fill: '#b83f2c', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, 'Real India'));
+      }
+
+      function renderFakeCountryChart(svg, width, height) {
+        const years = incomeYears.slice(30);
+        const shortfalls = incomeSynthetic.slice(30).map((value, index) => value - incomeActual[index + 30]);
+        const margin = { top: 62, right: 14, bottom: 36, left: 62 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const slot = plotWidth / years.length;
+        const barWidth = Math.max(12, slot * .62);
+        const badgeWidth = Math.max(17, Math.min(22, slot * .72));
+        const y = value => margin.top + (value / 1200) * plotHeight;
+
+        svg.setAttribute('aria-label', 'Real India income shortfall for each year from 2014 to 2023. Zero or one comparison-country rerun had a larger gap in each year.');
+        svg.appendChild(makeSvg('text', { x: margin.left, y: '17', fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, 'OTHER COUNTRIES WITH A BIGGER GAP'));
+        [0, 400, 800, 1200].forEach(value => {
+          const tickY = y(value);
+          svg.appendChild(makeSvg('line', { x1: margin.left, y1: tickY, x2: width - margin.right, y2: tickY, stroke: value === 0 ? '#211d45' : '#d9cfb5', 'stroke-width': value === 0 ? '3' : '1' }));
+          svg.appendChild(makeSvg('text', { x: margin.left - 8, y: tickY + 4, fill: value === 0 ? '#211d45' : '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': value === 0 ? '600' : '400', 'text-anchor': 'end' }, value === 0 ? '$0' : `−$${value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}`));
+        });
+
+        years.forEach((year, index) => {
+          const center = margin.left + slot * (index + .5);
+          const bottom = y(shortfalls[index]);
+          const badgeX = center - badgeWidth / 2;
+          const bar = makeSvg('rect', { class: 'fake-gap-bar', x: center - barWidth / 2, y: margin.top, width: barWidth, height: Math.max(2, bottom - margin.top), fill: '#ef6b3a', stroke: '#211d45', 'stroke-width': '2', tabindex: '0', 'aria-label': `${year}: real India was $${Math.round(shortfalls[index])} below Bhagwan Bharose India; ${incomeRankCounts[index]} other-country reruns had a bigger gap.` });
+          bar.appendChild(makeSvg('title', {}, `${year}: −$${Math.round(shortfalls[index])}; ${incomeRankCounts[index]} other-country reruns bigger`));
+          svg.appendChild(bar);
+          svg.appendChild(makeSvg('rect', { x: badgeX, y: '27', width: badgeWidth, height: '22', fill: incomeRankCounts[index] === 0 ? '#ffd44a' : '#53d8dd', stroke: '#211d45', 'stroke-width': '2' }));
+          svg.appendChild(makeSvg('text', { x: center, y: '43', fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '700', 'text-anchor': 'middle' }, String(incomeRankCounts[index])));
+          svg.appendChild(makeSvg('text', { x: center, y: height - 13, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': 'middle' }, width < 560 ? `'${String(year).slice(2)}` : String(year)));
+        });
+      }
+
+      function renderFalseStartChart(svg, width, height) {
+        const years = Array.from({ length: 10 }, (_, index) => 2001 + index);
+        const margin = { top: 28, right: 14, bottom: 82, left: 55 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const slot = plotWidth / years.length;
+        const barWidth = Math.max(12, slot * .58);
+        const y = value => margin.top + ((2 - value) / 32) * plotHeight;
+        const zeroY = y(0);
+
+        svg.setAttribute('aria-label', 'False-start income gaps from 2001 to 2010 are small, and about half of the comparison-country reruns look at least as unusual.');
+        svg.appendChild(makeSvg('rect', { x: margin.left, y: y(0), width: plotWidth, height: y(-30) - y(0), fill: '#fff4d2' }));
+        [0, -10, -20, -30].forEach(value => {
+          svg.appendChild(makeSvg('line', { x1: margin.left, y1: y(value), x2: width - margin.right, y2: y(value), stroke: value === 0 ? '#211d45' : '#d9cfb5', 'stroke-width': value === 0 ? '3' : '1' }));
+          svg.appendChild(makeSvg('text', { x: margin.left - 8, y: y(value) + 4, fill: value === 0 ? '#211d45' : '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': 'end' }, value === 0 ? '$0' : `−$${Math.abs(value)}`));
+        });
+
+        years.forEach((year, index) => {
+          const center = margin.left + slot * (index + .5);
+          const bottom = y(falseStartGaps[index]);
+          const bar = makeSvg('rect', { class: 'false-gap-bar', x: center - barWidth / 2, y: zeroY, width: barWidth, height: Math.max(2, bottom - zeroY), fill: '#53d8dd', stroke: '#211d45', 'stroke-width': '2', tabindex: '0', 'aria-label': `${year}: approximate false-start gap $${Math.abs(falseStartGaps[index])} below Bhagwan Bharose India.` });
+          bar.appendChild(makeSvg('title', {}, `${year}: approximately −$${Math.abs(falseStartGaps[index])}`));
+          svg.appendChild(bar);
+          svg.appendChild(makeSvg('text', { x: center, y: height - margin.bottom + 17, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': 'middle' }, width < 560 ? `'${String(year).slice(2)}` : String(year)));
+        });
+
+        const tokenSize = 14;
+        const tokenGap = 4;
+        const rowWidth = tokenSize * 10 + tokenGap * 9;
+        const rowX = margin.left + Math.max(0, (plotWidth - rowWidth) / 2);
+        svg.appendChild(makeSvg('text', { x: margin.left, y: height - 43, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, 'ABOUT HALF OF OTHER RUNS LOOK THIS ODD OR ODDER'));
+        for (let index = 0; index < 10; index += 1) {
+          svg.appendChild(makeSvg('rect', { class: 'false-rank-token', x: rowX + index * (tokenSize + tokenGap), y: height - 32, width: tokenSize, height: tokenSize, fill: index < 5 ? '#ef6b3a' : '#fff4d2', stroke: '#211d45', 'stroke-width': '2' }));
+        }
+      }
+
+      function renderCheckChart() {
+        const svg = $('#check-custom-chart');
+        if (!svg) return;
+        const bounds = svg.getBoundingClientRect();
+        const width = Math.max(300, Math.round(bounds.width));
+        const height = Math.max(230, Math.round(bounds.height));
+        svg.replaceChildren();
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        if (state.check === 'placebos') renderFakeCountryChart(svg, width, height);
+        else if (state.check === 'fakeDate') renderFalseStartChart(svg, width, height);
+        else renderCheckFitChart(svg, width, height);
+      }
+
+      function niceStep(span, count = 5) {
+        const rough = span / count;
+        const power = 10 ** Math.floor(Math.log10(rough));
+        const fraction = rough / power;
+        const nice = fraction < 1.5 ? 1 : fraction < 3 ? 2 : fraction < 7 ? 5 : 10;
+        return nice * power;
+      }
+
+      function formatEffect(value, step = .1) {
+        if (Math.abs(value) < 1e-8) return '0';
+        const decimals = step < .01 ? 3 : step < .1 ? 2 : 1;
+        return `${value < 0 ? '−' : '+'}${Math.abs(value).toFixed(decimals)}`;
+      }
+
+      function renderGovernanceChart() {
+        const svg = $('#governance-custom-chart');
+        if (!svg) return;
+        const key = state.outcome;
+        const data = outcomes[key];
+        const series = governanceEffects[key];
+        const bounds = svg.getBoundingClientRect();
+        const width = Math.max(320, Math.round(bounds.width));
+        const height = Math.max(240, Math.round(bounds.height));
+        const margin = { top: 26, right: 22, bottom: 38, left: 58 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const points = series.map((value, index) => ({ year: 1984 + index, value })).filter(point => point.value !== null);
+        const values = points.map(point => point.value);
+        const rawMin = Math.min(0, ...values);
+        const rawMax = Math.max(0, ...values);
+        const step = niceStep(Math.max(.02, (rawMax - rawMin) * 1.12));
+        let yMin = Math.floor(rawMin / step) * step;
+        let yMax = Math.ceil(rawMax / step) * step;
+        if (yMax === yMin) yMax += step;
+        const x = year => margin.left + ((year - 1984) / 39) * plotWidth;
+        const y = value => margin.top + ((yMax - value) / (yMax - yMin)) * plotHeight;
+        const path = points.map((point, index) => `${index ? 'L' : 'M'}${x(point.year).toFixed(1)},${y(point.value).toFixed(1)}`).join(' ');
+
+        svg.replaceChildren();
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.setAttribute('aria-label', `${data.question} Yearly gap between real India and Bhagwan Bharose India from ${points[0].year} to 2023.`);
+        svg.appendChild(makeSvg('rect', { x: x(2013.5), y: margin.top, width: width - margin.right - x(2013.5), height: plotHeight, fill: '#ffd44a', opacity: '.14' }));
+
+        for (let tick = yMin; tick <= yMax + step / 2; tick += step) {
+          const cleanTick = Math.abs(tick) < step / 100 ? 0 : tick;
+          const isZero = cleanTick === 0;
+          svg.appendChild(makeSvg('line', { x1: margin.left, y1: y(cleanTick), x2: width - margin.right, y2: y(cleanTick), stroke: isZero ? '#211d45' : '#d9cfb5', 'stroke-width': isZero ? '3' : '1' }));
+          svg.appendChild(makeSvg('text', { x: margin.left - 9, y: y(cleanTick) + 4, fill: isZero ? '#211d45' : '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': isZero ? '600' : '400', 'text-anchor': 'end' }, formatEffect(cleanTick, step)));
+        }
+
+        [1985,1990,1995,2000,2005,2010,2015,2020,2023].forEach(year => {
+          svg.appendChild(makeSvg('line', { x1: x(year), y1: height - margin.bottom, x2: x(year), y2: height - margin.bottom + 6, stroke: '#211d45', 'stroke-width': '2' }));
+          svg.appendChild(makeSvg('text', { x: x(year), y: height - 14, fill: '#6f6688', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'text-anchor': year === 2023 ? 'end' : 'middle' }, String(year)));
+        });
+        svg.appendChild(makeSvg('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '3' }));
+        svg.appendChild(makeSvg('line', { x1: x(2013.5), y1: margin.top, x2: x(2013.5), y2: height - margin.bottom, stroke: '#211d45', 'stroke-width': '2', 'stroke-dasharray': '7 6' }));
+        svg.appendChild(makeSvg('text', { x: x(2013.5) + 7, y: margin.top + 13, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600' }, '2014'));
+        svg.appendChild(makeSvg('path', { class: 'governance-series', d: path, fill: 'none', stroke: '#ef6b3a', 'stroke-width': '4', 'stroke-linejoin': 'round', 'stroke-linecap': 'square', 'vector-effect': 'non-scaling-stroke' }));
+
+        points.forEach(point => {
+          const hit = makeSvg('circle', { class: 'governance-hit', cx: x(point.year), cy: y(point.value), r: '7', tabindex: '0', 'aria-label': `${point.year}: ${formatEffect(point.value, .001)}` });
+          hit.appendChild(makeSvg('title', {}, `${point.year}: real India minus Bhagwan Bharose India = ${point.value.toFixed(3)}`));
+          svg.appendChild(hit);
+        });
+
+        const end = points.at(-1);
+        const labelY = Math.max(margin.top + 16, Math.min(height - margin.bottom - 14, y(end.value)));
+        svg.appendChild(makeSvg('circle', { cx: x(end.year), cy: y(end.value), r: '5', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '3' }));
+        svg.appendChild(makeSvg('rect', { x: width - margin.right - 120, y: labelY - 16, width: '116', height: '28', fill: '#ffd44a', stroke: '#211d45', 'stroke-width': '2' }));
+        svg.appendChild(makeSvg('text', { x: width - margin.right - 10, y: labelY + 3, fill: '#211d45', 'font-family': 'IBM Plex Mono, monospace', 'font-size': '12', 'font-weight': '600', 'text-anchor': 'end' }, `2023  ${formatEffect(end.value, .001)}`));
+
+        const isCorruption = key === 'corruption';
+        $('#governance-chart-takeaway').textContent = isCorruption
+          ? 'After 2014, real India rises above its made-up twin. On this measure, moving upward means more political corruption.'
+          : 'Before 2014, the line stays near zero. After 2014, real India falls behind its made-up twin.';
+      }
+
+      function setPathView(view) {
+        state.pathView = view;
+        $$('.path-view-button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.pathView === view)));
+        $$('[data-path-panel]').forEach(panel => { panel.hidden = panel.dataset.pathPanel !== view; });
+        if (view === 'chart') requestAnimationFrame(renderIncomeChart);
+      }
+      $$('.path-view-button').forEach(button => button.addEventListener('click', () => setPathView(button.dataset.pathView)));
+
+      $$('.mode-button').forEach(button => button.addEventListener('click', () => {
+        const compare = button.dataset.scoreMode === 'compare';
+        $$('.mode-button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        $('#peer-score').hidden = !compare;
+        $('#score-verdict').innerHTML = compare
+          ? 'The similar school reached 80. Your school stopped at 70. <strong>It improved, but not as much as it could have.</strong>'
+          : 'Yes, the score improved by <strong>10 points.</strong> But we still do not know whether the principal did a good enough job.';
+      }));
+
+      function setAudit(key) {
+        const data = audits[key];
+        $$('.audit-tab').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.audit === key)));
+        $$('[data-audit-panel]').forEach(panel => { panel.hidden = panel.dataset.auditPanel !== key; });
+        $('#audit-label').textContent = data.label;
+        $('#audit-title').textContent = data.title;
+        $('#audit-description').textContent = data.description;
+        $('#audit-verdict').textContent = data.verdict;
+        $('#audit-verdict-copy').textContent = data.verdictCopy;
+        $('#audit-source').textContent = data.source;
+      }
+      $$('.audit-tab').forEach(button => button.addEventListener('click', () => setAudit(button.dataset.audit)));
+
+      const quadrantNames = { promise: 'both promises kept', strongman: 'growth wins, governance loses', paradox: 'governance wins, growth loses', worst: 'both promises missed' };
+      $$('.quadrant').forEach(button => button.addEventListener('click', () => {
+        const choice = button.dataset.quadrant;
+        $$('.quadrant').forEach(item => item.classList.remove('selected', 'answer'));
+        button.classList.add('selected');
+        $('[data-quadrant="worst"]').classList.add('answer');
+        $('#quadrant-feedback').innerHTML = choice === 'worst'
+          ? '<strong>That is the paper’s answer.</strong> Real India falls short on both the economy and governance.'
+          : `You picked <strong>${quadrantNames[choice]}</strong>. The paper’s answer is <strong>both promises missed</strong>.`;
+      }));
+
+      function renderDonors(donors) {
+        const stack = $('#donor-stack');
+        const legend = $('#donor-legend');
+        $('#donor-summary').textContent = donors.map(([name, weight]) => `${name} ${weight}%`).join(' + ');
+        stack.replaceChildren();
+        legend.replaceChildren();
+        donors.forEach(([name, weight], index) => {
+          const color = donorColors[index % donorColors.length];
+          const segment = document.createElement('span');
+          segment.className = 'donor-segment';
+          segment.style.flex = `${weight} 0 0`;
+          segment.style.background = color;
+          segment.title = `${name}: ${weight}%`;
+          if (weight >= 12) {
+            const inside = document.createElement('span');
+            inside.className = 'donor-segment-label';
+            inside.textContent = `${name} ${weight}%`;
+            segment.appendChild(inside);
+          }
+          stack.appendChild(segment);
+
+          const key = document.createElement('span');
+          const swatch = document.createElement('i');
+          swatch.style.background = color;
+          key.append(swatch, document.createTextNode(`${name} ${weight}%`));
+          legend.appendChild(key);
+        });
+        stack.setAttribute('aria-label', `Country shares in Bhagwan Bharose India: ${donors.map(([name, weight]) => `${name} ${weight}%`).join(', ')}`);
+      }
+
+      function setOutcome(key) {
+        const data = outcomes[key];
+        if (!data) return;
+        state.outcome = key;
+        $$('.outcome-button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.outcome === key)));
+        $('#outcome-domain').textContent = data.domain;
+        $('#outcome-question').textContent = data.question;
+        $('#outcome-gap').textContent = data.gap;
+        $('#outcome-definition').textContent = data.definition;
+        $('#outcome-note').textContent = data.note;
+        $('#outcome-rank').textContent = 'No comparison-country rerun produces an overall gap as large as India’s.';
+        $('#outcome-source').textContent = data.figure;
+        renderDonors(data.donors);
+        renderGovernanceChart();
+      }
+
+      $$('.outcome-button').forEach(button => button.addEventListener('click', () => setOutcome(button.dataset.outcome)));
+
+      function setCheck(key) {
+        const data = checks[key];
+        state.check = key;
+        $$('.check-tab').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.check === key)));
+        $('#check-label').textContent = data.label;
+        $('#check-title').textContent = data.title;
+        $('#check-description').textContent = data.description;
+        $('#check-stat').textContent = data.stat;
+        $('#check-stat-copy').textContent = data.statCopy;
+        $('#check-source').textContent = data.source;
+        $('#check-caption').textContent = data.caption;
+        const guide = $('#check-guide');
+        guide.replaceChildren();
+        data.guide.forEach(([heading, copy]) => {
+          const step = document.createElement('div');
+          step.className = 'guide-step';
+          const title = document.createElement('strong');
+          title.textContent = heading;
+          step.append(title, document.createTextNode(copy));
+          guide.appendChild(step);
+        });
+        requestAnimationFrame(renderCheckChart);
+      }
+      $$('.check-tab').forEach(button => button.addEventListener('click', () => setCheck(button.dataset.check)));
+
+      function renderSeatPixels(data) {
+        const holder = $('#seat-pixels');
+        holder.replaceChildren();
+        const total = data.bjp + data.opp;
+        for (let i = 0; i < total; i += 1) {
+          const pixel = document.createElement('i');
+          pixel.className = `seat-pixel ${i < data.bjp ? 'bjp' : 'opp'}`;
+          holder.appendChild(pixel);
+        }
+        holder.setAttribute('aria-label', `${data.bjp} BJP seats and ${data.opp} SP plus Congress seats in Uttar Pradesh`);
+      }
+
+      function setElection(year) {
+        const data = elections[year];
+        $$('.election-year').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.election === year)));
+        $('#national-vote').textContent = data.nationalVote;
+        $('#national-status').textContent = data.nationalStatus;
+        $('#bjp-seats').textContent = data.bjpSeats;
+        $('#bjp-vote').textContent = data.bjpVote;
+        $('#opp-seats').textContent = data.oppSeats;
+        $('#opp-mode').textContent = data.oppMode;
+        $('#up-context').textContent = data.context;
+        $('#bonus-takeaway').textContent = data.takeaway;
+        renderSeatPixels(data.pixels);
+      }
+      $$('.election-year').forEach(button => button.addEventListener('click', () => setElection(button.dataset.election)));
+
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => {
+          if (state.pathView === 'chart') renderIncomeChart();
+        }).observe($('.income-chart-stage'));
+        new ResizeObserver(renderGovernanceChart).observe($('.governance-chart-stage'));
+        new ResizeObserver(renderCheckChart).observe($('.check-chart-stage'));
+      }
+
+      const progress = $('#quest-progress');
+      function updateProgress() {
+        const available = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = `${available > 0 ? Math.min(100, (window.scrollY / available) * 100) : 0}%`;
+      }
+      addEventListener('scroll', updateProgress, { passive: true });
+      addEventListener('resize', updateProgress);
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .06 });
+      $$('.reveal').forEach(element => revealObserver.observe(element));
+
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.dataset.section;
+          $$('.hud-link[data-nav]').forEach(link => link.classList.toggle('active', link.dataset.nav === id));
+        });
+      }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+      $$('[data-section]').forEach(section => sectionObserver.observe(section));
+
+      renderDonors(outcomes.polyarchy.donors);
+      renderGovernanceChart();
+      setCheck('fit');
+      renderSeatPixels(elections[2014].pixels);
+      useReadableNumerals();
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>

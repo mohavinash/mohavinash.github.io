@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Promises, Promises</title>
+  <desc id="desc">A pixel-art interactive guide to a working paper on governance and growth in India under Modi and the BJP.</desc>
+  <defs>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M16 0H0V16" fill="none" stroke="#211d45" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff4d2" stop-opacity="1"/>
+      <stop offset=".72" stop-color="#fff4d2" stop-opacity=".96"/>
+      <stop offset="1" stop-color="#fff4d2" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="sceneClip"><rect x="580" y="0" width="620" height="630"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="#fff4d2"/>
+  <image x="520" y="0" width="945" height="630" preserveAspectRatio="xMidYMid slice" href="assets/pixel/counterfactual-railway.webp" xlink:href="assets/pixel/counterfactual-railway.webp" clip-path="url(#sceneClip)"/>
+  <rect x="0" y="0" width="790" height="630" fill="url(#fade)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <path d="M0 0H1200V16H0zM0 614H1200v16H0zM0 0h16v630H0zM1184 0h16v630h-16z" fill="#211d45"/>
+  <g font-family="Menlo, 'Courier New', monospace">
+    <rect x="56" y="52" width="340" height="38" fill="#53d8dd" stroke="#211d45" stroke-width="4"/>
+    <text x="75" y="77" fill="#211d45" font-size="17" font-weight="700" letter-spacing="1">DATACHUTNEY / PAPER QUEST</text>
+    <text x="55" y="205" fill="#b83f2c" font-size="76" font-weight="900" letter-spacing="-6">PROMISES,</text>
+    <text x="55" y="282" fill="#211d45" font-size="76" font-weight="900" letter-spacing="-6">PROMISES</text>
+    <rect x="55" y="315" width="570" height="8" fill="#ef6b3a"/>
+    <text x="56" y="372" fill="#211d45" font-size="27" font-weight="700">CAN MODI BEAT</text>
+    <text x="56" y="408" fill="#211d45" font-size="27" font-weight="700">BUSINESS AS USUAL?</text>
+    <rect x="56" y="466" width="430" height="56" fill="#ffd44a" stroke="#211d45" stroke-width="4"/>
+    <text x="78" y="501" fill="#211d45" font-size="18" font-weight="700">BUILD THE COUNTERFACTUAL  ▶</text>
+    <text x="56" y="568" fill="#6f6688" font-size="16">Grier &amp; Grier · Working paper · August 2026</text>
+  </g>
+  <g transform="translate(950 486)" font-family="Menlo, 'Courier New', monospace" font-size="12" font-weight="700">
+    <rect x="0" y="0" width="190" height="76" fill="#fffaf0" stroke="#211d45" stroke-width="4"/>
+    <rect x="16" y="16" width="16" height="16" fill="#ef6b3a" stroke="#211d45" stroke-width="2"/>
+    <text x="42" y="29" fill="#211d45">ACTUAL</text>
+    <rect x="16" y="44" width="16" height="16" fill="#53d8dd" stroke="#211d45" stroke-width="2"/>
+    <text x="42" y="57" fill="#211d45">SYNTHETIC</text>
+  </g>
+</svg>
