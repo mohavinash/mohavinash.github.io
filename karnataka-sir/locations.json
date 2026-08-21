@@ -1,5 +1,5 @@
 {
-  "snapshot_id": "07a3b8ba766f6648d263",
+  "snapshot_id": "ac2ef19c4abbcd96d08d",
   "districts": [
     {
       "name": "BAGALKOT",
@@ -142,7 +142,7 @@
         {
           "number": 154,
           "name": "Rajarajeshwarinagar",
-          "data_available": false
+          "data_available": true
         },
         {
           "number": 162,
@@ -526,8 +526,8 @@
         },
         {
           "number": 98,
-          "name": "Challakere (ST)",
-          "data_available": false
+          "name": "Challakere",
+          "data_available": true
         },
         {
           "number": 99,
@@ -1272,26 +1272,26 @@
         {
           "number": 36,
           "name": "Shorapur",
-          "data_available": false
+          "data_available": true
         },
         {
           "number": 37,
           "name": "Shahapur",
-          "data_available": false
+          "data_available": true
         },
         {
           "number": 38,
           "name": "Yadgir",
-          "data_available": false
+          "data_available": true
         },
         {
           "number": 39,
           "name": "Gurmitkal",
-          "data_available": false
+          "data_available": true
         }
       ]
     }
   ],
   "expected_constituencies": 224,
-  "available_constituencies": 218
+  "available_constituencies": 224
 }
