@@ -68,6 +68,10 @@
       stampRemoved: "Missing from draft",
       stampNotFound: "Not found",
       stampPending: "Pending",
+      statusAsddo: "ASDDO record",
+      statusRoll: "Present in the draft roll",
+      statusNotFound: "No indexed match",
+      statusPending: "Draft-roll check pending",
       matchedBy: "matched by: {quality}",
       verdictAsddoTitle: "This record appears in an ASDDO file.",
       verdictAsddoBody: "The file gives the reason shown below. Check the official draft roll, then file Form 6 with the SIR Declaration by 23 September 2026 when your name is missing there.",
@@ -233,6 +237,10 @@
       stampRemoved: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ",
       stampNotFound: "ಸಿಗಲಿಲ್ಲ",
       stampPending: "ಬಾಕಿ ಇದೆ",
+      statusAsddo: "ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆ",
+      statusRoll: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರು ಇದೆ",
+      statusNotFound: "ಸೂಚಿಯಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
+      statusPending: "ಕರಡು ಪಟ್ಟಿ ಪರಿಶೀಲನೆ ಬಾಕಿ",
       matchedBy: "ಹೊಂದಾಣಿಕೆ: {quality}",
       verdictAsddoTitle: "ಈ ದಾಖಲೆ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತದಲ್ಲಿದೆ.",
       verdictAsddoBody: "ಕಡತದಲ್ಲಿ ನಮೂದಿಸಿದ ಕಾರಣ ಕೆಳಗೆ ಕಾಣುತ್ತದೆ. ಅಧಿಕೃತ ಕರಡು ಪಟ್ಟಿಯನ್ನು ಪರಿಶೀಲಿಸಿ; ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇಲ್ಲದಿದ್ದರೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಎಸ್‌ಐಆರ್ ಘೋಷಣೆಯೊಂದಿಗೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ.",
@@ -802,6 +810,16 @@
     return text || t("unavailable");
   }
 
+  function statusLabelFor(result) {
+    switch (result?.verdict) {
+      case "ASDDO_LISTED": return t("statusAsddo");
+      case "ROLL_PRESENT": return t("statusRoll");
+      case "NOT_FOUND": return t("statusNotFound");
+      case "ROLL_PENDING": return t("statusPending");
+      default: return detailValue(result?.status_label);
+    }
+  }
+
   function renderCard(result, displayIndex) {
     const isAsddo = result.verdict === "ASDDO_LISTED";
     const evidenceRows = isAsddo ? result.asddo_evidence : result.roll_evidence;
@@ -826,7 +844,7 @@
     const status = card.querySelector(".result-status");
     status.textContent = isAsddo
       ? detailValue(evidence.reason)
-      : detailValue(result.status_label);
+      : statusLabelFor(result);
     if (result.verdict) {
       status.classList.add("verdict-" + result.verdict.toLowerCase().replace(/_/g, "-"));
     }
@@ -1038,7 +1056,7 @@
     item.querySelector(".row-match").textContent = matchLabel(summary.match_quality);
     item.querySelector(".row-relative").textContent = summary.relative_name || t("unavailable");
     const status = item.querySelector(".row-status");
-    status.textContent = summary.status_label;
+    status.textContent = statusLabelFor(summary);
     if (summary.verdict) {
       status.classList.add("verdict-" + summary.verdict.toLowerCase().replace("_", "-"));
     }
