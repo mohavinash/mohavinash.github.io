@@ -30,6 +30,7 @@
   const sheetDetailBody = document.querySelector("#sheet-detail-body");
   const sheetBack = document.querySelector("#sheet-back");
   const pagination = document.querySelector("#pagination");
+  const resultViewToggle = document.querySelector("#result-view-toggle");
   const newSearch = document.querySelector("#new-search");
   const cardTemplate = document.querySelector("#result-card-template");
   const rowTemplate = document.querySelector("#result-row-template");
@@ -39,79 +40,95 @@
 
   const COPY = {
     en: {
-      deskLabel: "Counter 03 · File-finding department",
-      eyebrow: "Karnataka SIR · ASDDO files",
-      title: "Is your name at risk of deletion? Ee form fill maadi to check.",
-      formInstruction: "Please fill this form carefully.",
+      deskLabel: "Counter 03 · Voter records",
+      eyebrow: "Karnataka SIR 2026 · Draft roll and ASDDO records",
+      title: "Check your Karnataka voter record.",
+      formInstruction: "Search with your EPIC ID or name.",
       nameMode: "By name",
       epicMode: "EPIC ID",
       nameLabel: "Voter name (as per EPIC ID, minimum three letters required)",
-      relativeLabel: "Relative’s name (optional — helps narrow the match)",
+      relativeLabel: "Relative’s name (optional; helps narrow the match)",
       epicLabel: "EPIC ID (combination of three letters and seven digits)",
       locationLegend: "Which office cupboard?",
       districtLabel: "District",
       constituencyLabel: "Assembly constituency",
-      locationHelp: "District + constituency. Correct file, correct cupboard.",
-      searchButton: "Search maadi",
-      searching: "Swalpa wait maadi…",
+      locationHelp: "Choose the district and Assembly constituency used in the voter record.",
+      searchButton: "Search records",
+      searching: "Searching…",
       resultsEyebrow: "File opened · Search results",
       resultsTitle: "Matches in these indexes",
       startOver: "Start over ↺",
-      searchAgain: "New search maadi",
+      searchAgain: "Search again",
       backToList: "← Back to the list",
       chalkAsddoIndexed: "ASDDO records",
-      chalkRollIndexed: "revised-roll records",
+      chalkRollIndexed: "draft-roll records",
       chalkSnapshot: "Two separate indexes · all 224 constituencies",
       mixedVerdictPrompt: "These records match your search. Open your own record below to see what applies to you.",
-      verdictAsddoTitle: "Your name is in the ASDDO list.",
-      verdictAsddoBody: "This list, published during Karnataka’s 2026 Special Intensive Revision, names electors recorded as absent, shifted, dead, duplicated or refused. Appearing here is a publication record, not a final deletion.",
-      verdictRollTitle: "Your name appears in the revised voter list.",
-      verdictRollBody: "No action is needed from you at this point. Verify the polling-station details below against the official electoral search or with your ERO.",
-      overlapDifferentBooth: "This Voter ID also appears in the revised roll at a different booth. This is the revision working as designed: the record was removed at the previous booth and added at the current one. Verify the current-booth entry with the official electoral search or your BLO / ERO.",
-      overlapSameBooth: "This Voter ID appears in both the ASDDO records and the revised roll at the same booth. Those records contradict each other. Ask your ERO to confirm which record applies.",
-      verdictNotFoundTitle: "Neither index has this entry.",
-      verdictNotFoundBody: "This means our two indexes do not contain it — it does not mean your name has been removed. Confirm your current status on the official portal or with your ERO.",
-      verdictPendingTitle: "The revised voter list is still being indexed.",
-      verdictPendingBody: "Your name is not in the ASDDO list. We cannot check the revised voter list yet. Please come back shortly, or check the official portal now.",
-      stepsTitle: "Your next steps",
-      step1Lead: "Start with the source page.",
-      step1Body: "Compare the Voter ID first. Then read the names, part, serial number and reason as printed.",
-      step2Lead: "Reach your local officer.",
-      step2Body: "Ask the BLO or ERO what the entry means for the record today. CEO Karnataka’s Voter Facilitation Centre page provides current contact details.",
-      step3Lead: "If an Enumeration Form is still pending, contact the BLO or ERO now.",
-      step3Body: "The CEO Karnataka target was 8 August. Ask which filing route remains available, submit through the official channel they identify, and keep the acknowledgement.",
-      step4Lead: "Use the claims route for a missing draft-roll entry.",
-      step4Body: "File Form 6 with the prescribed SIR Declaration during the active claims window. Your ERO will tell you which supporting papers apply.",
-      step5Lead: "A move uses Form 8.",
-      step5Body: "Submit it through the ECI portal or to the ERO serving your new address. The form covers shifts within and across constituencies.",
-      step6Lead: "Respond to any notice.",
-      step6Body: "Use ECI’s notice service for the requested documents. Attend the hearing time given by the officer and retain your copies.",
-      datesEyebrow: "Schedule checked 21 August 2026",
+      stampPresent: "Present",
+      stampRemoved: "Missing from draft",
+      stampNotFound: "Not found",
+      stampPending: "Pending",
+      matchedBy: "matched by: {quality}",
+      verdictAsddoTitle: "This record appears in an ASDDO file.",
+      verdictAsddoBody: "The file gives the reason shown below. Check the official draft roll, then file Form 6 with the SIR Declaration by 23 September 2026 when your name is missing there.",
+      verdictRollTitle: "Your name appears in the draft electoral roll.",
+      verdictRollBody: "Open ECI’s official search and check the polling station. For a changed address or spelling, file Form 8 by 23 September 2026.",
+      overlapDifferentBooth: "This EPIC appears in an ASDDO file for one booth and in the draft roll for another. Open the draft entry and check the address, then use Form 8 by 23 September 2026 for a change.",
+      overlapSameBooth: "This EPIC appears in both files for the same booth. Ask the ERO to confirm the active entry in writing.",
+      verdictNotFoundTitle: "We could not find this entry in either index.",
+      verdictNotFoundBody: "Search ECI’s official draft roll with the EPIC ID. Your BLO or ERO can check the record and guide your next filing.",
+      verdictPendingTitle: "The draft-roll index is unavailable.",
+      verdictPendingBody: "Open ECI’s official search. Your ERO can check the record when the portal cannot find it.",
+      stepsTitle: "If your record appears in an ASDDO file",
+      step1Lead: "Check the official draft roll.",
+      step1Body: "Search with the EPIC ID. Compare your name, address, polling station and part number.",
+      step2Lead: "File Form 6 by 23 September.",
+      step2Body: "Include the prescribed SIR Declaration. Submit through the Voters’ Service Portal or give the form to the ERO for your current address.",
+      step3Lead: "Attach the papers that apply to your case.",
+      step3Body: "Form 6 lists accepted proof of age and address. The ERO may ask for papers required by the SIR process.",
+      step4Lead: "Use Form 8 for a move or correction.",
+      step4Body: "Send it by 23 September through the portal or give it to the ERO for your current address.",
+      step5Lead: "Keep your acknowledgement.",
+      step5Body: "Track the application in the Voters’ Service Portal. Call 1950 for help finding your BLO or ERO.",
+      clarificationTitle: "If the ERO asks for clarification",
+      noticeStep1Lead: "Read the notice first.",
+      noticeStep1Body: "It gives the response deadline and your hearing details.",
+      noticeStep2Lead: "Send the requested papers.",
+      noticeStep2Body: "Use Submit Document Against Notice in the Voters’ Service Portal, or give the papers to the ERO named on the notice.",
+      noticeStep3Lead: "Attend the hearing.",
+      noticeStep3Body: "Carry the notice and the papers requested for your case. Ask for an acknowledgement after an in-person submission.",
+      noticeStep4Lead: "Keep the written order.",
+      noticeStep4Body: "A rejected claim can be appealed to the District Election Officer during this revision. Follow the deadline given in the order.",
+      noticePortal: "Submit notice papers or an appeal",
+      datesEyebrow: "Schedule checked 26 August 2026",
       datesTitle: "Dates to keep in view",
-      d1Label: "8 Aug 2026",
-      d1Body: "Target for BLO house visits and digitisation in the CEO Karnataka update; this date has passed.",
-      d2Label: "5 Aug – 4 Sep 2026",
-      d2Body: "ECI’s published schedule places claims and objections in this window.",
-      d3Label: "3 Oct 2026",
-      d3Body: "EROs complete notice work and decide claims by this target in ECI’s schedule.",
-      d4Label: "7 Oct 2026",
-      d4Body: "ECI’s published schedule says the final electoral roll will appear on this date.",
+      d1Label: "24 Aug 2026",
+      d1Body: "Karnataka published the draft electoral roll.",
+      d2Label: "By 23 Sep 2026",
+      d2Body: "Claims and objections close. Use Form 6 for a missing name; Form 8 covers a move or correction.",
+      d3Label: "By 22 Oct 2026",
+      d3Body: "EROs finish the notice phase and decide filings by this date.",
+      d4Label: "27 Oct 2026",
+      d4Body: "The final electoral roll is due on this date.",
       countersTitle: "Official counters",
       eciPortal: "ECI Voters’ Service Portal",
       officialForms: "Official forms",
       ceoHome: "CEO Karnataka",
       helpline: "Karnataka voter helplines:",
-      ceoUpdate: "CEO update, 29 July",
-      eciSchedule: "ECI schedule, 14 May",
+      ceoUpdate: "CEO guidance, 8 August",
+      eciSchedule: "Revised SIR schedule, 7 August",
+      form6: "Form 6 for inclusion",
+      form8: "Form 8 for a move or correction",
+      appealFaq: "ECI guidance on electoral-roll appeals",
       methodTitle: "What these two indexes contain",
       stat1: "ASDDO records carrying a stated reason.",
       stat2: "ASDDO electoral parts represented.",
-      stat3: "records in the revised electoral roll.",
-      stat4: "revised-roll electoral parts represented.",
+      stat3: "records in the draft electoral roll.",
+      stat4: "draft-roll electoral parts represented.",
       stat5: "Assembly constituencies represented across both indexes.",
-      stat6: "ASDDO mapping-only rows stay outside search; two upstream folder listings were inaccessible during the refresh.",
-      methodNote: "The ASDDO deletion-list records and the revised electoral roll remain separate corpora. The ASDDO index keeps one canonical searchable entry per Assembly constituency, part, prior-roll serial number and Voter ID when a stated reason is present; nine unreadable source files and mapping-only rows are excluded. The revised-roll index contains searchable voter rows across 60,922 parts. PDF extraction can introduce spelling errors. A result’s verdict identifies which corpus supplied it; the two record counts are never summed as voters.",
-      aboutIndex: "DataChutney built these independent, unofficial indexes from public ASDDO files and the revised electoral roll. Source gaps, spelling changes and PDF extraction can affect a match — official electoral services and your ERO have the final word. Name results show brief summaries; open your own record for its Voter ID and applicable details. Search terms stay out of the page address.",
+      stat6: "mapping-only rows have no searchable voter record. Two source folder listings could not be read during the refresh.",
+      methodNote: "The search reads Karnataka’s ASDDO files and draft electoral roll. Each result names its source. PDF text can carry spelling errors. Some source files could not be read, and mapping-only rows have no searchable voter record. The counts describe records in each index.",
+      aboutIndex: "DataChutney built this unofficial search from public ASDDO files and Karnataka’s draft electoral roll. Check every match in ECI’s official search; your ERO decides each electoral-roll application.",
       selectDistrict: "Select district",
       selectDistrictFirst: "Select a district first",
       selectConstituency: "Select Assembly constituency",
@@ -126,8 +143,8 @@
       coverageTitle: "Source data unavailable for AC {number} · {name}. ",
       coverageBody: "This constituency stays visible so the gap is clear. Check CEO Karnataka or ask your BLO / ERO.",
       zeroTitle: "Zero matches in these indexes",
-      zeroStrong: "No indexed match found.",
-      zeroBody: "Spelling, source gaps and PDF extraction can affect a search. Check the official roll too.",
+      zeroStrong: "The search returned zero indexed matches.",
+      zeroBody: "Try the EPIC ID in ECI’s official search. A BLO or ERO can check the record.",
       matchEpic: "Exact EPIC ID match",
       matchExact: "Exact name match",
       matchPossible: "Possible name match",
@@ -141,7 +158,7 @@
       openSource: "Open source document",
       openArchive: "Open source archive",
       downloadSource: "Download source PDF",
-      tooMany: "Too many requests. Swalpa wait maadi, then try again.",
+      tooMany: "Too many requests. Wait a moment, then try again.",
       serviceUnavailable: "The search counter is temporarily closed. Please try again shortly.",
       openingRecord: "Opening this record…",
       recordOpenError: "This record could not open. Run the search again.",
@@ -152,6 +169,12 @@
       previousPage: "Previous page",
       nextPage: "Next page",
       pageLabel: "Page {page}",
+      expandResults: "Expand & scroll",
+      usePages: "Use pages",
+      loadMoreResults: "Load more matches",
+      loadingMoreResults: "Loading more matches…",
+      scrollSummary: "Showing {shown} of {total}. Scroll through the matches and open your own record for details.",
+      narrowResults: "Many matches. Add more of the voter’s name or the relative’s name to narrow the results.",
       sourceMatch: "record match",
       sourceMatches: "record matches",
       singleSummary: "Opening the matching record. Its EPIC ID and record details will appear below.",
@@ -169,8 +192,8 @@
       factPollingAddress: "Polling-station address",
       factAcPart: "Assembly constituency / part / serial",
       acPartSerial: "AC {ac} · Part {part} · Serial {serial}",
-      verifyLine: "Compare the source carefully. Your ERO provides the official status.",
-      verifyRollLine: "Compare these polling-station details with the official electoral search. Your ERO provides the official status.",
+      verifyLine: "Check this match in ECI’s official search. Your ERO decides the application.",
+      verifyRollLine: "Check these polling-station details in ECI’s official search. Ask the ERO about any discrepancy.",
       rowVoter: "Voter",
       rowRelative: "Relative",
       rowReason: "Status",
@@ -179,22 +202,22 @@
       ceoPage: "CEO Karnataka ASDDO page",
       contacts: "Find BLO / ERO contacts",
       footerLine: "Independent tools for navigating public information.",
-      previewLine: "Use these indexes as a starting point. Official electoral services and your ERO provide the official status.",
+      previewLine: "Check each result in ECI’s official search. Your ERO handles applications and notices.",
     },
     kn: {
-      deskLabel: "ಕೌಂಟರ್ ೦೩ · ಕಡತ ಹುಡುಕುವ ವಿಭಾಗ",
-      eyebrow: "ಕರ್ನಾಟಕ ಎಸ್‌ಐಆರ್ · ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು",
-      title: "ನಿಮ್ಮ ಹೆಸರು ಪಟ್ಟಿಯಿಂದ ಕೈಬಿಡುವ ಅಪಾಯದಲ್ಲಿದೆಯೇ? ಈ ಅರ್ಜಿ ತುಂಬಿ ಪರಿಶೀಲಿಸಿ.",
-      formInstruction: "ದಯವಿಟ್ಟು ಈ ಅರ್ಜಿಯನ್ನು ಜಾಗರೂಕತೆಯಿಂದ ಭರ್ತಿ ಮಾಡಿ.",
+      deskLabel: "ಕೌಂಟರ್ ೦೩ · ಮತದಾರರ ದಾಖಲೆಗಳು",
+      eyebrow: "ಕರ್ನಾಟಕ ಎಸ್‌ಐಆರ್ 2026 · ಕರಡು ಪಟ್ಟಿ ಮತ್ತು ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು",
+      title: "ನಿಮ್ಮ ಕರ್ನಾಟಕ ಮತದಾರರ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಿ.",
+      formInstruction: "ಇಪಿಐಸಿ ಐಡಿ ಅಥವಾ ಹೆಸರಿನಿಂದ ಹುಡುಕಿ.",
       nameMode: "ಹೆಸರಿನಿಂದ",
       epicMode: "ಇಪಿಐಸಿ ಐಡಿ",
       nameLabel: "ಮತದಾರರ ಹೆಸರು (ಇಪಿಐಸಿ ಐಡಿಯಲ್ಲಿರುವಂತೆ, ಕನಿಷ್ಠ ಮೂರು ಅಕ್ಷರಗಳು ಅಗತ್ಯ)",
-      relativeLabel: "ಸಂಬಂಧಿಯ ಹೆಸರು (ಐಚ್ಛಿಕ — ಹೊಂದಾಣಿಕೆಯನ್ನು ನಿಖರಗೊಳಿಸಲು ಸಹಾಯಕ)",
+      relativeLabel: "ಸಂಬಂಧಿಯ ಹೆಸರು (ಐಚ್ಛಿಕ; ಹೊಂದಾಣಿಕೆಯನ್ನು ನಿಖರಗೊಳಿಸಲು ಸಹಾಯಕ)",
       epicLabel: "ಇಪಿಐಸಿ ಐಡಿ (ಮೂರು ಅಕ್ಷರಗಳು ಮತ್ತು ಏಳು ಅಂಕೆಗಳ ಸಂಯೋಜನೆ)",
       locationLegend: "ಕಡತ ಯಾವ ಕಪಾಟಿನಲ್ಲಿ?",
       districtLabel: "ಜಿಲ್ಲೆ",
       constituencyLabel: "ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ",
-      locationHelp: "ಜಿಲ್ಲೆ + ಕ್ಷೇತ್ರ. ಸರಿಯಾದ ಕಡತ, ಸರಿಯಾದ ಕಪಾಟು.",
+      locationHelp: "ಮತದಾರರ ದಾಖಲೆಯಲ್ಲಿರುವ ಜಿಲ್ಲೆ ಮತ್ತು ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
       searchButton: "ಕಡತ ಪರಿಶೀಲಿಸಿ",
       searching: "ಸ್ವಲ್ಪ ಕಾಯಿರಿ…",
       resultsEyebrow: "ಕಡತ ತೆರೆದಿದೆ · ಹುಡುಕಾಟದ ಫಲಿತಾಂಶ",
@@ -203,58 +226,74 @@
       searchAgain: "ಮತ್ತೊಮ್ಮೆ ಹುಡುಕಿ",
       backToList: "← ಪಟ್ಟಿಗೆ ಹಿಂತಿರುಗಿ",
       chalkAsddoIndexed: "ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು",
-      chalkRollIndexed: "ಪರಿಷ್ಕೃತ ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು",
+      chalkRollIndexed: "ಕರಡು ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು",
       chalkSnapshot: "ಎರಡು ಪ್ರತ್ಯೇಕ ಸೂಚಿಗಳು · ಎಲ್ಲ 224 ಕ್ಷೇತ್ರಗಳು",
       mixedVerdictPrompt: "ಈ ದಾಖಲೆಗಳು ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಹೊಂದಿಕೆಯಾಗುತ್ತವೆ. ನಿಮಗೆ ಯಾವುದು ಅನ್ವಯಿಸುತ್ತದೆ ಎಂಬುದನ್ನು ನೋಡಲು ಕೆಳಗೆ ನಿಮ್ಮದೇ ದಾಖಲೆಯನ್ನು ತೆರೆಯಿರಿ.",
-      verdictAsddoTitle: "ನಿಮ್ಮ ಹೆಸರು ASDDO ಪಟ್ಟಿಯಲ್ಲಿದೆ.",
-      verdictAsddoBody: "ಕರ್ನಾಟಕದ 2026ರ ವಿಶೇಷ ತೀವ್ರ ಪರಿಷ್ಕರಣೆಯ ವೇಳೆ ಪ್ರಕಟಿಸಿದ ಈ ಪಟ್ಟಿಯಲ್ಲಿ ಗೈರುಹಾಜರಾದ, ಸ್ಥಳಾಂತರಗೊಂಡ, ಮೃತಪಟ್ಟ, ನಕಲು ದಾಖಲೆ ಹೊಂದಿರುವ ಅಥವಾ ನಿರಾಕರಿಸಿದವರು ಎಂದು ದಾಖಲಿಸಲಾದ ಮತದಾರರ ಹೆಸರುಗಳಿವೆ. ಇದರಲ್ಲಿ ಹೆಸರು ಕಾಣಿಸುವುದು ಪ್ರಕಟಣಾ ದಾಖಲೆ ಮಾತ್ರ; ಅಂತಿಮವಾಗಿ ಹೆಸರು ತೆಗೆದುಹಾಕಿರುವುದಲ್ಲ.",
-      verdictRollTitle: "ನಿಮ್ಮ ಹೆಸರು ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿದೆ.",
-      verdictRollBody: "ಈ ಹಂತದಲ್ಲಿ ನೀವು ಯಾವುದೇ ಕ್ರಮ ಕೈಗೊಳ್ಳುವ ಅಗತ್ಯವಿಲ್ಲ. ಕೆಳಗಿನ ಮತಗಟ್ಟೆಯ ವಿವರಗಳನ್ನು ಅಧಿಕೃತ ಮತದಾರರ ಹುಡುಕಾಟದಲ್ಲಿ ಅಥವಾ ನಿಮ್ಮ ಇಆರ್‌ಒ ಬಳಿ ಪರಿಶೀಲಿಸಿ.",
-      overlapDifferentBooth: "ಈ ಇಪಿಐಸಿ ಐಡಿ ಪರಿಷ್ಕೃತ ಪಟ್ಟಿಯಲ್ಲಿ ಬೇರೆ ಮತಗಟ್ಟೆಯಲ್ಲಿಯೂ ಇದೆ. ಪರಿಷ್ಕರಣೆ ಉದ್ದೇಶಿಸಿದಂತೆ ನಡೆದಿರುವುದನ್ನು ಇದು ಸೂಚಿಸುತ್ತದೆ: ಹಿಂದಿನ ಮತಗಟ್ಟೆಯಿಂದ ದಾಖಲೆಯನ್ನು ತೆಗೆದು ಪ್ರಸ್ತುತ ಮತಗಟ್ಟೆಯಲ್ಲಿ ಸೇರಿಸಲಾಗಿದೆ. ಅಧಿಕೃತ ಮತದಾರರ ಹುಡುಕಾಟದಲ್ಲಿ ಅಥವಾ ನಿಮ್ಮ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಬಳಿ ಪ್ರಸ್ತುತ ಮತಗಟ್ಟೆಯ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಿ.",
-      overlapSameBooth: "ಈ ಇಪಿಐಸಿ ಐಡಿ ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳಲ್ಲೂ ಪರಿಷ್ಕೃತ ಪಟ್ಟಿಯಲ್ಲೂ ಅದೇ ಮತಗಟ್ಟೆಯಲ್ಲಿ ಇದೆ. ಈ ಎರಡು ದಾಖಲೆಗಳು ಪರಸ್ಪರ ವಿರೋಧವಾಗಿವೆ. ಯಾವ ದಾಖಲೆ ಅನ್ವಯಿಸುತ್ತದೆ ಎಂಬುದನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ಬಳಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
-      verdictNotFoundTitle: "ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಈ ದಾಖಲೆ ಇಲ್ಲ.",
-      verdictNotFoundBody: "ಇದರ ಅರ್ಥ ನಮ್ಮ ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಈ ದಾಖಲೆ ಇಲ್ಲ ಎಂದಷ್ಟೇ — ನಿಮ್ಮ ಹೆಸರನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ ಎಂದಲ್ಲ. ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಅಥವಾ ನಿಮ್ಮ ಇಆರ್‌ಒ ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಸ್ಥಿತಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
-      verdictPendingTitle: "ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿಯನ್ನು ಇನ್ನೂ ಸೂಚೀಕರಿಸಲಾಗುತ್ತಿದೆ.",
-      verdictPendingBody: "ನಿಮ್ಮ ಹೆಸರು ASDDO ಪಟ್ಟಿಯಲ್ಲಿಲ್ಲ. ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿಯನ್ನು ನಾವು ಇನ್ನೂ ಪರಿಶೀಲಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಬನ್ನಿ, ಅಥವಾ ಈಗಲೇ ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.",
-      stepsTitle: "ಮುಂದಿನ ಹೆಜ್ಜೆಗಳು",
-      step1Lead: "ಮೂಲ ಪುಟದಿಂದ ಪ್ರಾರಂಭಿಸಿ.",
-      step1Body: "ಮೊದಲು ಇಪಿಐಸಿ ಐಡಿ ಹೋಲಿಸಿ. ನಂತರ ಹೆಸರುಗಳು, ಭಾಗ, ಕ್ರಮ ಸಂಖ್ಯೆ ಮತ್ತು ಮುದ್ರಿತ ಕಾರಣವನ್ನು ಓದಿ.",
-      step2Lead: "ನಿಮ್ಮ ಸ್ಥಳೀಯ ಅಧಿಕಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ.",
-      step2Body: "ಈ ದಾಖಲೆಯ ಅರ್ಥವೇನು ಎಂದು ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ಬಳಿ ಕೇಳಿ. ಸಂಪರ್ಕ ವಿವರಗಳು ಸಿಇಒ ಕರ್ನಾಟಕದ ಮತದಾರ ಸೌಲಭ್ಯ ಕೇಂದ್ರ ಪುಟದಲ್ಲಿ ಇವೆ.",
-      step3Lead: "ಎಣಿಕೆ ಅರ್ಜಿ ಬಾಕಿ ಇದ್ದರೆ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಅವರನ್ನು ಈಗಲೇ ಸಂಪರ್ಕಿಸಿ.",
-      step3Body: "ಸಿಇಒ ಕರ್ನಾಟಕದ ಗುರಿ ದಿನಾಂಕ 8 ಆಗಸ್ಟ್ ಆಗಿತ್ತು. ಯಾವ ಸಲ್ಲಿಕೆ ಮಾರ್ಗ ಲಭ್ಯ ಎಂದು ಕೇಳಿ, ಅಧಿಕೃತ ಮಾರ್ಗದಲ್ಲಿ ಸಲ್ಲಿಸಿ, ಸ್ವೀಕೃತಿಯನ್ನು ಇಟ್ಟುಕೊಳ್ಳಿ.",
-      step4Lead: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರು ಇಲ್ಲದಿದ್ದರೆ ಹಕ್ಕು ಮಾರ್ಗ ಬಳಸಿ.",
-      step4Body: "ಹಕ್ಕು-ಆಕ್ಷೇಪಣೆ ಅವಧಿಯಲ್ಲಿ ನಿಗದಿತ ಎಸ್‌ಐಆರ್ ಘೋಷಣೆಯೊಂದಿಗೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ. ಬೇಕಾದ ದಾಖಲೆಗಳನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತಿಳಿಸುತ್ತಾರೆ.",
-      step5Lead: "ವಿಳಾಸ ಬದಲಾವಣೆಗೆ ಫಾರ್ಮ್ 8.",
-      step5Body: "ಇಸಿಐ ಪೋರ್ಟಲ್ ಮೂಲಕ ಅಥವಾ ಹೊಸ ವಿಳಾಸದ ಇಆರ್‌ಒಗೆ ಸಲ್ಲಿಸಿ. ಕ್ಷೇತ್ರದ ಒಳಗಿನ ಮತ್ತು ಕ್ಷೇತ್ರಗಳ ನಡುವಿನ ಸ್ಥಳಾಂತರ ಎರಡಕ್ಕೂ ಇದು ಅನ್ವಯಿಸುತ್ತದೆ.",
-      step6Lead: "ಯಾವುದೇ ನೋಟಿಸ್‌ಗೆ ಉತ್ತರಿಸಿ.",
-      step6Body: "ಕೇಳಿದ ದಾಖಲೆಗಳನ್ನು ಇಸಿಐ ನೋಟಿಸ್ ಸೇವೆಯ ಮೂಲಕ ಸಲ್ಲಿಸಿ. ಅಧಿಕಾರಿ ನೀಡಿದ ಸಮಯಕ್ಕೆ ವಿಚಾರಣೆಗೆ ಹಾಜರಾಗಿ, ನಿಮ್ಮ ಪ್ರತಿಗಳನ್ನು ಇಟ್ಟುಕೊಳ್ಳಿ.",
-      datesEyebrow: "ವೇಳಾಪಟ್ಟಿ ಪರಿಶೀಲನೆ: 21 ಆಗಸ್ಟ್ 2026",
+      stampPresent: "ಇದೆ",
+      stampRemoved: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ",
+      stampNotFound: "ಸಿಗಲಿಲ್ಲ",
+      stampPending: "ಬಾಕಿ ಇದೆ",
+      matchedBy: "ಹೊಂದಾಣಿಕೆ: {quality}",
+      verdictAsddoTitle: "ಈ ದಾಖಲೆ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತದಲ್ಲಿದೆ.",
+      verdictAsddoBody: "ಕಡತದಲ್ಲಿ ನಮೂದಿಸಿದ ಕಾರಣ ಕೆಳಗೆ ಕಾಣುತ್ತದೆ. ಅಧಿಕೃತ ಕರಡು ಪಟ್ಟಿಯನ್ನು ಪರಿಶೀಲಿಸಿ; ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇಲ್ಲದಿದ್ದರೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಎಸ್‌ಐಆರ್ ಘೋಷಣೆಯೊಂದಿಗೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ.",
+      verdictRollTitle: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇದೆ.",
+      verdictRollBody: "ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಮತಗಟ್ಟೆಯನ್ನು ಪರಿಶೀಲಿಸಿ. ವಿಳಾಸ ಅಥವಾ ಹೆಸರಿನ ತಿದ್ದುಪಡಿಗೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಫಾರ್ಮ್ 8 ಸಲ್ಲಿಸಿ.",
+      overlapDifferentBooth: "ಈ ಇಪಿಐಸಿ ಒಂದು ಮತಗಟ್ಟೆಯ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತದಲ್ಲೂ ಇನ್ನೊಂದು ಮತಗಟ್ಟೆಯ ಕರಡು ಪಟ್ಟಿಯಲ್ಲೂ ಕಾಣುತ್ತದೆ. ಕರಡು ದಾಖಲೆಯ ವಿಳಾಸ ಪರಿಶೀಲಿಸಿ; ಬದಲಾವಣೆ ಬೇಕಾದರೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಫಾರ್ಮ್ 8 ಸಲ್ಲಿಸಿ.",
+      overlapSameBooth: "ಈ ಇಪಿಐಸಿ ಒಂದೇ ಮತಗಟ್ಟೆಗೆ ಸಂಬಂಧಿಸಿದ ಎರಡೂ ಕಡತಗಳಲ್ಲಿ ಕಾಣುತ್ತದೆ. ಯಾವ ದಾಖಲೆ ಚಾಲ್ತಿಯಲ್ಲಿದೆ ಎಂಬುದನ್ನು ಇಆರ್‌ಒ ಅವರಿಂದ ಲಿಖಿತವಾಗಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
+      verdictNotFoundTitle: "ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಈ ದಾಖಲೆ ಸಿಗಲಿಲ್ಲ.",
+      verdictNotFoundBody: "ಇಪಿಐಸಿ ಐಡಿಯೊಂದಿಗೆ ಇಸಿಐ ಅಧಿಕೃತ ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಹುಡುಕಿ. ನಿಮ್ಮ ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ದಾಖಲೆ ಪರಿಶೀಲಿಸಿ, ಸೂಕ್ತ ಅರ್ಜಿಯನ್ನು ತಿಳಿಸಬಹುದು.",
+      verdictPendingTitle: "ಕರಡು ಪಟ್ಟಿಯ ಸೂಚಿ ಲಭ್ಯವಿಲ್ಲ.",
+      verdictPendingBody: "ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟವನ್ನು ತೆರೆಯಿರಿ. ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ದಾಖಲೆ ಸಿಗದಿದ್ದರೆ ನಿಮ್ಮ ಇಆರ್‌ಒ ಅದನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.",
+      stepsTitle: "ನಿಮ್ಮ ದಾಖಲೆ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತದಲ್ಲಿದ್ದರೆ",
+      step1Lead: "ಅಧಿಕೃತ ಕರಡು ಪಟ್ಟಿ ಪರಿಶೀಲಿಸಿ.",
+      step1Body: "ಇಪಿಐಸಿ ಐಡಿಯಿಂದ ಹುಡುಕಿ. ಹೆಸರು, ವಿಳಾಸ, ಮತಗಟ್ಟೆ ಮತ್ತು ಭಾಗ ಸಂಖ್ಯೆಯನ್ನು ಹೋಲಿಸಿ.",
+      step2Lead: "23 ಸೆಪ್ಟೆಂಬರ್ ಒಳಗೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ.",
+      step2Body: "ನಿಗದಿತ ಎಸ್‌ಐಆರ್ ಘೋಷಣೆಯನ್ನು ಸೇರಿಸಿ. ಮತದಾರರ ಸೇವಾ ಪೋರ್ಟಲ್ ಮೂಲಕ ಸಲ್ಲಿಸಬಹುದು; ನಿಮ್ಮ ಪ್ರಸ್ತುತ ವಿಳಾಸದ ಇಆರ್‌ಒ ಅವರಿಗೂ ಕೊಡಬಹುದು.",
+      step3Lead: "ನಿಮ್ಮ ಪ್ರಕರಣಕ್ಕೆ ಬೇಕಾದ ದಾಖಲೆಗಳನ್ನು ಸೇರಿಸಿ.",
+      step3Body: "ವಯಸ್ಸು ಮತ್ತು ವಿಳಾಸಕ್ಕೆ ಸ್ವೀಕರಿಸುವ ದಾಖಲೆಗಳು ಫಾರ್ಮ್ 6ರಲ್ಲಿ ಇವೆ. ಎಸ್‌ಐಆರ್ ಪ್ರಕ್ರಿಯೆಗೆ ಸಂಬಂಧಿಸಿದ ದಾಖಲೆಗಳನ್ನು ಇಆರ್‌ಒ ಕೇಳಬಹುದು.",
+      step4Lead: "ಸ್ಥಳಾಂತರ ಅಥವಾ ತಿದ್ದುಪಡಿಗೆ ಫಾರ್ಮ್ 8 ಬಳಸಿ.",
+      step4Body: "23 ಸೆಪ್ಟೆಂಬರ್ ಒಳಗೆ ಪೋರ್ಟಲ್ ಮೂಲಕ ಅಥವಾ ನಿಮ್ಮ ಪ್ರಸ್ತುತ ವಿಳಾಸದ ಇಆರ್‌ಒ ಅವರಿಗೆ ಸಲ್ಲಿಸಿ.",
+      step5Lead: "ಸ್ವೀಕೃತಿ ಇಟ್ಟುಕೊಳ್ಳಿ.",
+      step5Body: "ಮತದಾರರ ಸೇವಾ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಅರ್ಜಿಯ ಸ್ಥಿತಿ ನೋಡಿ. ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ಸಂಪರ್ಕಕ್ಕಾಗಿ 1950ಗೆ ಕರೆ ಮಾಡಿ.",
+      clarificationTitle: "ಇಆರ್‌ಒ ಸ್ಪಷ್ಟನೆ ಕೇಳಿದರೆ",
+      noticeStep1Lead: "ಮೊದಲು ನೋಟಿಸ್ ಓದಿ.",
+      noticeStep1Body: "ಅದರಲ್ಲಿ ಉತ್ತರದ ಕೊನೆಯ ದಿನ ಮತ್ತು ವಿಚಾರಣೆಯ ವಿವರಗಳು ಇರುತ್ತವೆ.",
+      noticeStep2Lead: "ಕೇಳಿದ ದಾಖಲೆಗಳನ್ನು ಸಲ್ಲಿಸಿ.",
+      noticeStep2Body: "ಮತದಾರರ ಸೇವಾ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ನೋಟಿಸ್‌ಗೆ ದಾಖಲೆ ಸಲ್ಲಿಸುವ ಸೇವೆ ಬಳಸಿ, ಅಥವಾ ನೋಟಿಸ್‌ನಲ್ಲಿ ಹೆಸರಿಸಿರುವ ಇಆರ್‌ಒ ಅವರಿಗೆ ದಾಖಲೆಗಳನ್ನು ಕೊಡಿ.",
+      noticeStep3Lead: "ವಿಚಾರಣೆಗೆ ಹಾಜರಾಗಿ.",
+      noticeStep3Body: "ನೋಟಿಸ್ ಮತ್ತು ನಿಮ್ಮ ಪ್ರಕರಣಕ್ಕೆ ಕೇಳಿದ ದಾಖಲೆಗಳನ್ನು ತೆಗೆದುಕೊಂಡು ಹೋಗಿ. ಕಚೇರಿಯಲ್ಲಿ ಸಲ್ಲಿಸಿದ ನಂತರ ಸ್ವೀಕೃತಿ ಕೇಳಿ.",
+      noticeStep4Lead: "ಲಿಖಿತ ಆದೇಶವನ್ನು ಇಟ್ಟುಕೊಳ್ಳಿ.",
+      noticeStep4Body: "ಈ ಪರಿಷ್ಕರಣೆಯ ವೇಳೆ ತಿರಸ್ಕೃತ ಹಕ್ಕಿನ ವಿರುದ್ಧ ಜಿಲ್ಲಾ ಚುನಾವಣಾಧಿಕಾರಿಗೆ ಮೇಲ್ಮನವಿ ಸಲ್ಲಿಸಬಹುದು. ಆದೇಶದಲ್ಲಿರುವ ಗಡುವನ್ನು ಪಾಲಿಸಿ.",
+      noticePortal: "ನೋಟಿಸ್ ದಾಖಲೆ ಅಥವಾ ಮೇಲ್ಮನವಿ ಸಲ್ಲಿಸಿ",
+      datesEyebrow: "ವೇಳಾಪಟ್ಟಿ ಪರಿಶೀಲನೆ: 26 ಆಗಸ್ಟ್ 2026",
       datesTitle: "ಗಮನದಲ್ಲಿಡಬೇಕಾದ ದಿನಾಂಕಗಳು",
-      d1Label: "8 ಆಗಸ್ಟ್ 2026",
-      d1Body: "ಬಿಎಲ್‌ಒ ಮನೆ ಭೇಟಿ ಮತ್ತು ಡಿಜಿಟಲೀಕರಣಕ್ಕೆ ಸಿಇಒ ಕರ್ನಾಟಕ ನಿಗದಿಪಡಿಸಿದ್ದ ಗುರಿ ದಿನಾಂಕ; ಇದು ಈಗಾಗಲೇ ಕಳೆದಿದೆ.",
-      d2Label: "5 ಆಗಸ್ಟ್ – 4 ಸೆಪ್ಟೆಂಬರ್ 2026",
-      d2Body: "ಹಕ್ಕು ಮತ್ತು ಆಕ್ಷೇಪಣೆಗಳಿಗೆ ಇಸಿಐ ಪ್ರಕಟಿಸಿದ ಅವಧಿ.",
-      d3Label: "3 ಅಕ್ಟೋಬರ್ 2026",
-      d3Body: "ಇಸಿಐ ವೇಳಾಪಟ್ಟಿಯಂತೆ ಇಆರ್‌ಒಗಳು ನೋಟಿಸ್ ಕೆಲಸ ಮುಗಿಸಿ ಹಕ್ಕುಗಳ ಬಗ್ಗೆ ತೀರ್ಮಾನಿಸುವ ಗುರಿ ದಿನಾಂಕ.",
-      d4Label: "7 ಅಕ್ಟೋಬರ್ 2026",
-      d4Body: "ಅಂತಿಮ ಮತದಾರರ ಪಟ್ಟಿ ಈ ದಿನಾಂಕದಂದು ಪ್ರಕಟವಾಗಲಿದೆ ಎಂದು ಇಸಿಐ ವೇಳಾಪಟ್ಟಿ ಹೇಳುತ್ತದೆ.",
+      d1Label: "24 ಆಗಸ್ಟ್ 2026",
+      d1Body: "ಕರ್ನಾಟಕದ ಕರಡು ಮತದಾರರ ಪಟ್ಟಿ ಪ್ರಕಟವಾಯಿತು.",
+      d2Label: "23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ",
+      d2Body: "ಹಕ್ಕು ಮತ್ತು ಆಕ್ಷೇಪಣೆಗಳ ಅವಧಿ ಮುಗಿಯುತ್ತದೆ. ಹೆಸರು ಬಿಟ್ಟಿದ್ದರೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ; ಸ್ಥಳಾಂತರ ಅಥವಾ ತಿದ್ದುಪಡಿಗೆ ಫಾರ್ಮ್ 8 ಬಳಸಿ.",
+      d3Label: "22 ಅಕ್ಟೋಬರ್ 2026ರೊಳಗೆ",
+      d3Body: "ಇಆರ್‌ಒಗಳು ನೋಟಿಸ್ ಪ್ರಕ್ರಿಯೆ ಮತ್ತು ಅರ್ಜಿಗಳ ತೀರ್ಮಾನವನ್ನು ಈ ದಿನದೊಳಗೆ ಮುಗಿಸುತ್ತಾರೆ.",
+      d4Label: "27 ಅಕ್ಟೋಬರ್ 2026",
+      d4Body: "ಪರಿಷ್ಕೃತ ವೇಳಾಪಟ್ಟಿಯಂತೆ ಅಂತಿಮ ಪಟ್ಟಿ ಈ ದಿನ ಪ್ರಕಟವಾಗುತ್ತದೆ.",
       countersTitle: "ಅಧಿಕೃತ ಕೌಂಟರ್‌ಗಳು",
       eciPortal: "ಇಸಿಐ ಮತದಾರರ ಸೇವಾ ಪೋರ್ಟಲ್",
       officialForms: "ಅಧಿಕೃತ ಫಾರ್ಮ್‌ಗಳು",
       ceoHome: "ಸಿಇಒ ಕರ್ನಾಟಕ",
       helpline: "ಕರ್ನಾಟಕ ಮತದಾರರ ಸಹಾಯವಾಣಿ:",
-      ceoUpdate: "ಸಿಇಒ ಪ್ರಕಟಣೆ, 29 ಜುಲೈ",
-      eciSchedule: "ಇಸಿಐ ವೇಳಾಪಟ್ಟಿ, 14 ಮೇ",
+      ceoUpdate: "ಸಿಇಒ ಮಾರ್ಗದರ್ಶನ, 8 ಆಗಸ್ಟ್",
+      eciSchedule: "ಪರಿಷ್ಕೃತ ಎಸ್‌ಐಆರ್ ವೇಳಾಪಟ್ಟಿ, 7 ಆಗಸ್ಟ್",
+      form6: "ಹೆಸರು ಸೇರಿಸಲು ಫಾರ್ಮ್ 6",
+      form8: "ಸ್ಥಳಾಂತರ ಅಥವಾ ತಿದ್ದುಪಡಿಗೆ ಫಾರ್ಮ್ 8",
+      appealFaq: "ಮತದಾರರ ಪಟ್ಟಿ ಮೇಲ್ಮನವಿಗೆ ಇಸಿಐ ಮಾರ್ಗದರ್ಶನ",
       methodTitle: "ಈ ಎರಡು ಸೂಚಿಗಳಲ್ಲಿ ಏನಿದೆ",
       stat1: "ಕಾರಣ ನಮೂದಾಗಿರುವ ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು.",
       stat2: "ಒಳಗೊಂಡಿರುವ ಎಎಸ್‌ಡಿಡಿಒ ಮತದಾನ ಭಾಗಗಳು.",
-      stat3: "ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು.",
-      stat4: "ಒಳಗೊಂಡಿರುವ ಪರಿಷ್ಕೃತ ಪಟ್ಟಿಯ ಮತದಾನ ಭಾಗಗಳು.",
+      stat3: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು.",
+      stat4: "ಒಳಗೊಂಡಿರುವ ಕರಡು ಪಟ್ಟಿಯ ಮತದಾನ ಭಾಗಗಳು.",
       stat5: "ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಒಳಗೊಂಡಿರುವ ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರಗಳು.",
-      stat6: "ಎಎಸ್‌ಡಿಡಿಒ ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳು ಹುಡುಕಾಟದ ಹೊರಗಿವೆ; ನವೀಕರಣದ ವೇಳೆ ಎರಡು ಮೂಲ ಫೋಲ್ಡರ್ ಪಟ್ಟಿಗಳು ಲಭ್ಯವಾಗಲಿಲ್ಲ.",
-      methodNote: "ಎಎಸ್‌ಡಿಡಿಒ ತೆಗೆದುಹಾಕುವಿಕೆ-ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು ಮತ್ತು ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿ ಎರಡು ಪ್ರತ್ಯೇಕ ದತ್ತಸಂಗ್ರಹಗಳಾಗಿವೆ. ಕಾರಣ ನಮೂದಾಗಿರುವಾಗ ಪ್ರತಿ ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ, ಭಾಗ, ಹಿಂದಿನ ಪಟ್ಟಿಯ ಕ್ರಮ ಸಂಖ್ಯೆ ಮತ್ತು ಇಪಿಐಸಿ ಐಡಿಗೆ ಒಂದೇ ಹುಡುಕಬಹುದಾದ ದಾಖಲೆಯನ್ನು ಎಎಸ್‌ಡಿಡಿಒ ಸೂಚಿ ಇಟ್ಟುಕೊಳ್ಳುತ್ತದೆ; ಓದಲಾಗದ ಒಂಬತ್ತು ಮೂಲ ಕಡತಗಳು ಮತ್ತು ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳು ಇದರಲ್ಲಿ ಸೇರಿಲ್ಲ. ಪರಿಷ್ಕೃತ ಪಟ್ಟಿಯ ಸೂಚಿಯಲ್ಲಿ 60,922 ಭಾಗಗಳ ಹುಡುಕಬಹುದಾದ ಮತದಾರರ ದಾಖಲೆಗಳಿವೆ. ಪಿಡಿಎಫ್ ಓದುವಿಕೆಯಿಂದ ಕಾಗುಣಿತ ದೋಷ ಉಂಟಾಗಬಹುದು. ಫಲಿತಾಂಶದ ತೀರ್ಪು ಯಾವ ದತ್ತಸಂಗ್ರಹದಿಂದ ಬಂದಿದೆ ಎಂಬುದನ್ನು ಸೂಚಿಸುತ್ತದೆ; ಎರಡರ ದಾಖಲೆ ಸಂಖ್ಯೆಯನ್ನು ಮತದಾರರೆಂದು ಒಟ್ಟುಗೂಡಿಸುವುದಿಲ್ಲ.",
-      aboutIndex: "ಸಾರ್ವಜನಿಕ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು ಮತ್ತು ಪರಿಷ್ಕೃತ ಮತದಾರರ ಪಟ್ಟಿಯಿಂದ ಡೇಟಾಚಟ್ನಿ ರೂಪಿಸಿದ ಸ್ವತಂತ್ರ, ಅನಧಿಕೃತ ಸೂಚಿಗಳು ಇವು. ಮೂಲದ ಕೊರತೆ, ಕಾಗುಣಿತ ವ್ಯತ್ಯಾಸ ಮತ್ತು ಪಿಡಿಎಫ್ ಓದುವ ದೋಷಗಳು ಹೊಂದಾಣಿಕೆಯ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರಬಹುದು — ಅಧಿಕೃತ ಮತದಾರರ ಸೇವೆಗಳು ಮತ್ತು ನಿಮ್ಮ ಇಆರ್‌ಒ ಹೇಳುವುದೇ ಅಂತಿಮ. ಹೆಸರಿನ ಫಲಿತಾಂಶಗಳು ಸಂಕ್ಷಿಪ್ತ ಸಾರಾಂಶ ಮಾತ್ರ; ಇಪಿಐಸಿ ಐಡಿ ಮತ್ತು ಅನ್ವಯಿಸುವ ವಿವರಗಳನ್ನು ನೋಡಲು ನಿಮ್ಮದೇ ದಾಖಲೆಯನ್ನು ತೆರೆಯಿರಿ. ಹುಡುಕಾಟದ ಪದಗಳು ಪುಟದ ವಿಳಾಸದಲ್ಲಿ ಸೇರುವುದಿಲ್ಲ.",
+      stat6: "ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳಲ್ಲಿ ಹುಡುಕಬಹುದಾದ ಮತದಾರರ ದಾಖಲೆ ಇಲ್ಲ. ನವೀಕರಣದ ವೇಳೆ ಎರಡು ಮೂಲ ಫೋಲ್ಡರ್ ಪಟ್ಟಿಗಳನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+      methodNote: "ಈ ಹುಡುಕಾಟವು ಕರ್ನಾಟಕದ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು ಮತ್ತು ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯನ್ನು ಓದುತ್ತದೆ. ಪ್ರತಿ ಫಲಿತಾಂಶವು ತನ್ನ ಮೂಲವನ್ನು ತೋರಿಸುತ್ತದೆ. ಪಿಡಿಎಫ್ ಪಠ್ಯದಲ್ಲಿ ಕಾಗುಣಿತ ದೋಷ ಇರಬಹುದು. ಕೆಲವು ಮೂಲ ಕಡತಗಳನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ; ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳಲ್ಲಿ ಹುಡುಕಬಹುದಾದ ಮತದಾರರ ದಾಖಲೆ ಇಲ್ಲ. ಸಂಖ್ಯೆಗಳು ಪ್ರತಿ ಸೂಚಿಯ ದಾಖಲೆಗಳನ್ನು ತೋರಿಸುತ್ತವೆ.",
+      aboutIndex: "ಸಾರ್ವಜನಿಕ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು ಮತ್ತು ಕರ್ನಾಟಕದ ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯಿಂದ ಡೇಟಾಚಟ್ನಿ ಈ ಅನಧಿಕೃತ ಹುಡುಕಾಟವನ್ನು ರೂಪಿಸಿದೆ. ಪ್ರತಿ ಹೊಂದಾಣಿಕೆಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ; ಮತದಾರರ ಪಟ್ಟಿಯ ಅರ್ಜಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತೀರ್ಮಾನಿಸುತ್ತಾರೆ.",
       selectDistrict: "ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
       selectDistrictFirst: "ಮೊದಲು ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
       selectConstituency: "ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ ಆಯ್ಕೆಮಾಡಿ",
@@ -269,8 +308,8 @@
       coverageTitle: "ಎಸಿ {number} · {name}ಗೆ ಮೂಲ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ. ",
       coverageBody: "ಮಾಹಿತಿ ಕೊರತೆ ಸ್ಪಷ್ಟವಾಗಲು ಈ ಕ್ಷೇತ್ರವನ್ನು ತೋರಿಸಲಾಗಿದೆ. ಸಿಇಒ ಕರ್ನಾಟಕ ಅಥವಾ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಬಳಿ ಪರಿಶೀಲಿಸಿ.",
       zeroTitle: "ಈ ಸೂಚಿಗಳಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
-      zeroStrong: "ಸೂಚಿಯಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಸಿಗಲಿಲ್ಲ.",
-      zeroBody: "ಕಾಗುಣಿತ, ಮೂಲದ ಕೊರತೆ ಮತ್ತು ಪಿಡಿಎಫ್ ಓದುವ ದೋಷಗಳು ಹುಡುಕಾಟದ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರಬಹುದು. ಅಧಿಕೃತ ಪಟ್ಟಿಯನ್ನೂ ಪರಿಶೀಲಿಸಿ.",
+      zeroStrong: "ಹುಡುಕಾಟದಲ್ಲಿ ಯಾವುದೇ ಸೂಚೀಕೃತ ಹೊಂದಾಣಿಕೆ ಸಿಗಲಿಲ್ಲ.",
+      zeroBody: "ಇಪಿಐಸಿ ಐಡಿಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪ್ರಯತ್ನಿಸಿ. ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.",
       matchEpic: "ಇಪಿಐಸಿ ಐಡಿ ನಿಖರ ಹೊಂದಾಣಿಕೆ",
       matchExact: "ಹೆಸರಿನ ನಿಖರ ಹೊಂದಾಣಿಕೆ",
       matchPossible: "ಹೆಸರಿನ ಸಾಧ್ಯ ಹೊಂದಾಣಿಕೆ",
@@ -295,6 +334,12 @@
       previousPage: "ಹಿಂದಿನ ಪುಟ",
       nextPage: "ಮುಂದಿನ ಪುಟ",
       pageLabel: "ಪುಟ {page}",
+      expandResults: "ಫಲಿತಾಂಶಗಳನ್ನು ವಿಸ್ತರಿಸಿ ಸ್ಕ್ರೋಲ್ ಮಾಡಿ",
+      usePages: "ಪುಟಗಳನ್ನು ಬಳಸಿ",
+      loadMoreResults: "ಇನ್ನಷ್ಟು ಹೊಂದಾಣಿಕೆಗಳನ್ನು ತೋರಿಸಿ",
+      loadingMoreResults: "ಇನ್ನಷ್ಟು ಹೊಂದಾಣಿಕೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ…",
+      scrollSummary: "{total}ರಲ್ಲಿ {shown} ತೋರಿಸಲಾಗಿದೆ. ಹೊಂದಾಣಿಕೆಗಳನ್ನು ಸ್ಕ್ರೋಲ್ ಮಾಡಿ ಮತ್ತು ವಿವರಗಳಿಗಾಗಿ ನಿಮ್ಮ ದಾಖಲೆಯನ್ನು ತೆರೆಯಿರಿ.",
+      narrowResults: "ಹೆಚ್ಚು ಹೊಂದಾಣಿಕೆಗಳಿವೆ. ಫಲಿತಾಂಶಗಳನ್ನು ನಿಖರಗೊಳಿಸಲು ಮತದಾರರ ಹೆಸರಿನ ಇನ್ನಷ್ಟು ಭಾಗವನ್ನು ಅಥವಾ ಸಂಬಂಧಿಯ ಹೆಸರನ್ನು ಸೇರಿಸಿ.",
       sourceMatch: "ದಾಖಲೆ ಹೊಂದಾಣಿಕೆ",
       sourceMatches: "ದಾಖಲೆ ಹೊಂದಾಣಿಕೆಗಳು",
       singleSummary: "ಹೊಂದಾಣಿಕೆಯ ದಾಖಲೆ ತೆರೆಯಲಾಗುತ್ತಿದೆ. ಇಪಿಐಸಿ ಐಡಿ ಮತ್ತು ದಾಖಲೆಯ ವಿವರಗಳು ಕೆಳಗೆ ಕಾಣುತ್ತವೆ.",
@@ -312,8 +357,8 @@
       factPollingAddress: "ಮತಗಟ್ಟೆಯ ವಿಳಾಸ",
       factAcPart: "ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ / ಭಾಗ / ಕ್ರಮ ಸಂಖ್ಯೆ",
       acPartSerial: "ಎಸಿ {ac} · ಭಾಗ {part} · ಕ್ರಮ ಸಂಖ್ಯೆ {serial}",
-      verifyLine: "ಮೂಲವನ್ನು ಎಚ್ಚರಿಕೆಯಿಂದ ಹೋಲಿಸಿ. ಅಧಿಕೃತ ಸ್ಥಿತಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ನೀಡುತ್ತಾರೆ.",
-      verifyRollLine: "ಈ ಮತಗಟ್ಟೆಯ ವಿವರಗಳನ್ನು ಅಧಿಕೃತ ಮತದಾರರ ಹುಡುಕಾಟದೊಂದಿಗೆ ಹೋಲಿಸಿ. ಅಧಿಕೃತ ಸ್ಥಿತಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ನೀಡುತ್ತಾರೆ.",
+      verifyLine: "ಈ ಹೊಂದಾಣಿಕೆಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ಅರ್ಜಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತೀರ್ಮಾನಿಸುತ್ತಾರೆ.",
+      verifyRollLine: "ಈ ಮತಗಟ್ಟೆಯ ವಿವರಗಳನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ವ್ಯತ್ಯಾಸ ಕಂಡರೆ ಇಆರ್‌ಒ ಅವರನ್ನು ಕೇಳಿ.",
       rowVoter: "ಮತದಾರ",
       rowRelative: "ಸಂಬಂಧಿ",
       rowReason: "ಸ್ಥಿತಿ",
@@ -322,7 +367,7 @@
       ceoPage: "ಸಿಇಒ ಕರ್ನಾಟಕ ಎಎಸ್‌ಡಿಡಿಒ ಪುಟ",
       contacts: "ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಸಂಪರ್ಕ ಹುಡುಕಿ",
       footerLine: "ಸಾರ್ವಜನಿಕ ಮಾಹಿತಿಗಾಗಿ ಸ್ವತಂತ್ರ ಸಾಧನಗಳು.",
-      previewLine: "ಈ ಸೂಚಿಗಳನ್ನು ಆರಂಭಿಕ ಬಿಂದುವಾಗಿ ಬಳಸಿ. ಅಧಿಕೃತ ಮತದಾರರ ಸೇವೆಗಳು ಮತ್ತು ನಿಮ್ಮ ಇಆರ್‌ಒ ಅಧಿಕೃತ ಸ್ಥಿತಿಯನ್ನು ನೀಡುತ್ತಾರೆ.",
+      previewLine: "ಪ್ರತಿ ಫಲಿತಾಂಶವನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ಅರ್ಜಿ ಮತ್ತು ನೋಟಿಸ್‌ಗಳನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ.",
     },
   };
 
@@ -335,10 +380,19 @@
   let expandedRow = null;
   let visualPage = 1;
   let pendingVisualPage = null;
+  let resultViewMode = "paged";
+  let scrollResults = [];
+  let scrollMeta = null;
+  let scrollNextPage = null;
+  let scrollLoading = false;
+  let scrollLoadController = null;
+  let scrollObserver = null;
+  let scrollQueryPayload = null;
 
-  // The board sheet shows a fixed number of rows per "page" so the paper
-  // never grows past the green board; the API's 20-row pages are sliced.
-  const VISUAL_PAGE_SIZE = 4;
+  // Desktop keeps the compact paper view by default. Five rows fit the sheet;
+  // visitors can switch to a scrollable list. Mobile starts in scroll mode.
+  const VISUAL_PAGE_SIZE = 5;
+  const MOBILE_RESULTS = window.matchMedia("(max-width: 900px)");
 
   function t(key, values = {}) {
     const template = COPY[language][key] || COPY.en[key] || key;
@@ -412,6 +466,7 @@
   function setLanguage(nextLanguage) {
     const districtValue = districtSelect.value;
     const constituencyValue = constituencySelect.value;
+    const openDetail = expandedRow?.result ? { ...expandedRow } : null;
     language = nextLanguage === "kn" ? "kn" : "en";
     applyStaticCopy();
     if (districts.length) {
@@ -424,7 +479,16 @@
       showCoverageWarning();
     }
     setLoading(Boolean(activeRequest));
-    if (lastResponse && !resultsSection.hidden) renderResults(lastResponse);
+    if (lastResponse && !resultsSection.hidden) {
+      if (openDetail) {
+        sheetDetailBody.replaceChildren(renderCard(openDetail.result, openDetail.displayIndex));
+        syncSheetStamp(openDetail.result);
+        applyVerdictGuidance(openDetail.result.verdict || openDetail.summary?.verdict);
+        expandedRow = { ...openDetail, detail: sheetDetailBody, controller: null };
+      } else {
+        renderResults(lastResponse);
+      }
+    }
     const bubble = document.querySelector("#clerk-bubble");
     bubble?.classList.remove("is-speaking");
     requestAnimationFrame(() => bubble?.classList.add("is-speaking"));
@@ -490,6 +554,7 @@
     form.hidden = true;
     resultsSection.hidden = false;
     wallAction.hidden = true;
+    setBoardActionsVisible(true);
     updatePlaqueLabel();
   }
 
@@ -497,6 +562,7 @@
     resultsSection.hidden = true;
     form.hidden = false;
     wallAction.hidden = false;
+    setBoardActionsVisible(false);
     updatePlaqueLabel();
     if (focus) (searchMode === "name" ? nameInput : voterIdInput).focus();
   }
@@ -647,6 +713,7 @@
   function setLoading(isLoading) {
     button.disabled = isLoading || (searchMode === "name" && !districts.length);
     button.classList.toggle("is-loading", isLoading);
+    resultViewToggle.disabled = isLoading;
     updatePlaqueLabel();
     resultsSection.setAttribute("aria-busy", String(isLoading));
     pagination.querySelectorAll("button").forEach((pageButton) => {
@@ -682,13 +749,33 @@
     sheetDetailBody.replaceChildren();
   }
 
+  function disconnectScrollObserver() {
+    if (scrollObserver) scrollObserver.disconnect();
+    scrollObserver = null;
+  }
+
+  function resetScrollState() {
+    disconnectScrollObserver();
+    if (scrollLoadController) scrollLoadController.abort();
+    scrollLoadController = null;
+    scrollLoading = false;
+    scrollResults = [];
+    scrollMeta = null;
+    scrollNextPage = null;
+  }
+
   function clearResults() {
     closeDetail();
+    disconnectScrollObserver();
     applyVerdictGuidance(null);
+    syncSheetStamp(null);
     resultSummary.replaceChildren();
+    resultsSection.classList.remove("is-scroll-mode");
     resultList.hidden = false;
+    resultList.classList.remove("is-scroll-mode");
     resultList.replaceChildren();
     resultTableHeading.hidden = true;
+    resultViewToggle.hidden = true;
     pagination.replaceChildren();
     pagination.hidden = true;
   }
@@ -790,18 +877,7 @@
       overlapNote.hidden = false;
     }
 
-    const memberNote = card.querySelector(".source-member-note");
-    const sourceDetails = [];
-    if (isAsddo && evidence.source_title) {
-      sourceDetails.push(t("sourceTitle", { title: evidence.source_title }));
-    }
-    if (isAsddo && evidence.archive_member) {
-      sourceDetails.push(t("archiveMember", { archive: evidence.archive_member }));
-    }
-    if (sourceDetails.length) {
-      memberNote.textContent = sourceDetails.join(" · ");
-      memberNote.hidden = false;
-    }
+    const sourceFileName = (isAsddo && (evidence.archive_member || evidence.source_title)) || "";
 
     const sourceLink = card.querySelector(".source-link");
     const sourceUrl = evidence.archive_member
@@ -812,9 +888,15 @@
       sourceLink.querySelector(".source-link-label").textContent = evidence.archive_member
         ? t("openArchive")
         : (evidence.viewer_url ? t("openSource") : t("downloadSource"));
+      const fileEl = sourceLink.querySelector(".source-link-file");
+      if (sourceFileName) {
+        fileEl.textContent = sourceFileName;
+        fileEl.title = sourceFileName;
+      } else {
+        fileEl.remove();
+      }
       sourceLink.hidden = false;
     } else {
-      memberNote.remove();
       sourceLink.remove();
     }
     return card;
@@ -856,8 +938,16 @@
     resultSummary.hidden = false;
     resultTableHeading.hidden = !listVisible;
     resultList.hidden = !listVisible;
-    pagination.hidden = !listVisible || !pagination.childElementCount;
+    const total = Number(lastResponse?.meta?.total_results || 0);
+    resultViewToggle.hidden = !listVisible || total <= VISUAL_PAGE_SIZE;
+    pagination.hidden = !listVisible
+      || resultViewMode === "scroll"
+      || !pagination.childElementCount;
     sheetDetail.hidden = listVisible;
+    if (listVisible) {
+      syncSheetStamp(null);
+      if (sheetBack) sheetBack.hidden = true;
+    }
   }
 
   async function revealDetail(summary, displayIndex, fromList) {
@@ -874,8 +964,16 @@
       const result = await fetchDetail(summary.detail_token, controller.signal);
       if (expandedRow?.controller !== controller) return;
       sheetDetailBody.replaceChildren(renderCard(result, displayIndex));
+      syncSheetStamp(result);
       applyVerdictGuidance(result.verdict || summary.verdict);
-      expandedRow.controller = null;
+      expandedRow = {
+        detail: sheetDetailBody,
+        controller: null,
+        result,
+        summary,
+        displayIndex,
+        fromList,
+      };
     } catch (error) {
       if (error.name === "AbortError" || expandedRow?.controller !== controller) return;
       sheetDetailBody.replaceChildren();
@@ -890,6 +988,47 @@
     } finally {
       window.clearTimeout(timeout);
     }
+  }
+
+  function stampSpecFor(result) {
+    if (!result || !result.verdict) return null;
+    switch (result.verdict) {
+      case "ROLL_PRESENT":
+        return { key: "stampPresent", cls: "sheet-stamp--roll" };
+      case "ASDDO_LISTED":
+        // On the ASDDO list AND still on the revised roll -> not removed.
+        return result.also_in_roll
+          ? { key: "stampPresent", cls: "sheet-stamp--roll" }
+          : { key: "stampRemoved", cls: "sheet-stamp--asddo" };
+      case "NOT_FOUND":
+        return { key: "stampNotFound", cls: "sheet-stamp--neutral" };
+      case "ROLL_PENDING":
+        return { key: "stampPending", cls: "sheet-stamp--neutral" };
+      default:
+        return null;
+    }
+  }
+
+  function syncSheetStamp(result) {
+    const stamp = document.querySelector("#sheet-stamp");
+    if (!stamp) return;
+    const spec = stampSpecFor(result);
+    stamp.classList.remove("sheet-stamp--asddo", "sheet-stamp--roll", "sheet-stamp--neutral");
+    if (!spec) {
+      stamp.hidden = true;
+      stamp.textContent = "";
+      return;
+    }
+    stamp.textContent = t(spec.key);
+    stamp.classList.add(spec.cls);
+    stamp.hidden = false;
+    const badge = sheetDetailBody.querySelector(".match-badge");
+    if (badge) badge.hidden = true;
+  }
+
+  function setBoardActionsVisible(visible) {
+    const wrap = document.querySelector("#board-actions");
+    if (wrap) wrap.hidden = !visible;
   }
 
   function renderCompactRow(summary, displayIndex) {
@@ -909,6 +1048,64 @@
       revealDetail(summary, displayIndex, true);
     });
     return item;
+  }
+
+  function updateResultViewToggle(total) {
+    const scrollMode = resultViewMode === "scroll";
+    const copyKey = scrollMode ? "usePages" : "expandResults";
+    resultViewToggle.dataset.copy = copyKey;
+    resultViewToggle.textContent = t(copyKey);
+    resultViewToggle.setAttribute("aria-pressed", String(scrollMode));
+    resultViewToggle.hidden = total <= VISUAL_PAGE_SIZE;
+  }
+
+  function renderResultNotices(items, meta, { first, last, scrollMode = false }) {
+    resultSummary.replaceChildren();
+    const total = Number(meta.total_results || items.length);
+    const rowVerdicts = new Set(items.map((item) => item.verdict).filter(Boolean));
+    const unanimousRows = rowVerdicts.size === 1
+      && items.every((item) => Boolean(item.verdict));
+    const mixedNameResults = meta.search_mode === "name" && !unanimousRows;
+    const resultVerdict = meta.search_mode === "name"
+      ? (unanimousRows ? items[0]?.verdict : null)
+      : (meta.verdict || items[0]?.verdict);
+    applyVerdictGuidance(resultVerdict);
+
+    if (mixedNameResults) {
+      appendText(resultSummary, "div", "mixed-verdict-prompt", t("mixedVerdictPrompt"));
+    }
+    if (meta.search_mode === "name" && total > 10) {
+      const nudge = appendText(resultSummary, "div", "specificity-nudge", t("narrowResults"));
+      nudge.setAttribute("role", "status");
+    }
+
+    appendText(
+      resultSummary,
+      "div",
+      "result-summary",
+      scrollMode
+        ? t("scrollSummary", {
+          shown: last.toLocaleString("en-IN"),
+          total: total.toLocaleString("en-IN"),
+        })
+        : t("multipleSummary", {
+          first: first.toLocaleString("en-IN"),
+          last: last.toLocaleString("en-IN"),
+          total: total.toLocaleString("en-IN"),
+        }),
+    );
+
+    if (meta.pagination_limited) {
+      appendText(
+        resultSummary,
+        "div",
+        "pagination-limit-note",
+        t("privacyLimit", {
+          count: (Number(meta.page_size || 20) * Number(meta.total_pages || 0))
+            .toLocaleString("en-IN"),
+        }),
+      );
+    }
   }
 
   function pageItems(current, total) {
@@ -966,6 +1163,125 @@
     pagination.hidden = false;
   }
 
+  function initializeScrollResults(response) {
+    scrollResults = Array.isArray(response.results) ? [...response.results] : [];
+    scrollMeta = { ...(response.meta || {}) };
+    const currentPage = Number(scrollMeta.page || 1);
+    const totalPages = Number(scrollMeta.total_pages || 1);
+    scrollNextPage = scrollMeta.has_more && currentPage < totalPages
+      ? currentPage + 1
+      : null;
+  }
+
+  function renderScrollLoader(observe = true) {
+    disconnectScrollObserver();
+    resultList.querySelector(".result-scroll-loader")?.remove();
+    if (!scrollNextPage) return;
+
+    const loader = document.createElement("div");
+    loader.className = "result-scroll-loader";
+    const loadButton = document.createElement("button");
+    loadButton.className = "text-button result-scroll-load";
+    loadButton.type = "button";
+    loadButton.textContent = t(scrollLoading ? "loadingMoreResults" : "loadMoreResults");
+    loadButton.disabled = scrollLoading;
+    loadButton.addEventListener("click", loadNextScrollPage);
+    loader.append(loadButton);
+    resultList.append(loader);
+
+    if (observe && !scrollLoading && "IntersectionObserver" in window) {
+      scrollObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) loadNextScrollPage();
+      }, {
+        root: MOBILE_RESULTS.matches ? null : resultList,
+        rootMargin: "0px 0px 160px 0px",
+      });
+      scrollObserver.observe(loader);
+    }
+  }
+
+  function appendScrollPage(response) {
+    const incoming = Array.isArray(response.results) ? response.results : [];
+    const seen = new Set(scrollResults.map((item) => item.detail_token));
+    const fresh = incoming.filter((item) => !seen.has(item.detail_token));
+    const firstIndex = scrollResults.length;
+    resultList.querySelector(".result-scroll-loader")?.remove();
+    fresh.forEach((item, index) => {
+      resultList.append(renderCompactRow(item, firstIndex + index + 1));
+    });
+    scrollResults.push(...fresh);
+
+    const meta = response.meta || {};
+    const currentPage = Number(meta.page || 1);
+    const totalPages = Number(meta.total_pages || scrollMeta?.total_pages || 1);
+    scrollNextPage = meta.has_more && currentPage < totalPages
+      ? currentPage + 1
+      : null;
+    scrollMeta = { ...(scrollMeta || {}), ...meta, page: 1 };
+    renderResultNotices(scrollResults, scrollMeta, {
+      first: 1,
+      last: scrollResults.length,
+      scrollMode: true,
+    });
+    renderScrollLoader();
+  }
+
+  async function loadNextScrollPage() {
+    if (scrollLoading || !scrollNextPage || !scrollQueryPayload) return;
+    disconnectScrollObserver();
+    scrollLoading = true;
+    renderScrollLoader();
+    const controller = new AbortController();
+    scrollLoadController = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+    try {
+      const response = await requestSearchPage(
+        { ...scrollQueryPayload, page: scrollNextPage },
+        controller.signal,
+      );
+      if (resultViewMode !== "scroll" || scrollLoadController !== controller) return;
+      scrollLoading = false;
+      appendScrollPage(response);
+    } catch (error) {
+      if (error.name === "AbortError" || scrollLoadController !== controller) return;
+      scrollLoading = false;
+      renderScrollLoader(false);
+      const loader = resultList.querySelector(".result-scroll-loader");
+      if (loader) {
+        const errorText = appendText(
+          loader,
+          "span",
+          "result-scroll-error",
+          error.message || t("serviceUnavailable"),
+        );
+        errorText.setAttribute("role", "alert");
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (scrollLoadController === controller) scrollLoadController = null;
+    }
+  }
+
+  function renderScrollableResults(meta) {
+    resultsSection.classList.add("is-scroll-mode");
+    resultList.classList.add("is-scroll-mode");
+    resultTableHeading.hidden = false;
+    pagination.hidden = true;
+    updateResultViewToggle(Number(meta.total_results || scrollResults.length));
+    renderResultNotices(scrollResults, scrollMeta || meta, {
+      first: 1,
+      last: scrollResults.length,
+      scrollMode: true,
+    });
+    const fragment = document.createDocumentFragment();
+    scrollResults.forEach((item, index) => {
+      fragment.append(renderCompactRow(item, index + 1));
+    });
+    resultList.append(fragment);
+    renderScrollLoader();
+    showResultsSheet();
+  }
+
   function updateCorpusCounts(meta) {
     if (Number.isFinite(meta.asddo?.records)) {
       asddoIndexedCount.textContent = Number(meta.asddo.records).toLocaleString("en-US");
@@ -987,32 +1303,27 @@
       return;
     }
 
-    const rowVerdicts = new Set(items.map((item) => item.verdict).filter(Boolean));
-    const unanimousRows = rowVerdicts.size === 1
-      && items.every((item) => Boolean(item.verdict));
-    const mixedNamePage = meta.search_mode === "name" && !unanimousRows;
-    const pageVerdict = meta.search_mode === "name"
-      ? (unanimousRows ? items[0].verdict : null)
-      : (meta.verdict || items[0]?.verdict);
-    applyVerdictGuidance(pageVerdict);
-
     const total = Number(meta.total_results || items.length);
     const apiPage = Number(meta.page || 1);
     const pageSize = Number(meta.page_size || 20);
     const apiFirst = (apiPage - 1) * pageSize;
     const noun = total === 1 ? t("sourceMatch") : t("sourceMatches");
     resultsTitle.textContent = `${total.toLocaleString("en-IN")} ${noun}`;
-
-    if (mixedNamePage) {
-      appendText(resultSummary, "div", "mixed-verdict-prompt", t("mixedVerdictPrompt"));
-    }
+    updateResultViewToggle(total);
 
     if (items.length === 1) {
       visualPage = 1;
       pendingVisualPage = null;
+      applyVerdictGuidance(meta.verdict || items[0]?.verdict);
       appendText(resultSummary, "div", "result-summary", t("singleSummary"));
       revealDetail(items[0], 1, false);
       showResultsSheet();
+      return;
+    }
+
+    if (resultViewMode === "scroll") {
+      if (!scrollMeta) initializeScrollResults(response);
+      renderScrollableResults(meta);
       return;
     }
 
@@ -1026,21 +1337,10 @@
     const globalFirst = (page - 1) * VISUAL_PAGE_SIZE;
     const slice = items.slice(globalFirst - apiFirst, globalFirst - apiFirst + VISUAL_PAGE_SIZE);
 
-    appendText(resultSummary, "div", "result-summary", t("multipleSummary", {
-      first: (globalFirst + 1).toLocaleString("en-IN"),
-      last: (globalFirst + slice.length).toLocaleString("en-IN"),
-      total: total.toLocaleString("en-IN"),
-    }));
-    if (meta.pagination_limited) {
-      appendText(
-        resultSummary,
-        "div",
-        "pagination-limit-note",
-        t("privacyLimit", {
-          count: (pageSize * Number(meta.total_pages || 0)).toLocaleString("en-IN"),
-        }),
-      );
-    }
+    renderResultNotices(items, meta, {
+      first: globalFirst + 1,
+      last: globalFirst + slice.length,
+    });
 
     resultTableHeading.hidden = false;
     const fragment = document.createDocumentFragment();
@@ -1052,6 +1352,21 @@
     showResultsSheet();
   }
 
+  async function requestSearchPage(payload, signal) {
+    const response = await fetch(`${apiBaseUrl}/v1/search`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-store",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal,
+    });
+    if (!response.ok) throw new Error(await parseError(response));
+    return response.json();
+  }
+
   async function runSearch(payload) {
     if (activeRequest) activeRequest.abort();
     closeDetail();
@@ -1061,19 +1376,11 @@
     setLoading(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/v1/search`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-store",
-        credentials: "omit",
-        referrerPolicy: "no-referrer",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
-      if (!response.ok) throw new Error(await parseError(response));
-      const body = await response.json();
+      const body = await requestSearchPage(payload, controller.signal);
       lastPayload = { ...payload, page: Number(body.meta?.page || payload.page) };
+      if (resultViewMode === "scroll" && Number(body.meta?.page || 1) === 1) {
+        initializeScrollResults(body);
+      }
       renderResults(body);
     } catch (error) {
       if (error.name === "AbortError") {
@@ -1093,10 +1400,11 @@
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     if (!resultsSection.hidden) {
-      // The plaque reads "New search maadi" while a results sheet is up:
+      // The plaque reads "Search again" while a results sheet is up:
       // it returns the visitor to the form instead of re-submitting.
       if (activeRequest) return;
       closeDetail();
+      resetScrollState();
       clearResults();
       showFormSheet();
       return;
@@ -1111,6 +1419,9 @@
     }
     visualPage = 1;
     pendingVisualPage = null;
+    resetScrollState();
+    resultViewMode = MOBILE_RESULTS.matches ? "scroll" : "paged";
+    scrollQueryPayload = { ...payload, page: 1 };
     runSearch(payload);
   });
 
@@ -1136,7 +1447,33 @@
     lastResponse = null;
     visualPage = 1;
     pendingVisualPage = null;
+    resetScrollState();
+    resultViewMode = MOBILE_RESULTS.matches ? "scroll" : "paged";
+    scrollQueryPayload = null;
     showFormSheet();
+  });
+
+  resultViewToggle.addEventListener("click", () => {
+    if (!lastResponse) return;
+    visualPage = 1;
+    pendingVisualPage = null;
+    if (resultViewMode === "scroll") {
+      resultViewMode = "paged";
+      resetScrollState();
+      renderResults(lastResponse);
+      return;
+    }
+
+    resultViewMode = "scroll";
+    resetScrollState();
+    const basePayload = scrollQueryPayload || lastPayload;
+    if (basePayload) scrollQueryPayload = { ...basePayload, page: 1 };
+    if (Number(lastResponse.meta?.page || 1) === 1) {
+      initializeScrollResults(lastResponse);
+      renderResults(lastResponse);
+    } else if (scrollQueryPayload) {
+      runSearch(scrollQueryPayload);
+    }
   });
 
   sheetBack.addEventListener("click", () => {
