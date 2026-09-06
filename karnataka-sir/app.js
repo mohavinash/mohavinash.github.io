@@ -222,6 +222,7 @@
       ceoPage: "CEO Karnataka ASDDO page",
       ceoNotices: "CEO Karnataka notices issued",
       openNoticeSource: "Open official notice source",
+      sourceAccessWarning: "Some official links may be temporarily unavailable or may have been made private by the Election Commission.",
       contacts: "Find BLO / ERO contacts",
       footerLine: "Independent tools for navigating public information.",
       previewLine: "Check each result in ECI’s official search. Your ERO handles applications and notices.",
@@ -407,6 +408,7 @@
       ceoPage: "ಸಿಇಒ ಕರ್ನಾಟಕ ಎಎಸ್‌ಡಿಡಿಒ ಪುಟ",
       ceoNotices: "ಸಿಇಒ ಕರ್ನಾಟಕ ನೀಡಿದ ನೋಟಿಸ್‌ಗಳು",
       openNoticeSource: "ಅಧಿಕೃತ ನೋಟಿಸ್ ಮೂಲ ತೆರೆಯಿರಿ",
+      sourceAccessWarning: "ಕೆಲವು ಅಧಿಕೃತ ಲಿಂಕ್‌ಗಳು ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲದಿರಬಹುದು ಅಥವಾ ಚುನಾವಣಾ ಆಯೋಗವು ಅವುಗಳನ್ನು ಖಾಸಗಿಯಾಗಿಸಿರಬಹುದು.",
       contacts: "ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಸಂಪರ್ಕ ಹುಡುಕಿ",
       footerLine: "ಸಾರ್ವಜನಿಕ ಮಾಹಿತಿಗಾಗಿ ಸ್ವತಂತ್ರ ಸಾಧನಗಳು.",
       previewLine: "ಪ್ರತಿ ಫಲಿತಾಂಶವನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ಅರ್ಜಿ ಮತ್ತು ನೋಟಿಸ್‌ಗಳನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ.",
@@ -1011,6 +1013,7 @@
         || sourceEvidence.source_title)) || "";
 
     const sourceLink = card.querySelector(".source-link");
+    const sourceAccessNote = card.querySelector(".source-access-note");
     const sourceUrl = sourceEvidence.archive_member
       ? (sourceEvidence.download_url || sourceEvidence.viewer_url)
       : (sourceEvidence.viewer_url || sourceEvidence.download_url);
@@ -1029,8 +1032,15 @@
         fileEl.remove();
       }
       sourceLink.hidden = false;
+      if (isClarification) {
+        sourceAccessNote.textContent = t("sourceAccessWarning");
+        sourceAccessNote.hidden = false;
+      } else {
+        sourceAccessNote.remove();
+      }
     } else {
       sourceLink.remove();
+      sourceAccessNote.remove();
     }
     return card;
   }
