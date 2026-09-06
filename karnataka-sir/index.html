@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123c3d">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Search Karnataka's 2026 draft electoral roll and ASDDO records by EPIC ID or name. Open a match for current official steps.">
+  <meta name="description" content="Search Karnataka's 2026 draft electoral roll and ASDDO records, with an exact EPIC check against published clarification notices.">
   <meta name="author" content="DataChutney">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta property="og:title" content="Karnataka Voter Verification Centre | DataChutney">
-  <meta property="og:description" content="Search Karnataka's draft electoral roll and ASDDO records by EPIC ID or name. Open your match for the next official step.">
+  <meta property="og:description" content="Search Karnataka's draft electoral roll and ASDDO records, including published clarification notices.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://datachutney.io/karnataka-sir/">
   <meta property="og:site_name" content="DataChutney">
@@ -21,14 +21,14 @@
   <meta property="og:image:alt" content="DataChutney Karnataka voter verification cover reading: Nearly 1 in 5. Has your name been struck off?">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Karnataka Voter Verification Centre | DataChutney">
-  <meta name="twitter:description" content="Search Karnataka's draft electoral roll and ASDDO records by EPIC ID or name. Open your match for the next official step.">
+  <meta name="twitter:description" content="Search Karnataka's draft electoral roll and ASDDO records, including published clarification notices.">
   <meta name="twitter:image" content="https://datachutney.io/karnataka-sir/social-preview-wide.png?v=20260826-cover1">
   <meta name="twitter:image:alt" content="DataChutney Karnataka voter verification cover reading: Nearly 1 in 5. Has your name been struck off?">
   <link rel="canonical" href="https://datachutney.io/karnataka-sir/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/sarkari-office-hero.png" as="image" media="(min-width: 901px)" fetchpriority="high">
   <link rel="preload" href="assets/sarkari-office-mobile.png" as="image" media="(max-width: 900px)" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=20260826-prod2">
+  <link rel="stylesheet" href="styles.css?v=20260906-notices3">
   <title>Karnataka Voter Verification Centre | DataChutney</title>
   <script defer src="https://umami-production-daa4.up.railway.app/script.js" data-website-id="c412f3c1-880b-4977-bdd6-33e193b2e7aa"></script>
   <script type="application/ld+json">
@@ -39,7 +39,7 @@
     "applicationCategory": "PublicServiceApplication",
     "operatingSystem": "Any",
     "url": "https://datachutney.io/karnataka-sir/",
-    "description": "An independent search of Karnataka's 2026 draft electoral roll and published ASDDO records.",
+    "description": "An independent search of Karnataka's 2026 draft electoral roll, published ASDDO records and clarification notices.",
     "publisher": {
       "@type": "Organization",
       "name": "DataChutney",
@@ -96,6 +96,7 @@
           width="1686"
           height="420"
         >
+        <p class="new-feature-badge" data-copy="newClarificationBadge">NEW · Now includes the clarification shortlist</p>
 
         <div class="board-actions" id="board-actions" hidden>
           <button class="text-button board-restart" id="new-search" type="button" data-copy="startOver">Start over ↺</button>
@@ -104,6 +105,10 @@
         <article class="counter-panel" aria-label="Search Karnataka voter records">
           <form id="search-form" novalidate autocomplete="off">
             <p class="form-instruction" data-copy="formInstruction">Search with your EPIC ID or name.</p>
+            <div class="coverage-warning notice-coverage-warning" role="status">
+              <strong data-copy="noticeCoverageBallariTitle">Some clarification-notice coverage is incomplete.</strong>
+              <span data-copy="noticeCoverageBallariBody"> Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.</span>
+            </div>
           <div class="query-group">
             <div class="mode-switch" aria-label="Choose a search method">
               <button class="mode-button is-active" id="epic-mode-button" type="button" aria-pressed="true" data-mode="epic">
@@ -193,7 +198,8 @@
         <div class="board-chalk">
           <p class="chalk-line chalk-line--big"><strong id="asddo-indexed-count">10,778,213</strong> <span data-copy="chalkAsddoIndexed">ASDDO records</span></p>
           <p class="chalk-line chalk-line--big"><strong id="roll-indexed-count">44,625,877</strong> <span data-copy="chalkRollIndexed">draft-roll records</span></p>
-          <p class="chalk-line" data-copy="chalkSnapshot">Two separate indexes · all 224 constituencies</p>
+          <p class="chalk-line chalk-line--big"><strong id="notice-indexed-count">—</strong> <span data-copy="chalkNoticeIndexed">voters with clarification notices</span></p>
+          <p class="chalk-line" data-copy="chalkSnapshot">Two voter indexes + exact EPIC notice checks · all 224 constituencies</p>
         </div>
 
         <div class="wall-action">
@@ -233,6 +239,7 @@
         </ol>
         <div class="official-links notice-sources">
           <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener noreferrer"><span data-copy="noticePortal">Submit notice papers or an appeal</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/notices_issued.html" target="_blank" rel="noopener noreferrer"><span data-copy="ceoNotices">CEO Karnataka notices issued</span> <span aria-hidden="true">↗</span></a>
           <a href="https://ceo.karnataka.gov.in/vfc/details/" target="_blank" rel="noopener noreferrer"><span data-copy="contacts">Find BLO / ERO contacts</span> <span aria-hidden="true">↗</span></a>
         </div>
       </article>
@@ -253,16 +260,17 @@
       </article>
 
       <article class="notice">
-        <h3 class="notice-title" data-copy="methodTitle">What these two indexes contain</h3>
+        <h3 class="notice-title" data-copy="methodTitle">What the voter indexes and notice check contain</h3>
         <div class="notice-dates">
           <div><span class="notice-date">10,778,213</span><span data-copy="stat1">ASDDO records carrying a stated reason.</span></div>
           <div><span class="notice-date">58,948</span><span data-copy="stat2">ASDDO electoral parts represented.</span></div>
           <div><span class="notice-date">44,625,877</span><span data-copy="stat3">records in the draft electoral roll.</span></div>
           <div><span class="notice-date">60,922</span><span data-copy="stat4">draft-roll electoral parts represented.</span></div>
           <div><span class="notice-date">224 / 224</span><span data-copy="stat5">Assembly constituencies represented across both indexes.</span></div>
+          <div><span class="notice-date" id="notice-method-count">—</span><span data-copy="statNotice">distinct EPIC IDs in published clarification notices.</span></div>
           <div><span class="notice-date">435,687</span><span data-copy="stat6">mapping-only rows have no searchable voter record. Two source folder listings could not be read during the refresh.</span></div>
         </div>
-        <p class="notice-copy notice-copy--small" data-copy="methodNote">The search reads Karnataka’s ASDDO files and draft electoral roll. Each result names its source. PDF text can carry spelling errors. Some source files could not be read, and mapping-only rows have no searchable voter record. The counts describe records in each index.</p>
+        <p class="notice-copy notice-copy--small" data-copy="methodNote">The search first identifies a voter in Karnataka’s ASDDO files or draft roll, then checks that EPIC ID in the clarification notices. It does not run a separate name search across notices. PDF text can carry spelling errors; the counts describe each source layer.</p>
       </article>
 
       <article class="notice">
@@ -275,13 +283,14 @@
           <a href="https://voters.eci.gov.in/formspdf/Form_8_English.pdf" target="_blank" rel="noopener noreferrer"><span data-copy="form8">Form 8 for a move or correction</span> <span aria-hidden="true">↗</span></a>
           <a href="https://www.eci.gov.in/faq/2/9" target="_blank" rel="noopener noreferrer"><span data-copy="appealFaq">ECI guidance on electoral-roll appeals</span> <span aria-hidden="true">↗</span></a>
           <a href="https://ceo.karnataka.gov.in/asddo.html" target="_blank" rel="noopener noreferrer"><span data-copy="ceoPage">CEO Karnataka ASDDO page</span> <span aria-hidden="true">↗</span></a>
+          <a href="https://ceo.karnataka.gov.in/notices_issued.html" target="_blank" rel="noopener noreferrer"><span data-copy="ceoNotices">CEO Karnataka notices issued</span> <span aria-hidden="true">↗</span></a>
           <a href="https://ceo.karnataka.gov.in/vfc/details/" target="_blank" rel="noopener noreferrer"><span data-copy="contacts">Find BLO / ERO contacts</span> <span aria-hidden="true">↗</span></a>
           <a href="https://ceo.karnataka.gov.in/" target="_blank" rel="noopener noreferrer"><span data-copy="ceoHome">CEO Karnataka</span> <span aria-hidden="true">↗</span></a>
         </div>
         <p class="helpline-note"><span data-copy="helpline">Karnataka voter helplines:</span> <a href="tel:1950">1950</a> · <a href="tel:180042551950">1800 4255 1950</a></p>
       </article>
 
-      <p class="about-line" data-copy="aboutIndex">DataChutney built this unofficial search from public ASDDO files and Karnataka’s draft electoral roll. Check every match in ECI’s official search; your ERO decides each electoral-roll application.</p>
+      <p class="about-line" data-copy="aboutIndex">DataChutney built this unofficial search from public ASDDO files, Karnataka’s draft electoral roll and the CEO’s published clarification notices. Check every match in ECI’s official search; your ERO decides each electoral-roll application.</p>
     </section>
   </main>
 
@@ -335,6 +344,6 @@
   </template>
 
   <script src="config.js?v=20260826-prod2"></script>
-  <script src="app.js?v=20260826-prod5" defer></script>
+  <script src="app.js?v=20260906-notices3" defer></script>
 </body>
 </html>

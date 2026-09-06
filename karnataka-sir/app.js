@@ -36,13 +36,16 @@
   const rowTemplate = document.querySelector("#result-row-template");
   const asddoIndexedCount = document.querySelector("#asddo-indexed-count");
   const rollIndexedCount = document.querySelector("#roll-indexed-count");
+  const noticeIndexedCount = document.querySelector("#notice-indexed-count");
+  const noticeMethodCount = document.querySelector("#notice-method-count");
   const languageToggle = document.querySelector("#language-toggle");
 
   const COPY = {
     en: {
       deskLabel: "Counter 03 · Voter records",
-      eyebrow: "Karnataka SIR 2026 · Draft roll and ASDDO records",
+      eyebrow: "Karnataka SIR 2026 · Draft roll, ASDDO and clarification notices",
       title: "Check your Karnataka voter record.",
+      newClarificationBadge: "NEW · Now includes the clarification shortlist",
       formInstruction: "Search with your EPIC ID or name.",
       nameMode: "By name",
       epicMode: "EPIC ID",
@@ -62,14 +65,18 @@
       backToList: "← Back to the list",
       chalkAsddoIndexed: "ASDDO records",
       chalkRollIndexed: "draft-roll records",
-      chalkSnapshot: "Two separate indexes · all 224 constituencies",
+      chalkNoticeIndexed: "voters with clarification notices",
+      chalkSnapshot: "Two voter indexes + exact EPIC notice checks · all 224 constituencies",
       mixedVerdictPrompt: "These records match your search. Open your own record below to see what applies to you.",
       stampPresent: "Present",
       stampRemoved: "Missing from draft",
       stampNotFound: "Not found",
       stampPending: "Pending",
+      stampClarification: "Present*",
+      stampClarificationNote: "* But clarification sought",
       statusAsddo: "ASDDO record",
       statusRoll: "Present in the draft roll",
+      statusNotice: "Present · clarification sought",
       statusNotFound: "No indexed match",
       statusPending: "Draft-roll check pending",
       matchedBy: "matched by: {quality}",
@@ -77,6 +84,8 @@
       verdictAsddoBody: "The file gives the reason shown below. Check the official draft roll, then file Form 6 with the SIR Declaration by 23 September 2026 when your name is missing there.",
       verdictRollTitle: "Your name appears in the draft electoral roll.",
       verdictRollBody: "Open ECI’s official search and check the polling station. For a changed address or spelling, file Form 8 by 23 September 2026.",
+      verdictNoticeTitle: "Your name appears in the draft roll, and clarification has been sought.",
+      verdictNoticeBody: "Read the published reason and any hearing details below, open the official notice source, and submit the requested papers through the official channel.",
       overlapDifferentBooth: "This EPIC appears in an ASDDO file for one booth and in the draft roll for another. Open the draft entry and check the address, then use Form 8 by 23 September 2026 for a change.",
       overlapSameBooth: "This EPIC appears in both files for the same booth. Ask the ERO to confirm the active entry in writing.",
       verdictNotFoundTitle: "We could not find this entry in either index.",
@@ -124,15 +133,16 @@
       form6: "Form 6 for inclusion",
       form8: "Form 8 for a move or correction",
       appealFaq: "ECI guidance on electoral-roll appeals",
-      methodTitle: "What these two indexes contain",
+      methodTitle: "What the voter indexes and notice check contain",
       stat1: "ASDDO records carrying a stated reason.",
       stat2: "ASDDO electoral parts represented.",
       stat3: "records in the draft electoral roll.",
       stat4: "draft-roll electoral parts represented.",
       stat5: "Assembly constituencies represented across both indexes.",
       stat6: "mapping-only rows have no searchable voter record. Two source folder listings could not be read during the refresh.",
-      methodNote: "The search reads Karnataka’s ASDDO files and draft electoral roll. Each result names its source. PDF text can carry spelling errors. Some source files could not be read, and mapping-only rows have no searchable voter record. The counts describe records in each index.",
-      aboutIndex: "DataChutney built this unofficial search from public ASDDO files and Karnataka’s draft electoral roll. Check every match in ECI’s official search; your ERO decides each electoral-roll application.",
+      statNotice: "distinct EPIC IDs in published clarification notices.",
+      methodNote: "The search first identifies a voter in Karnataka’s ASDDO files or draft roll, then checks that EPIC ID in the clarification notices. It does not run a separate name search across notices. PDF text can carry spelling errors; the counts describe each source layer.",
+      aboutIndex: "DataChutney built this unofficial search from public ASDDO files, Karnataka’s draft electoral roll and the CEO’s published clarification notices. Check every match in ECI’s official search; your ERO decides each electoral-roll application.",
       selectDistrict: "Select district",
       selectDistrictFirst: "Select a district first",
       selectConstituency: "Select Assembly constituency",
@@ -146,6 +156,8 @@
       validationConstituency: "Select the voter’s Assembly constituency.",
       coverageTitle: "Source data unavailable for AC {number} · {name}. ",
       coverageBody: "This constituency stays visible so the gap is clear. Check CEO Karnataka or ask your BLO / ERO.",
+      noticeCoverageBallariTitle: "Some clarification-notice coverage is incomplete.",
+      noticeCoverageBallariBody: " Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.",
       zeroTitle: "Zero matches in these indexes",
       zeroStrong: "The search returned zero indexed matches.",
       zeroBody: "Try the EPIC ID in ECI’s official search. A BLO or ERO can check the record.",
@@ -195,23 +207,30 @@
       factPollingStation: "Polling station",
       factPollingAddress: "Polling-station address",
       factAcPart: "Assembly constituency / part / serial",
+      factClarificationReason: "Clarification reason",
+      factHearing: "Hearing / scheduled time",
+      factHearingLocation: "Hearing location",
       acPartSerial: "AC {ac} · Part {part} · Serial {serial}",
       verifyLine: "Check this match in ECI’s official search. Your ERO decides the application.",
       verifyRollLine: "Check these polling-station details in ECI’s official search. Ask the ERO about any discrepancy.",
+      verifyNoticeLine: "Your name is present in the draft roll. Read the official notice source and contact the ERO about the requested clarification.",
       rowVoter: "Voter",
       rowRelative: "Relative",
       rowReason: "Status",
       rowOpen: "Open",
       officialSearch: "Official electoral search",
       ceoPage: "CEO Karnataka ASDDO page",
+      ceoNotices: "CEO Karnataka notices issued",
+      openNoticeSource: "Open official notice source",
       contacts: "Find BLO / ERO contacts",
       footerLine: "Independent tools for navigating public information.",
       previewLine: "Check each result in ECI’s official search. Your ERO handles applications and notices.",
     },
     kn: {
       deskLabel: "ಕೌಂಟರ್ ೦೩ · ಮತದಾರರ ದಾಖಲೆಗಳು",
-      eyebrow: "ಕರ್ನಾಟಕ ಎಸ್‌ಐಆರ್ 2026 · ಕರಡು ಪಟ್ಟಿ ಮತ್ತು ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು",
+      eyebrow: "ಕರ್ನಾಟಕ ಎಸ್‌ಐಆರ್ 2026 · ಕರಡು ಪಟ್ಟಿ, ಎಎಸ್‌ಡಿಡಿಒ ಮತ್ತು ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್‌ಗಳು",
       title: "ನಿಮ್ಮ ಕರ್ನಾಟಕ ಮತದಾರರ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಿ.",
+      newClarificationBadge: "ಹೊಸದು · ಈಗ ಸ್ಪಷ್ಟೀಕರಣ ಕಿರುಪಟ್ಟಿಯೂ ಸೇರಿದೆ",
       formInstruction: "ಇಪಿಐಸಿ ಐಡಿ ಅಥವಾ ಹೆಸರಿನಿಂದ ಹುಡುಕಿ.",
       nameMode: "ಹೆಸರಿನಿಂದ",
       epicMode: "ಇಪಿಐಸಿ ಐಡಿ",
@@ -231,14 +250,18 @@
       backToList: "← ಪಟ್ಟಿಗೆ ಹಿಂತಿರುಗಿ",
       chalkAsddoIndexed: "ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು",
       chalkRollIndexed: "ಕರಡು ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು",
-      chalkSnapshot: "ಎರಡು ಪ್ರತ್ಯೇಕ ಸೂಚಿಗಳು · ಎಲ್ಲ 224 ಕ್ಷೇತ್ರಗಳು",
+      chalkNoticeIndexed: "ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ಇರುವ ಮತದಾರರು",
+      chalkSnapshot: "ಎರಡು ಮತದಾರ ಸೂಚಿಗಳು + ಇಪಿಐಸಿ ನೋಟಿಸ್ ಪರಿಶೀಲನೆ · ಎಲ್ಲ 224 ಕ್ಷೇತ್ರಗಳು",
       mixedVerdictPrompt: "ಈ ದಾಖಲೆಗಳು ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಹೊಂದಿಕೆಯಾಗುತ್ತವೆ. ನಿಮಗೆ ಯಾವುದು ಅನ್ವಯಿಸುತ್ತದೆ ಎಂಬುದನ್ನು ನೋಡಲು ಕೆಳಗೆ ನಿಮ್ಮದೇ ದಾಖಲೆಯನ್ನು ತೆರೆಯಿರಿ.",
       stampPresent: "ಇದೆ",
       stampRemoved: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ",
       stampNotFound: "ಸಿಗಲಿಲ್ಲ",
       stampPending: "ಬಾಕಿ ಇದೆ",
+      stampClarification: "ಇದೆ*",
+      stampClarificationNote: "* ಆದರೆ ಸ್ಪಷ್ಟೀಕರಣ ಕೇಳಲಾಗಿದೆ",
       statusAsddo: "ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆ",
       statusRoll: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರು ಇದೆ",
+      statusNotice: "ಹೆಸರು ಇದೆ · ಸ್ಪಷ್ಟೀಕರಣ ಕೇಳಲಾಗಿದೆ",
       statusNotFound: "ಸೂಚಿಯಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
       statusPending: "ಕರಡು ಪಟ್ಟಿ ಪರಿಶೀಲನೆ ಬಾಕಿ",
       matchedBy: "ಹೊಂದಾಣಿಕೆ: {quality}",
@@ -246,6 +269,8 @@
       verdictAsddoBody: "ಕಡತದಲ್ಲಿ ನಮೂದಿಸಿದ ಕಾರಣ ಕೆಳಗೆ ಕಾಣುತ್ತದೆ. ಅಧಿಕೃತ ಕರಡು ಪಟ್ಟಿಯನ್ನು ಪರಿಶೀಲಿಸಿ; ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇಲ್ಲದಿದ್ದರೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಎಸ್‌ಐಆರ್ ಘೋಷಣೆಯೊಂದಿಗೆ ಫಾರ್ಮ್ 6 ಸಲ್ಲಿಸಿ.",
       verdictRollTitle: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇದೆ.",
       verdictRollBody: "ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಮತಗಟ್ಟೆಯನ್ನು ಪರಿಶೀಲಿಸಿ. ವಿಳಾಸ ಅಥವಾ ಹೆಸರಿನ ತಿದ್ದುಪಡಿಗೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಫಾರ್ಮ್ 8 ಸಲ್ಲಿಸಿ.",
+      verdictNoticeTitle: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇದೆ; ಸ್ಪಷ್ಟೀಕರಣ ಕೇಳಲಾಗಿದೆ.",
+      verdictNoticeBody: "ಪ್ರಕಟಿತ ಕಾರಣ ಮತ್ತು ವಿಚಾರಣೆಯ ವಿವರಗಳನ್ನು ಕೆಳಗೆ ಓದಿ, ಅಧಿಕೃತ ನೋಟಿಸ್ ಮೂಲವನ್ನು ತೆರೆಯಿರಿ ಮತ್ತು ಕೇಳಿದ ದಾಖಲೆಗಳನ್ನು ಅಧಿಕೃತ ಮಾರ್ಗದಲ್ಲಿ ಸಲ್ಲಿಸಿ.",
       overlapDifferentBooth: "ಈ ಇಪಿಐಸಿ ಒಂದು ಮತಗಟ್ಟೆಯ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತದಲ್ಲೂ ಇನ್ನೊಂದು ಮತಗಟ್ಟೆಯ ಕರಡು ಪಟ್ಟಿಯಲ್ಲೂ ಕಾಣುತ್ತದೆ. ಕರಡು ದಾಖಲೆಯ ವಿಳಾಸ ಪರಿಶೀಲಿಸಿ; ಬದಲಾವಣೆ ಬೇಕಾದರೆ 23 ಸೆಪ್ಟೆಂಬರ್ 2026ರೊಳಗೆ ಫಾರ್ಮ್ 8 ಸಲ್ಲಿಸಿ.",
       overlapSameBooth: "ಈ ಇಪಿಐಸಿ ಒಂದೇ ಮತಗಟ್ಟೆಗೆ ಸಂಬಂಧಿಸಿದ ಎರಡೂ ಕಡತಗಳಲ್ಲಿ ಕಾಣುತ್ತದೆ. ಯಾವ ದಾಖಲೆ ಚಾಲ್ತಿಯಲ್ಲಿದೆ ಎಂಬುದನ್ನು ಇಆರ್‌ಒ ಅವರಿಂದ ಲಿಖಿತವಾಗಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
       verdictNotFoundTitle: "ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಈ ದಾಖಲೆ ಸಿಗಲಿಲ್ಲ.",
@@ -293,15 +318,16 @@
       form6: "ಹೆಸರು ಸೇರಿಸಲು ಫಾರ್ಮ್ 6",
       form8: "ಸ್ಥಳಾಂತರ ಅಥವಾ ತಿದ್ದುಪಡಿಗೆ ಫಾರ್ಮ್ 8",
       appealFaq: "ಮತದಾರರ ಪಟ್ಟಿ ಮೇಲ್ಮನವಿಗೆ ಇಸಿಐ ಮಾರ್ಗದರ್ಶನ",
-      methodTitle: "ಈ ಎರಡು ಸೂಚಿಗಳಲ್ಲಿ ಏನಿದೆ",
+      methodTitle: "ಮತದಾರ ಸೂಚಿಗಳು ಮತ್ತು ನೋಟಿಸ್ ಪರಿಶೀಲನೆಯಲ್ಲಿ ಏನಿದೆ",
       stat1: "ಕಾರಣ ನಮೂದಾಗಿರುವ ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆಗಳು.",
       stat2: "ಒಳಗೊಂಡಿರುವ ಎಎಸ್‌ಡಿಡಿಒ ಮತದಾನ ಭಾಗಗಳು.",
       stat3: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯ ದಾಖಲೆಗಳು.",
       stat4: "ಒಳಗೊಂಡಿರುವ ಕರಡು ಪಟ್ಟಿಯ ಮತದಾನ ಭಾಗಗಳು.",
       stat5: "ಎರಡೂ ಸೂಚಿಗಳಲ್ಲಿ ಒಳಗೊಂಡಿರುವ ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರಗಳು.",
       stat6: "ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳಲ್ಲಿ ಹುಡುಕಬಹುದಾದ ಮತದಾರರ ದಾಖಲೆ ಇಲ್ಲ. ನವೀಕರಣದ ವೇಳೆ ಎರಡು ಮೂಲ ಫೋಲ್ಡರ್ ಪಟ್ಟಿಗಳನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
-      methodNote: "ಈ ಹುಡುಕಾಟವು ಕರ್ನಾಟಕದ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು ಮತ್ತು ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯನ್ನು ಓದುತ್ತದೆ. ಪ್ರತಿ ಫಲಿತಾಂಶವು ತನ್ನ ಮೂಲವನ್ನು ತೋರಿಸುತ್ತದೆ. ಪಿಡಿಎಫ್ ಪಠ್ಯದಲ್ಲಿ ಕಾಗುಣಿತ ದೋಷ ಇರಬಹುದು. ಕೆಲವು ಮೂಲ ಕಡತಗಳನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ; ಮ್ಯಾಪಿಂಗ್-ಮಾತ್ರ ಸಾಲುಗಳಲ್ಲಿ ಹುಡುಕಬಹುದಾದ ಮತದಾರರ ದಾಖಲೆ ಇಲ್ಲ. ಸಂಖ್ಯೆಗಳು ಪ್ರತಿ ಸೂಚಿಯ ದಾಖಲೆಗಳನ್ನು ತೋರಿಸುತ್ತವೆ.",
-      aboutIndex: "ಸಾರ್ವಜನಿಕ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು ಮತ್ತು ಕರ್ನಾಟಕದ ಕರಡು ಮತದಾರರ ಪಟ್ಟಿಯಿಂದ ಡೇಟಾಚಟ್ನಿ ಈ ಅನಧಿಕೃತ ಹುಡುಕಾಟವನ್ನು ರೂಪಿಸಿದೆ. ಪ್ರತಿ ಹೊಂದಾಣಿಕೆಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ; ಮತದಾರರ ಪಟ್ಟಿಯ ಅರ್ಜಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತೀರ್ಮಾನಿಸುತ್ತಾರೆ.",
+      statNotice: "ಪ್ರಕಟಿತ ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್‌ಗಳಲ್ಲಿರುವ ಪ್ರತ್ಯೇಕ ಇಪಿಐಸಿ ಐಡಿಗಳು.",
+      methodNote: "ಈ ಹುಡುಕಾಟವು ಮೊದಲು ಕರ್ನಾಟಕದ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತ ಅಥವಾ ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಮತದಾರರನ್ನು ಗುರುತಿಸಿ, ನಂತರ ಆ ಇಪಿಐಸಿ ಐಡಿಯನ್ನು ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್‌ಗಳಲ್ಲಿ ಪರಿಶೀಲಿಸುತ್ತದೆ. ನೋಟಿಸ್‌ಗಳ ಮೇಲೆ ಪ್ರತ್ಯೇಕ ಹೆಸರು ಹುಡುಕಾಟ ನಡೆಯುವುದಿಲ್ಲ. ಪಿಡಿಎಫ್ ಪಠ್ಯದಲ್ಲಿ ಕಾಗುಣಿತ ದೋಷ ಇರಬಹುದು; ಸಂಖ್ಯೆಗಳು ಪ್ರತಿ ಮೂಲ ಪದರವನ್ನು ತೋರಿಸುತ್ತವೆ.",
+      aboutIndex: "ಸಾರ್ವಜನಿಕ ಎಎಸ್‌ಡಿಡಿಒ ಕಡತಗಳು, ಕರ್ನಾಟಕದ ಕರಡು ಮತದಾರರ ಪಟ್ಟಿ ಮತ್ತು ಸಿಇಒ ಪ್ರಕಟಿಸಿದ ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್‌ಗಳಿಂದ ಡೇಟಾಚಟ್ನಿ ಈ ಅನಧಿಕೃತ ಹುಡುಕಾಟವನ್ನು ರೂಪಿಸಿದೆ. ಪ್ರತಿ ಹೊಂದಾಣಿಕೆಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ; ಮತದಾರರ ಪಟ್ಟಿಯ ಅರ್ಜಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತೀರ್ಮಾನಿಸುತ್ತಾರೆ.",
       selectDistrict: "ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
       selectDistrictFirst: "ಮೊದಲು ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
       selectConstituency: "ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ ಆಯ್ಕೆಮಾಡಿ",
@@ -315,6 +341,8 @@
       validationConstituency: "ಮತದಾರರ ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ ಆಯ್ಕೆಮಾಡಿ.",
       coverageTitle: "ಎಸಿ {number} · {name}ಗೆ ಮೂಲ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ. ",
       coverageBody: "ಮಾಹಿತಿ ಕೊರತೆ ಸ್ಪಷ್ಟವಾಗಲು ಈ ಕ್ಷೇತ್ರವನ್ನು ತೋರಿಸಲಾಗಿದೆ. ಸಿಇಒ ಕರ್ನಾಟಕ ಅಥವಾ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಬಳಿ ಪರಿಶೀಲಿಸಿ.",
+      noticeCoverageBallariTitle: "ಕೆಲವು ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ಮಾಹಿತಿ ಅಪೂರ್ಣವಾಗಿದೆ.",
+      noticeCoverageBallariBody: " ಲಭ್ಯವಿರುವ ದಾಖಲೆಗಳನ್ನು ಸೇರಿಸಿದ್ದೇವೆ; ಮರುಪ್ರಯತ್ನಕ್ಕೂ ಮೊದಲು ಬಳ್ಳಾರಿಯ 50, ಚಿತ್ರದುರ್ಗದ 29 ಮತ್ತು ವಿಜಯಪುರದ 4 ಮೂಲ ಕಡತಗಳು ಲಭ್ಯವಿಲ್ಲದಂತಾದವು.",
       zeroTitle: "ಈ ಸೂಚಿಗಳಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
       zeroStrong: "ಹುಡುಕಾಟದಲ್ಲಿ ಯಾವುದೇ ಸೂಚೀಕೃತ ಹೊಂದಾಣಿಕೆ ಸಿಗಲಿಲ್ಲ.",
       zeroBody: "ಇಪಿಐಸಿ ಐಡಿಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪ್ರಯತ್ನಿಸಿ. ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.",
@@ -364,18 +392,55 @@
       factPollingStation: "ಮತಗಟ್ಟೆ",
       factPollingAddress: "ಮತಗಟ್ಟೆಯ ವಿಳಾಸ",
       factAcPart: "ವಿಧಾನಸಭಾ ಕ್ಷೇತ್ರ / ಭಾಗ / ಕ್ರಮ ಸಂಖ್ಯೆ",
+      factClarificationReason: "ಸ್ಪಷ್ಟೀಕರಣದ ಕಾರಣ",
+      factHearing: "ವಿಚಾರಣೆ / ನಿಗದಿತ ಸಮಯ",
+      factHearingLocation: "ವಿಚಾರಣೆಯ ಸ್ಥಳ",
       acPartSerial: "ಎಸಿ {ac} · ಭಾಗ {part} · ಕ್ರಮ ಸಂಖ್ಯೆ {serial}",
       verifyLine: "ಈ ಹೊಂದಾಣಿಕೆಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ಅರ್ಜಿಯನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ತೀರ್ಮಾನಿಸುತ್ತಾರೆ.",
       verifyRollLine: "ಈ ಮತಗಟ್ಟೆಯ ವಿವರಗಳನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ವ್ಯತ್ಯಾಸ ಕಂಡರೆ ಇಆರ್‌ಒ ಅವರನ್ನು ಕೇಳಿ.",
+      verifyNoticeLine: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಇದೆ. ಅಧಿಕೃತ ನೋಟಿಸ್ ಮೂಲವನ್ನು ಓದಿ ಮತ್ತು ಕೇಳಿದ ಸ್ಪಷ್ಟೀಕರಣದ ಬಗ್ಗೆ ಇಆರ್‌ಒ ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
       rowVoter: "ಮತದಾರ",
       rowRelative: "ಸಂಬಂಧಿ",
       rowReason: "ಸ್ಥಿತಿ",
       rowOpen: "ತೆರೆಯಿರಿ",
       officialSearch: "ಅಧಿಕೃತ ಮತದಾರರ ಹುಡುಕಾಟ",
       ceoPage: "ಸಿಇಒ ಕರ್ನಾಟಕ ಎಎಸ್‌ಡಿಡಿಒ ಪುಟ",
+      ceoNotices: "ಸಿಇಒ ಕರ್ನಾಟಕ ನೀಡಿದ ನೋಟಿಸ್‌ಗಳು",
+      openNoticeSource: "ಅಧಿಕೃತ ನೋಟಿಸ್ ಮೂಲ ತೆರೆಯಿರಿ",
       contacts: "ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಸಂಪರ್ಕ ಹುಡುಕಿ",
       footerLine: "ಸಾರ್ವಜನಿಕ ಮಾಹಿತಿಗಾಗಿ ಸ್ವತಂತ್ರ ಸಾಧನಗಳು.",
       previewLine: "ಪ್ರತಿ ಫಲಿತಾಂಶವನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. ಅರ್ಜಿ ಮತ್ತು ನೋಟಿಸ್‌ಗಳನ್ನು ನಿಮ್ಮ ಇಆರ್‌ಒ ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ.",
+    },
+  };
+
+  const NOTICE_REASON_LABELS = {
+    en: {
+      unmapped_with_last_sir: "Not mapped to a voter record from the previous SIR",
+      elector_name_mismatch: "Voter name differs from the previous SIR record",
+      parent_age_gap_under_15: "Age gap with the linked parent is under 15 years",
+      parent_name_mismatch: "Parent’s name differs from the previous SIR record",
+      grandparent_age_gap_under_40: "Age gap with the linked grandparent is under 40 years",
+      progeny_age_gap_under_9_months: "Age gap between linked children is under 9 months",
+      other_discrepancy: "Other discrepancy stated in the notice",
+      parent_age_gap_over_50: "Age gap with the linked parent is over 50 years",
+      other_printed_reason: "Other discrepancy stated in the notice",
+      sibling_age_gap_under_9_months: "Age gap with a linked sibling is under 9 months",
+      age_gap_under_9_months: "A linked age gap is under 9 months",
+      father_name_mismatch: "Father’s name differs from the previous SIR record",
+    },
+    kn: {
+      unmapped_with_last_sir: "ಹಿಂದಿನ ಎಸ್‌ಐಆರ್ ಮತದಾರರ ದಾಖಲೆಗೆ ಜೋಡಣೆ ಆಗಿಲ್ಲ",
+      elector_name_mismatch: "ಮತದಾರರ ಹೆಸರು ಹಿಂದಿನ ಎಸ್‌ಐಆರ್ ದಾಖಲೆಯ ಹೆಸರಿಗಿಂತ ಭಿನ್ನವಾಗಿದೆ",
+      parent_age_gap_under_15: "ಜೋಡಿಸಲಾದ ಪೋಷಕರೊಂದಿಗೆ ವಯಸ್ಸಿನ ಅಂತರ 15 ವರ್ಷಕ್ಕಿಂತ ಕಡಿಮೆ",
+      parent_name_mismatch: "ಪೋಷಕರ ಹೆಸರು ಹಿಂದಿನ ಎಸ್‌ಐಆರ್ ದಾಖಲೆಯ ಹೆಸರಿಗಿಂತ ಭಿನ್ನವಾಗಿದೆ",
+      grandparent_age_gap_under_40: "ಜೋಡಿಸಲಾದ ಅಜ್ಜ/ಅಜ್ಜಿಯೊಂದಿಗೆ ವಯಸ್ಸಿನ ಅಂತರ 40 ವರ್ಷಕ್ಕಿಂತ ಕಡಿಮೆ",
+      progeny_age_gap_under_9_months: "ಒಂದೇ ಪೋಷಕರಿಗೆ ಜೋಡಿಸಲಾದ ಮಕ್ಕಳ ವಯಸ್ಸಿನ ಅಂತರ 9 ತಿಂಗಳಿಗಿಂತ ಕಡಿಮೆ",
+      other_discrepancy: "ನೋಟಿಸ್‌ನಲ್ಲಿ ಸೂಚಿಸಿರುವ ಇತರೆ ವ್ಯತ್ಯಾಸ",
+      parent_age_gap_over_50: "ಜೋಡಿಸಲಾದ ಪೋಷಕರೊಂದಿಗೆ ವಯಸ್ಸಿನ ಅಂತರ 50 ವರ್ಷಕ್ಕಿಂತ ಹೆಚ್ಚು",
+      other_printed_reason: "ನೋಟಿಸ್‌ನಲ್ಲಿ ಸೂಚಿಸಿರುವ ಇತರೆ ವ್ಯತ್ಯಾಸ",
+      sibling_age_gap_under_9_months: "ಜೋಡಿಸಲಾದ ಸಹೋದರ/ಸಹೋದರಿಯೊಂದಿಗೆ ವಯಸ್ಸಿನ ಅಂತರ 9 ತಿಂಗಳಿಗಿಂತ ಕಡಿಮೆ",
+      age_gap_under_9_months: "ಜೋಡಿಸಲಾದ ದಾಖಲೆಗಳ ವಯಸ್ಸಿನ ಅಂತರ 9 ತಿಂಗಳಿಗಿಂತ ಕಡಿಮೆ",
+      father_name_mismatch: "ತಂದೆಯ ಹೆಸರು ಹಿಂದಿನ ಎಸ್‌ಐಆರ್ ದಾಖಲೆಯ ಹೆಸರಿಗಿಂತ ಭಿನ್ನವಾಗಿದೆ",
     },
   };
 
@@ -489,6 +554,11 @@
     setLoading(Boolean(activeRequest));
     if (lastResponse && !resultsSection.hidden) {
       if (openDetail) {
+        const total = Number(lastResponse.meta?.total_results || lastResponse.results?.length || 0);
+        const noun = total === 1 ? t("sourceMatch") : t("sourceMatches");
+        resultsTitle.textContent = `${total.toLocaleString("en-IN")} ${noun}`;
+        const singleSummary = resultSummary.querySelector(".result-summary");
+        if (singleSummary && total === 1) singleSummary.textContent = t("singleSummary");
         sheetDetailBody.replaceChildren(renderCard(openDetail.result, openDetail.displayIndex));
         syncSheetStamp(openDetail.result);
         applyVerdictGuidance(openDetail.result.verdict || openDetail.summary?.verdict);
@@ -733,6 +803,7 @@
     const guidance = document.getElementById("verdict-guidance");
     const steps = document.getElementById("asddo-steps");
     const map = {
+      CLARIFICATION_SOUGHT: ["verdictNoticeTitle", "verdictNoticeBody"],
       ASDDO_LISTED: ["verdictAsddoTitle", "verdictAsddoBody"],
       ROLL_PRESENT: ["verdictRollTitle", "verdictRollBody"],
       NOT_FOUND: ["verdictNotFoundTitle", "verdictNotFoundBody"],
@@ -810,8 +881,23 @@
     return text || t("unavailable");
   }
 
+  function localizedNoticeReasons(noticeRows) {
+    const codes = [...new Set(noticeRows.flatMap((row) => (
+      Array.isArray(row?.reason_codes) ? row.reason_codes : []
+    )).map((code) => String(code).trim()).filter(Boolean))];
+    const labels = codes.map((code) => NOTICE_REASON_LABELS[language][code])
+      .filter(Boolean);
+    if (labels.length) return [...new Set(labels)].join("; ");
+
+    const sourceReasons = [...new Set(noticeRows.flatMap((row) => (
+      Array.isArray(row?.reasons) ? row.reasons : []
+    )).map((reason) => String(reason).trim()).filter(Boolean))];
+    return sourceReasons.join("; ");
+  }
+
   function statusLabelFor(result) {
     switch (result?.verdict) {
+      case "CLARIFICATION_SOUGHT": return t("statusNotice");
       case "ASDDO_LISTED": return t("statusAsddo");
       case "ROLL_PRESENT": return t("statusRoll");
       case "NOT_FOUND": return t("statusNotFound");
@@ -822,10 +908,15 @@
 
   function renderCard(result, displayIndex) {
     const isAsddo = result.verdict === "ASDDO_LISTED";
-    const evidenceRows = isAsddo ? result.asddo_evidence : result.roll_evidence;
+    const isClarification = result.verdict === "CLARIFICATION_SOUGHT";
+    const noticeRows = Array.isArray(result.notice_evidence) ? result.notice_evidence : [];
+    const noticeEvidence = noticeRows.find((row) => row && typeof row === "object") || {};
+    const evidenceRows = isAsddo
+      ? result.asddo_evidence
+      : (result.roll_evidence?.length ? result.roll_evidence : result.asddo_evidence);
     const evidence = Array.isArray(evidenceRows) && evidenceRows[0] && typeof evidenceRows[0] === "object"
       ? evidenceRows[0]
-      : {};
+      : noticeEvidence;
     const card = cardTemplate.content.firstElementChild.cloneNode(true);
     const badge = card.querySelector(".match-badge");
     badge.textContent = matchLabel(result.match_quality);
@@ -842,9 +933,12 @@
       : t("relativeUnavailable");
     card.querySelector(".result-epic").textContent = detailValue(result.query_epic);
     const status = card.querySelector(".result-status");
+    const clarificationReasons = localizedNoticeReasons(noticeRows);
     status.textContent = isAsddo
       ? detailValue(evidence.reason)
-      : statusLabelFor(result);
+      : isClarification
+        ? detailValue(clarificationReasons || noticeEvidence.mapping_category)
+        : statusLabelFor(result);
     if (result.verdict) {
       status.classList.add("verdict-" + result.verdict.toLowerCase().replace(/_/g, "-"));
     }
@@ -852,7 +946,9 @@
     const factLabels = card.querySelectorAll(".result-facts dt");
     const factKeys = isAsddo
       ? ["factEpic", "factReason", "factDistrict", "factConstituency", "factPart"]
-      : ["factEpic", "factStatus", "factPollingStation", "factPollingAddress", "factAcPart"];
+      : isClarification
+        ? ["factEpic", "factClarificationReason", "factHearing", "factHearingLocation", "factAcPart"]
+        : ["factEpic", "factStatus", "factPollingStation", "factPollingAddress", "factAcPart"];
     factKeys.forEach((key, index) => {
       if (factLabels[index]) factLabels[index].textContent = t(key);
     });
@@ -869,6 +965,19 @@
         serial: detailValue(evidence.serial_number),
       });
       card.querySelector(".verify-line").textContent = t("verifyLine");
+    } else if (isClarification) {
+      const hearing = noticeEvidence.scheduled_datetime_raw || [
+        noticeEvidence.hearing_date,
+        noticeEvidence.hearing_time,
+      ].filter(Boolean).join(" · ");
+      card.querySelector(".result-district").textContent = detailValue(hearing);
+      card.querySelector(".result-ac").textContent = detailValue(noticeEvidence.hearing_location);
+      card.querySelector(".result-part").textContent = t("acPartSerial", {
+        ac: detailValue(evidence.ac_number ?? noticeEvidence.ac_number),
+        part: detailValue(evidence.part_number ?? noticeEvidence.part_number),
+        serial: detailValue(evidence.serial_number ?? noticeEvidence.serial_number),
+      });
+      card.querySelector(".verify-line").textContent = t("verifyNoticeLine");
     } else {
       card.querySelector(".result-district").textContent = detailValue(evidence.polling_station);
       card.querySelector(".result-ac").textContent = detailValue(evidence.polling_station_address);
@@ -895,17 +1004,23 @@
       overlapNote.hidden = false;
     }
 
-    const sourceFileName = (isAsddo && (evidence.archive_member || evidence.source_title)) || "";
+    const sourceEvidence = isClarification ? noticeEvidence : evidence;
+    const sourceFileName = ((isAsddo || isClarification)
+      && (sourceEvidence.source_member
+        || sourceEvidence.archive_member
+        || sourceEvidence.source_title)) || "";
 
     const sourceLink = card.querySelector(".source-link");
-    const sourceUrl = evidence.archive_member
-      ? (evidence.download_url || evidence.viewer_url)
-      : (evidence.viewer_url || evidence.download_url);
-    if (isAsddo && sourceUrl) {
+    const sourceUrl = sourceEvidence.archive_member
+      ? (sourceEvidence.download_url || sourceEvidence.viewer_url)
+      : (sourceEvidence.viewer_url || sourceEvidence.download_url);
+    if ((isAsddo || isClarification) && sourceUrl) {
       sourceLink.href = sourceUrl;
-      sourceLink.querySelector(".source-link-label").textContent = evidence.archive_member
-        ? t("openArchive")
-        : (evidence.viewer_url ? t("openSource") : t("downloadSource"));
+      sourceLink.querySelector(".source-link-label").textContent = isClarification
+        ? t("openNoticeSource")
+        : sourceEvidence.archive_member
+          ? t("openArchive")
+          : (sourceEvidence.viewer_url ? t("openSource") : t("downloadSource"));
       const fileEl = sourceLink.querySelector(".source-link-file");
       if (sourceFileName) {
         fileEl.textContent = sourceFileName;
@@ -1011,6 +1126,12 @@
   function stampSpecFor(result) {
     if (!result || !result.verdict) return null;
     switch (result.verdict) {
+      case "CLARIFICATION_SOUGHT":
+        return {
+          key: "stampClarification",
+          noteKey: "stampClarificationNote",
+          cls: "sheet-stamp--notice",
+        };
       case "ROLL_PRESENT":
         return { key: "stampPresent", cls: "sheet-stamp--roll" };
       case "ASDDO_LISTED":
@@ -1031,13 +1152,26 @@
     const stamp = document.querySelector("#sheet-stamp");
     if (!stamp) return;
     const spec = stampSpecFor(result);
-    stamp.classList.remove("sheet-stamp--asddo", "sheet-stamp--roll", "sheet-stamp--neutral");
+    stamp.classList.remove(
+      "sheet-stamp--asddo",
+      "sheet-stamp--roll",
+      "sheet-stamp--notice",
+      "sheet-stamp--neutral",
+    );
     if (!spec) {
       stamp.hidden = true;
-      stamp.textContent = "";
+      stamp.replaceChildren();
       return;
     }
-    stamp.textContent = t(spec.key);
+    const label = document.createElement("span");
+    label.textContent = t(spec.key);
+    stamp.replaceChildren(label);
+    if (spec.noteKey) {
+      const note = document.createElement("small");
+      note.className = "sheet-stamp-note";
+      note.textContent = t(spec.noteKey);
+      stamp.append(note);
+    }
     stamp.classList.add(spec.cls);
     stamp.hidden = false;
     const badge = sheetDetailBody.querySelector(".match-badge");
@@ -1307,6 +1441,31 @@
     if (Number.isFinite(meta.roll?.records)) {
       rollIndexedCount.textContent = Number(meta.roll.records).toLocaleString("en-US");
     }
+    if (Number.isFinite(meta.notice?.records)) {
+      const value = Number(meta.notice.records).toLocaleString("en-US");
+      if (noticeIndexedCount) noticeIndexedCount.textContent = value;
+      if (noticeMethodCount) noticeMethodCount.textContent = value;
+    }
+  }
+
+  async function loadMetadata() {
+    if (!apiBaseUrl || apiBaseUrl.includes("REPLACE_WITH")) return;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8_000);
+    try {
+      const response = await fetch(`${apiBaseUrl}/v1/meta`, {
+        mode: "cors",
+        cache: "reload",
+        credentials: "omit",
+        referrerPolicy: "no-referrer",
+        signal: controller.signal,
+      });
+      if (response.ok) updateCorpusCounts(await response.json());
+    } catch (_) {
+      // Static source counts remain visible if the metadata endpoint is unavailable.
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   function renderResults(response) {
@@ -1506,5 +1665,6 @@
   });
   applyStaticCopy();
   setSearchMode("epic", false);
+  loadMetadata();
   loadLocations();
 })();
