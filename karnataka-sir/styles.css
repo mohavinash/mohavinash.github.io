@@ -777,11 +777,19 @@ html[lang="en"] #search-form :is(
 }
 
 .notice-coverage-warning {
-  margin: 0 0 0.45rem;
-  background: rgba(247, 231, 198, 0.96);
-  border: 1px solid rgba(160, 71, 41, 0.52);
-  border-left: 4px solid #a04729;
-  box-shadow: 0 3px 8px rgba(4, 22, 22, 0.22);
+  position: absolute;
+  top: 76%;
+  left: 64.6%;
+  z-index: 5;
+  width: 34%;
+  margin: 0;
+  padding: 0.42rem 0.58rem;
+  background: rgba(247, 231, 198, 0.9);
+  border: 1px solid rgba(160, 71, 41, 0.42);
+  border-left: 3px solid #a04729;
+  box-shadow: 0 2px 5px rgba(4, 22, 22, 0.18);
+  font-size: 0.55rem;
+  transform: translateX(-50%) rotate(-0.15deg);
 }
 
 .bot-field {
@@ -813,12 +821,13 @@ html[lang="en"] #search-form :is(
 }
 
 .wall-action {
-  position: relative;
-  inset: auto;
-  z-index: 1;
-  width: 100%;
-  margin: 0.72rem 0 0;
-  transform: none;
+  position: absolute;
+  top: 64.1%;
+  left: 64.6%;
+  z-index: 5;
+  width: 34%;
+  margin: 0;
+  transform: translateX(-50%);
   grid-template-columns: 1fr;
   justify-items: center;
 }
@@ -1715,6 +1724,15 @@ footer p {
     padding: 0;
     color: var(--ink);
     text-shadow: none;
+    transform: none;
+  }
+
+  .notice-coverage-warning {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin: 0.55rem auto 0;
+    font-size: 0.62rem;
     transform: none;
   }
 

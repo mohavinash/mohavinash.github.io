@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/sarkari-office-hero.png" as="image" media="(min-width: 901px)" fetchpriority="high">
   <link rel="preload" href="assets/sarkari-office-mobile.png" as="image" media="(max-width: 900px)" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=20260907-notices5">
+  <link rel="stylesheet" href="styles.css?v=20260907-notices6">
   <title>Karnataka Voter Verification Centre | DataChutney</title>
   <script defer src="https://umami-production-daa4.up.railway.app/script.js" data-website-id="c412f3c1-880b-4977-bdd6-33e193b2e7aa"></script>
   <script type="application/ld+json">
@@ -103,10 +103,6 @@
         </div>
 
         <article class="counter-panel" aria-label="Search Karnataka voter records">
-          <div class="coverage-warning notice-coverage-warning" id="notice-coverage-warning" role="status">
-            <strong data-copy="noticeCoverageBallariTitle">Some clarification-notice coverage is incomplete.</strong>
-            <span data-copy="noticeCoverageBallariBody"> Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.</span>
-          </div>
           <form id="search-form" novalidate autocomplete="off">
             <p class="form-instruction" data-copy="formInstruction">Search with your EPIC ID or name.</p>
           <div class="query-group">
@@ -175,13 +171,6 @@
 
           </form>
 
-          <div class="wall-action">
-            <button class="search-button" id="search-button" type="submit" form="search-form">
-              <span class="button-label" data-copy="searchButton">Search records</span>
-              <span class="button-stamp" aria-hidden="true">→</span>
-            </button>
-          </div>
-
           <div class="board-results" id="board-results" hidden aria-live="polite" aria-busy="false">
             <div class="sheet-head">
               <h2 id="results-title" data-copy="resultsTitle">Matches in these indexes</h2>
@@ -207,6 +196,18 @@
           <p class="chalk-line chalk-line--big"><strong id="roll-indexed-count">44,625,877</strong> <span data-copy="chalkRollIndexed">draft-roll records</span></p>
           <p class="chalk-line chalk-line--big"><strong id="notice-indexed-count">—</strong> <span data-copy="chalkNoticeIndexed">voters with clarification notices</span></p>
           <p class="chalk-line" data-copy="chalkSnapshot">Two voter indexes + exact EPIC notice checks · all 224 constituencies</p>
+        </div>
+
+        <div class="wall-action">
+          <button class="search-button" id="search-button" type="submit" form="search-form">
+            <span class="button-label" data-copy="searchButton">Search records</span>
+            <span class="button-stamp" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="coverage-warning notice-coverage-warning" id="notice-coverage-warning" role="status">
+          <strong data-copy="noticeCoverageBallariTitle">Some clarification-notice coverage is incomplete.</strong>
+          <span data-copy="noticeCoverageBallariBody"> Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.</span>
         </div>
 
       </div>
@@ -346,6 +347,6 @@
   </template>
 
   <script src="config.js?v=20260826-prod2"></script>
-  <script src="app.js?v=20260907-notices5" defer></script>
+  <script src="app.js?v=20260907-notices6" defer></script>
 </body>
 </html>
