@@ -159,6 +159,8 @@
       coverageBody: "This constituency stays visible so the gap is clear. Check CEO Karnataka or ask your BLO / ERO.",
       noticeCoverageBallariTitle: "Some clarification-notice coverage is incomplete.",
       noticeCoverageBallariBody: " Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.",
+      noFurtherAction: "No further action is required in your case.",
+      noticeCoverageReference: "See the clarification-notice coverage note",
       zeroTitle: "Zero matches in these indexes",
       zeroStrong: "The search returned zero indexed matches.",
       zeroBody: "Try the EPIC ID in ECI’s official search. A BLO or ERO can check the record.",
@@ -345,6 +347,8 @@
       coverageBody: "ಮಾಹಿತಿ ಕೊರತೆ ಸ್ಪಷ್ಟವಾಗಲು ಈ ಕ್ಷೇತ್ರವನ್ನು ತೋರಿಸಲಾಗಿದೆ. ಸಿಇಒ ಕರ್ನಾಟಕ ಅಥವಾ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಬಳಿ ಪರಿಶೀಲಿಸಿ.",
       noticeCoverageBallariTitle: "ಕೆಲವು ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ಮಾಹಿತಿ ಅಪೂರ್ಣವಾಗಿದೆ.",
       noticeCoverageBallariBody: " ಲಭ್ಯವಿರುವ ದಾಖಲೆಗಳನ್ನು ಸೇರಿಸಿದ್ದೇವೆ; ಮರುಪ್ರಯತ್ನಕ್ಕೂ ಮೊದಲು ಬಳ್ಳಾರಿಯ 50, ಚಿತ್ರದುರ್ಗದ 29 ಮತ್ತು ವಿಜಯಪುರದ 4 ಮೂಲ ಕಡತಗಳು ಲಭ್ಯವಿಲ್ಲದಂತಾದವು.",
+      noFurtherAction: "ನಿಮ್ಮ ಪ್ರಕರಣದಲ್ಲಿ ಯಾವುದೇ ಮುಂದಿನ ಕ್ರಮ ಅಗತ್ಯವಿಲ್ಲ.",
+      noticeCoverageReference: "ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ವ್ಯಾಪ್ತಿಯ ಟಿಪ್ಪಣಿಯನ್ನು ನೋಡಿ",
       zeroTitle: "ಈ ಸೂಚಿಗಳಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
       zeroStrong: "ಹುಡುಕಾಟದಲ್ಲಿ ಯಾವುದೇ ಸೂಚೀಕೃತ ಹೊಂದಾಣಿಕೆ ಸಿಗಲಿಲ್ಲ.",
       zeroBody: "ಇಪಿಐಸಿ ಐಡಿಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪ್ರಯತ್ನಿಸಿ. ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.",
@@ -633,7 +637,7 @@
 
   function showResultsSheet() {
     form.hidden = true;
-    noticeCoverageWarning.hidden = true;
+    noticeCoverageWarning.hidden = false;
     resultsSection.hidden = false;
     wallAction.hidden = true;
     setBoardActionsVisible(true);
@@ -946,6 +950,17 @@
         : statusLabelFor(result);
     if (result.verdict) {
       status.classList.add("verdict-" + result.verdict.toLowerCase().replace(/_/g, "-"));
+    }
+
+    const noActionNote = card.querySelector(".roll-no-action-note");
+    if (result.verdict === "ROLL_PRESENT") {
+      noActionNote.querySelector(".roll-no-action-copy").textContent = t("noFurtherAction");
+      const reference = noActionNote.querySelector(".notice-coverage-reference");
+      reference.setAttribute("aria-label", t("noticeCoverageReference"));
+      reference.title = t("noticeCoverageReference");
+      noActionNote.hidden = false;
+    } else {
+      noActionNote.remove();
     }
 
     const factLabels = card.querySelectorAll(".result-facts dt");

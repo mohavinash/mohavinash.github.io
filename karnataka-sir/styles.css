@@ -790,6 +790,14 @@ html[lang="en"] #search-form :is(
   box-shadow: 0 2px 5px rgba(4, 22, 22, 0.18);
   font-size: 0.55rem;
   transform: translateX(-50%) rotate(-0.15deg);
+  scroll-margin-block: 1rem;
+}
+
+.coverage-footnote-mark { margin-right: 0.12rem; font-weight: 800; }
+
+#notice-coverage-warning:target {
+  outline: 2px solid rgba(160, 71, 41, 0.8);
+  outline-offset: 3px;
 }
 
 .bot-field {
@@ -1337,6 +1345,28 @@ html[lang="kn"] .board-chalk {
 }
 
 .result-status { color: #7e251b; }
+
+.roll-no-action-note {
+  margin: 0.45rem 0 0;
+  padding: 0.38rem 0.5rem;
+  color: #234c3d;
+  background: rgba(54, 126, 91, 0.13);
+  border-left: 3px solid #367e5b;
+  font-size: 0.64rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.notice-coverage-reference {
+  margin-left: 0.05rem;
+  color: #7e251b;
+  font-size: 1.08em;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
+}
+
+html[lang="kn"] .roll-no-action-note { font-family: var(--kannada); }
 
 .verdict-asddo-listed { background: #7a2618; color: #fff5ef; }
 .verdict-roll-present { background: #1d5b3a; color: #f2fbf5; }
