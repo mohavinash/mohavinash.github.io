@@ -8,6 +8,7 @@
   const districtSelect = document.querySelector("#district");
   const constituencySelect = document.querySelector("#constituency");
   const coverageWarning = document.querySelector("#coverage-warning");
+  const noticeCoverageWarning = document.querySelector("#notice-coverage-warning");
   const nameModeButton = document.querySelector("#name-mode-button");
   const epicModeButton = document.querySelector("#epic-mode-button");
   const nameQueryFields = document.querySelector("#name-query-fields");
@@ -632,6 +633,7 @@
 
   function showResultsSheet() {
     form.hidden = true;
+    noticeCoverageWarning.hidden = true;
     resultsSection.hidden = false;
     wallAction.hidden = true;
     setBoardActionsVisible(true);
@@ -641,6 +643,7 @@
   function showFormSheet(focus = true) {
     resultsSection.hidden = true;
     form.hidden = false;
+    noticeCoverageWarning.hidden = false;
     wallAction.hidden = false;
     setBoardActionsVisible(false);
     updatePlaqueLabel();
