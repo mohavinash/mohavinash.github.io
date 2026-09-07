@@ -780,7 +780,9 @@ html[lang="en"] #search-form :is(
   position: absolute;
   top: 76%;
   left: 64.6%;
-  z-index: 5;
+  /* One step under the counter panel: if space ever runs out entirely, the
+     paper sheet covers the pinned note instead of colliding with it. */
+  z-index: 4;
   width: 34%;
   margin: 0;
   padding: 0.42rem 0.58rem;
@@ -1345,6 +1347,77 @@ html[lang="kn"] .board-chalk {
 }
 
 .result-status { color: #7e251b; }
+
+.register-checks {
+  margin: 0.55rem 0 0;
+  padding: 0.44rem 0.55rem 0.5rem;
+  border: 1px dashed rgba(58, 48, 36, 0.42);
+  background: rgba(58, 48, 36, 0.035);
+}
+
+.register-checks[hidden] { display: none; }
+
+.register-checks-title {
+  margin: 0 0 0.3rem;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(58, 48, 36, 0.72);
+}
+
+.register-checks-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.24rem;
+}
+
+.register-check {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.register-check-mark {
+  flex: 0 0 auto;
+  font-weight: 800;
+  color: rgba(35, 108, 82, 0.9);
+}
+
+.register-check-label {
+  flex: 0 1 auto;
+  font-weight: 650;
+  color: #3a3024;
+}
+
+.register-check-leader {
+  flex: 1 1 1rem;
+  min-width: 0.8rem;
+  border-bottom: 1px dotted rgba(58, 48, 36, 0.45);
+  transform: translateY(-0.24em);
+}
+
+.register-check-value {
+  flex: 0 0 auto;
+  font-weight: 750;
+  text-align: right;
+}
+
+.register-check--good .register-check-value { color: #1d5b3a; }
+.register-check--notice .register-check-value { color: #8a5818; }
+.register-check--bad .register-check-value { color: #7a2618; }
+
+html[lang="kn"] .register-checks { font-family: var(--kannada); }
+html[lang="kn"] .register-checks-title { letter-spacing: 0.06em; }
+
+@media (max-width: 480px) {
+  .register-check { flex-wrap: wrap; row-gap: 0.05rem; }
+  .register-check-leader { min-width: 0.5rem; }
+}
 
 .roll-no-action-note {
   margin: 0.45rem 0 0;
@@ -2000,6 +2073,15 @@ footer p {
   line-height: 1.15;
 }
 
+.sheet-stamp--noted {
+  display: grid;
+  justify-items: center;
+  line-height: 1.05;
+  text-align: center;
+  white-space: normal;
+  max-width: 19rem;
+}
+
 .sheet-stamp--neutral {
   color: rgba(90, 74, 31, 0.95);
   border-color: rgba(90, 74, 31, 0.6);
@@ -2008,7 +2090,8 @@ footer p {
 
 @media (max-width: 900px) {
   .sheet-stamp { font-size: 0.72rem; letter-spacing: 0.09em; padding: 0.25rem 0.55rem; }
-  .sheet-stamp--notice { max-width: 62%; font-size: 0.62rem; }
+  .sheet-stamp--notice,
+  .sheet-stamp--noted { max-width: 62%; font-size: 0.62rem; }
 }
 
 /* --- source: one row, one action --- */

@@ -75,6 +75,7 @@
       stampPending: "Pending",
       stampClarification: "Present*",
       stampClarificationNote: "* But clarification sought",
+      stampPresentNote: "No notice on record",
       statusAsddo: "ASDDO record",
       statusRoll: "Present in the draft roll",
       statusNotice: "Present · clarification sought",
@@ -159,8 +160,17 @@
       coverageBody: "This constituency stays visible so the gap is clear. Check CEO Karnataka or ask your BLO / ERO.",
       noticeCoverageBallariTitle: "Some clarification-notice coverage is incomplete.",
       noticeCoverageBallariBody: " Available records are included, but 50 Ballari (Bellary), 29 Chitradurga and 4 Vijayapura source files became unavailable before retry.",
-      noFurtherAction: "No further action is required in your case.",
+      noFurtherAction: "No further action is needed as per these records.",
       noticeCoverageReference: "See the clarification-notice coverage note",
+      checksTitle: "Checked against three registers",
+      checkAsddoLabel: "ASDDO deletion list",
+      checkRollLabel: "Draft electoral roll",
+      checkNoticeLabel: "Clarification notices",
+      checkNotListed: "Not listed",
+      checkListed: "Listed",
+      checkNamePresent: "Name present",
+      checkNoNotice: "None in our records",
+      checkNoticeIssued: "Notice issued",
       zeroTitle: "Zero matches in these indexes",
       zeroStrong: "The search returned zero indexed matches.",
       zeroBody: "Try the EPIC ID in ECI’s official search. A BLO or ERO can check the record.",
@@ -263,6 +273,7 @@
       stampPending: "ಬಾಕಿ ಇದೆ",
       stampClarification: "ಇದೆ*",
       stampClarificationNote: "* ಆದರೆ ಸ್ಪಷ್ಟೀಕರಣ ಕೇಳಲಾಗಿದೆ",
+      stampPresentNote: "ನೋಟಿಸ್ ದಾಖಲೆಯಲ್ಲಿ ಇಲ್ಲ",
       statusAsddo: "ಎಎಸ್‌ಡಿಡಿಒ ದಾಖಲೆ",
       statusRoll: "ಕರಡು ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರು ಇದೆ",
       statusNotice: "ಹೆಸರು ಇದೆ · ಸ್ಪಷ್ಟೀಕರಣ ಕೇಳಲಾಗಿದೆ",
@@ -347,8 +358,17 @@
       coverageBody: "ಮಾಹಿತಿ ಕೊರತೆ ಸ್ಪಷ್ಟವಾಗಲು ಈ ಕ್ಷೇತ್ರವನ್ನು ತೋರಿಸಲಾಗಿದೆ. ಸಿಇಒ ಕರ್ನಾಟಕ ಅಥವಾ ಬಿಎಲ್‌ಒ / ಇಆರ್‌ಒ ಬಳಿ ಪರಿಶೀಲಿಸಿ.",
       noticeCoverageBallariTitle: "ಕೆಲವು ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ಮಾಹಿತಿ ಅಪೂರ್ಣವಾಗಿದೆ.",
       noticeCoverageBallariBody: " ಲಭ್ಯವಿರುವ ದಾಖಲೆಗಳನ್ನು ಸೇರಿಸಿದ್ದೇವೆ; ಮರುಪ್ರಯತ್ನಕ್ಕೂ ಮೊದಲು ಬಳ್ಳಾರಿಯ 50, ಚಿತ್ರದುರ್ಗದ 29 ಮತ್ತು ವಿಜಯಪುರದ 4 ಮೂಲ ಕಡತಗಳು ಲಭ್ಯವಿಲ್ಲದಂತಾದವು.",
-      noFurtherAction: "ನಿಮ್ಮ ಪ್ರಕರಣದಲ್ಲಿ ಯಾವುದೇ ಮುಂದಿನ ಕ್ರಮ ಅಗತ್ಯವಿಲ್ಲ.",
+      noFurtherAction: "ಈ ದಾಖಲೆಗಳ ಪ್ರಕಾರ ಯಾವುದೇ ಮುಂದಿನ ಕ್ರಮ ಅಗತ್ಯವಿಲ್ಲ.",
       noticeCoverageReference: "ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್ ವ್ಯಾಪ್ತಿಯ ಟಿಪ್ಪಣಿಯನ್ನು ನೋಡಿ",
+      checksTitle: "ಮೂರು ಪಟ್ಟಿಗಳಲ್ಲಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+      checkAsddoLabel: "ಎಎಸ್‌ಡಿಡಿಒ ಅಳಿಸುವಿಕೆ ಪಟ್ಟಿ",
+      checkRollLabel: "ಕರಡು ಮತದಾರರ ಪಟ್ಟಿ",
+      checkNoticeLabel: "ಸ್ಪಷ್ಟೀಕರಣ ನೋಟಿಸ್‌ಗಳು",
+      checkNotListed: "ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ",
+      checkListed: "ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ",
+      checkNamePresent: "ಹೆಸರು ಇದೆ",
+      checkNoNotice: "ನಮ್ಮ ದಾಖಲೆಗಳಲ್ಲಿ ಇಲ್ಲ",
+      checkNoticeIssued: "ನೋಟಿಸ್ ನೀಡಲಾಗಿದೆ",
       zeroTitle: "ಈ ಸೂಚಿಗಳಲ್ಲಿ ಹೊಂದಾಣಿಕೆ ಇಲ್ಲ",
       zeroStrong: "ಹುಡುಕಾಟದಲ್ಲಿ ಯಾವುದೇ ಸೂಚೀಕೃತ ಹೊಂದಾಣಿಕೆ ಸಿಗಲಿಲ್ಲ.",
       zeroBody: "ಇಪಿಐಸಿ ಐಡಿಯನ್ನು ಇಸಿಐ ಅಧಿಕೃತ ಹುಡುಕಾಟದಲ್ಲಿ ಪ್ರಯತ್ನಿಸಿ. ಬಿಎಲ್‌ಒ ಅಥವಾ ಇಆರ್‌ಒ ದಾಖಲೆಯನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.",
@@ -952,12 +972,57 @@
       status.classList.add("verdict-" + result.verdict.toLowerCase().replace(/_/g, "-"));
     }
 
+    const registerChecks = card.querySelector(".register-checks");
     const noActionNote = card.querySelector(".roll-no-action-note");
+    if (result.verdict === "ROLL_PRESENT" || isClarification) {
+      const asddoListed = Array.isArray(result.asddo_evidence) && result.asddo_evidence.length > 0;
+      const rows = [
+        {
+          labelKey: "checkAsddoLabel",
+          valueKey: asddoListed ? "checkListed" : "checkNotListed",
+          tone: asddoListed ? "bad" : "good",
+        },
+        { labelKey: "checkRollLabel", valueKey: "checkNamePresent", tone: "good" },
+        isClarification
+          ? { labelKey: "checkNoticeLabel", valueKey: "checkNoticeIssued", tone: "notice" }
+          : { labelKey: "checkNoticeLabel", valueKey: "checkNoNotice", tone: "good", footnote: true },
+      ];
+      registerChecks.querySelector(".register-checks-title").textContent = t("checksTitle");
+      const checksList = registerChecks.querySelector(".register-checks-list");
+      rows.forEach((row) => {
+        const item = document.createElement("li");
+        item.className = `register-check register-check--${row.tone}`;
+        const mark = document.createElement("span");
+        mark.className = "register-check-mark";
+        mark.setAttribute("aria-hidden", "true");
+        mark.textContent = "✓";
+        const label = document.createElement("span");
+        label.className = "register-check-label";
+        label.textContent = t(row.labelKey);
+        const leader = document.createElement("span");
+        leader.className = "register-check-leader";
+        leader.setAttribute("aria-hidden", "true");
+        const value = document.createElement("span");
+        value.className = "register-check-value";
+        value.textContent = t(row.valueKey);
+        if (row.footnote) {
+          const reference = document.createElement("a");
+          reference.className = "notice-coverage-reference";
+          reference.href = "#notice-coverage-warning";
+          reference.textContent = "*";
+          reference.setAttribute("aria-label", t("noticeCoverageReference"));
+          reference.title = t("noticeCoverageReference");
+          value.append(reference);
+        }
+        item.append(mark, label, leader, value);
+        checksList.append(item);
+      });
+      registerChecks.hidden = false;
+    } else {
+      registerChecks.remove();
+    }
     if (result.verdict === "ROLL_PRESENT") {
       noActionNote.querySelector(".roll-no-action-copy").textContent = t("noFurtherAction");
-      const reference = noActionNote.querySelector(".notice-coverage-reference");
-      reference.setAttribute("aria-label", t("noticeCoverageReference"));
-      reference.title = t("noticeCoverageReference");
       noActionNote.hidden = false;
     } else {
       noActionNote.remove();
@@ -1161,7 +1226,7 @@
           cls: "sheet-stamp--notice",
         };
       case "ROLL_PRESENT":
-        return { key: "stampPresent", cls: "sheet-stamp--roll" };
+        return { key: "stampPresent", noteKey: "stampPresentNote", cls: "sheet-stamp--roll" };
       case "ASDDO_LISTED":
         // On the ASDDO list AND still on the revised roll -> not removed.
         return result.also_in_roll
@@ -1185,6 +1250,7 @@
       "sheet-stamp--roll",
       "sheet-stamp--notice",
       "sheet-stamp--neutral",
+      "sheet-stamp--noted",
     );
     if (!spec) {
       stamp.hidden = true;
@@ -1199,6 +1265,7 @@
       note.className = "sheet-stamp-note";
       note.textContent = t(spec.noteKey);
       stamp.append(note);
+      stamp.classList.add("sheet-stamp--noted");
     }
     stamp.classList.add(spec.cls);
     stamp.hidden = false;
@@ -1691,6 +1758,34 @@
   languageToggle.addEventListener("change", () => {
     setLanguage(languageToggle.checked ? "kn" : "en");
   });
+  // The coverage note is pinned to the wall art at a fixed height. When an
+  // open result sheet grows past that pin, slide the note down so the two
+  // never overlap; clamp it inside the stage so the hero's overflow:hidden
+  // cannot cut it off mid-line.
+  const counterPanel = document.querySelector(".counter-panel");
+  function repositionCoverageWarning() {
+    if (!noticeCoverageWarning || !counterPanel) return;
+    if (window.getComputedStyle(noticeCoverageWarning).position !== "absolute") {
+      noticeCoverageWarning.style.top = "";
+      return;
+    }
+    const stage = noticeCoverageWarning.offsetParent;
+    const stageHeight = stage?.offsetHeight || 0;
+    if (!stageHeight) return;
+    const defaultTop = stageHeight * 0.76;
+    const panelBottom = counterPanel.offsetTop + counterPanel.offsetHeight;
+    const maxTop = stageHeight - noticeCoverageWarning.offsetHeight - 8;
+    const top = Math.min(Math.max(defaultTop, panelBottom + 14), maxTop);
+    noticeCoverageWarning.style.top = Math.abs(top - defaultTop) < 1
+      ? ""
+      : `${((top / stageHeight) * 100).toFixed(3)}%`;
+  }
+  if (noticeCoverageWarning && counterPanel && "ResizeObserver" in window) {
+    const coverageObserver = new ResizeObserver(() => repositionCoverageWarning());
+    coverageObserver.observe(counterPanel);
+    window.addEventListener("resize", repositionCoverageWarning);
+  }
+
   applyStaticCopy();
   setSearchMode("epic", false);
   loadMetadata();
