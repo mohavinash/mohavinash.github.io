@@ -1026,7 +1026,7 @@ html[lang="en"] #search-form :is(
 /* Chalk-written dataset facts on the empty green board, behind the sheet. */
 .board-chalk {
   position: absolute;
-  top: 55.2%;
+  top: 52.5%;
   left: 64.6%;
   z-index: 4;
   width: 34%;
