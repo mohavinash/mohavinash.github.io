@@ -373,7 +373,7 @@
     if (!localePromises[key]) {
       localePromises[key] = new Promise((resolve) => {
         const script = document.createElement("script");
-        script.src = `locales/${key}.js?v=20260915-tgdate`;
+        script.src = `locales/${key}.js?v=20260920-delhi`;
         script.onload = () => resolve(Boolean((window.SIR_LOCALES || {})[key]));
         script.onerror = () => resolve(false);
         document.head.append(script);

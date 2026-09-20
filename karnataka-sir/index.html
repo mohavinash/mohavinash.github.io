@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123c3d">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Search the 2026 SIR draft electoral rolls, deletion lists and published notices for Karnataka and Telangana, with an exact EPIC check.">
+  <meta name="description" content="Check your name in the SIR 2026 draft electoral roll, ASD/ASDDO deletion lists and published notice lists for Karnataka, Telangana and Delhi. Search by EPIC ID or name; every match links to its source PDF.">
   <meta name="author" content="DataChutney">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta property="og:title" content="Voter Verification Centre | DataChutney">
-  <meta property="og:description" content="Search the 2026 SIR draft electoral rolls, deletion lists and published notices for Karnataka and Telangana.">
+  <meta property="og:title" content="SIR 2026 voter search: draft roll, deletion lists and notices for Karnataka, Telangana and Delhi | DataChutney">
+  <meta property="og:description" content="Check your name in the SIR 2026 draft roll, ASD/ASDDO deletion lists and notice lists for Karnataka, Telangana and Delhi by EPIC ID or name.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://datachutney.io/karnataka-sir/">
   <meta property="og:site_name" content="DataChutney">
@@ -20,16 +20,16 @@
   <meta property="og:image:height" content="1080">
   <meta property="og:image:alt" content="DataChutney Karnataka voter verification cover reading: Nearly 1 in 5. Has your name been struck off?">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Voter Verification Centre | DataChutney">
-  <meta name="twitter:description" content="Search the 2026 SIR draft electoral rolls, deletion lists and published notices for Karnataka and Telangana.">
+  <meta name="twitter:title" content="SIR 2026 voter search: Karnataka, Telangana and Delhi | DataChutney">
+  <meta name="twitter:description" content="Check your name in the SIR 2026 draft roll, deletion lists and notice lists for Karnataka, Telangana and Delhi.">
   <meta name="twitter:image" content="https://datachutney.io/karnataka-sir/social-preview-wide.png?v=20260826-cover1">
   <meta name="twitter:image:alt" content="DataChutney Karnataka voter verification cover reading: Nearly 1 in 5. Has your name been struck off?">
   <link rel="canonical" href="https://datachutney.io/karnataka-sir/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/sarkari-office-hero.png" as="image" media="(min-width: 901px)" fetchpriority="high">
   <link rel="preload" href="assets/sarkari-office-mobile.png" as="image" media="(max-width: 900px)" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=20260915-tgdate">
-  <title>Voter Verification Centre | DataChutney</title>
+  <link rel="stylesheet" href="styles.css?v=20260920-delhi">
+  <title>SIR 2026 Voter Search: Draft Roll, Deletion Lists and Notices for Karnataka, Telangana and Delhi | DataChutney</title>
   <script defer src="https://umami-production-daa4.up.railway.app/script.js" data-website-id="c412f3c1-880b-4977-bdd6-33e193b2e7aa"></script>
   <script type="application/ld+json">
   {
@@ -39,7 +39,12 @@
     "applicationCategory": "PublicServiceApplication",
     "operatingSystem": "Any",
     "url": "https://datachutney.io/karnataka-sir/",
-    "description": "An independent search of the 2026 SIR draft electoral rolls, published deletion lists and notices for Karnataka and Telangana.",
+    "description": "An independent search of the 2026 SIR draft electoral rolls, published ASD/ASDDO deletion lists and notice lists for Karnataka, Telangana and Delhi, keyed by EPIC ID.",
+    "about": [
+      {"@type": "Thing", "name": "Karnataka SIR 2026", "url": "https://datachutney.io/karnataka-sir/karnataka/"},
+      {"@type": "Thing", "name": "Telangana SIR 2026", "url": "https://datachutney.io/karnataka-sir/telangana/"},
+      {"@type": "Thing", "name": "Delhi SIR 2026", "url": "https://datachutney.io/karnataka-sir/delhi/"}
+    ],
     "publisher": {
       "@type": "Organization",
       "name": "DataChutney",
@@ -312,6 +317,7 @@
       <span>DataChutney</span>
     </a>
     <p data-copy="footerLine">Independent tools for navigating public information.</p>
+    <nav class="footer-states" aria-label="State guides"><a href="karnataka/">Karnataka SIR 2026 guide</a> · <a href="telangana/">Telangana SIR 2026 guide</a> · <a href="delhi/">Delhi SIR 2026 guide</a></nav>
     <p class="footer-caution" data-copy="previewLine">Check each result in ECI’s official search. Your ERO handles applications and notices.</p>
   </footer>
 
@@ -364,7 +370,7 @@
   </template>
 
   <script src="config.js?v=20260826-prod2"></script>
-  <script src="states.js?v=20260915-tgdate"></script>
-  <script src="app.js?v=20260915-tgdate" defer></script>
+  <script src="states.js?v=20260920-delhi"></script>
+  <script src="app.js?v=20260920-delhi" defer></script>
 </body>
 </html>

@@ -2304,3 +2304,6 @@ footer p {
   border-bottom-color: var(--saffron-soft);
   transform: translateX(-50%);
 }
+
+.footer-states{margin:6px 0 10px;font-size:0.9rem}
+.footer-states a{color:inherit}
