@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello, 3D shapes</title>
+<style>
+  :root { --ink: #000; --paper: #fff; --soft: #d9d9d9; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+    font-size: 22px; line-height: 1.3;
+    display: grid; grid-template-rows: auto auto 1fr auto; overflow: hidden;
+    -webkit-user-select: none; user-select: none;
+  }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 32px 6px; }
+  .brand { font-size: 30px; font-weight: 800; white-space: nowrap; margin-right: 12px; }
+  @media (max-width: 1100px) { .brand { display: none; } }
+  .tabs { display: flex; gap: 4px; flex: 1; }
+  .tab { font-size: clamp(22px, 2.5vw, 30px); font-weight: 700; padding: 8px clamp(12px, 1.8vw, 26px); white-space: nowrap; border-radius: 999px; border: 3px solid transparent; }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .tab:not([aria-selected="true"]):hover { border-color: var(--ink); }
+  .ask-btn { white-space: nowrap; font-size: 22px; font-weight: 600; padding: 8px 20px; border: 2px solid var(--ink); border-radius: 999px; }
+  .ask-btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  .cards { display: flex; gap: 14px; padding: 10px 32px; align-items: stretch; }
+  .card {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    flex: 0 1 132px; min-width: 0; padding: 10px 8px 8px; border: 2px solid var(--soft); border-radius: 18px;
+    font-size: 20px; font-weight: 600;
+  }
+  .card:hover { border-color: var(--ink); }
+  .card[aria-pressed="true"] { border: 3px solid var(--ink); padding: 9px 7px 7px; }
+  .card svg { width: 60px; height: 60px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+  .switch { margin-left: auto; align-self: center; display: none; align-items: center; gap: 12px; font-size: 22px; font-weight: 600; }
+  .switch.on { display: flex; }
+  .switch .track { width: 68px; height: 38px; border: 3px solid var(--ink); border-radius: 999px; position: relative; }
+  .switch .knob { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); transition: left .15s; }
+  .switch[aria-pressed="true"] .track { background: var(--ink); }
+  .switch[aria-pressed="true"] .knob { left: 33px; background: var(--paper); }
+
+  main { position: relative; min-height: 0; display: flex; }
+  #stage { flex: 1; min-width: 0; position: relative; cursor: grab; touch-action: none; }
+  #stage.dragging { cursor: grabbing; }
+  #stage canvas { display: block; width: 100%; height: 100%; }
+  #above { position: absolute; top: 0; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; pointer-events: none; text-align: center; }
+  #title { font-size: 44px; font-weight: 800; line-height: 1.15; }
+  #title.done { font-size: 52px; }
+  #count { font-size: 28px; font-weight: 700; min-height: 36px; padding: 0 16px; }
+  #turnhint { position: absolute; bottom: 4px; right: 24px; font-size: 20px; opacity: .55; pointer-events: none; }
+  aside { width: 360px; padding: 8px 32px 8px 24px; border-left: 2px solid var(--soft); display: none; overflow: auto; }
+  aside.on { display: block; }
+  aside h2 { font-size: 26px; margin: 4px 0 12px; }
+  aside ol { margin: 0; padding-left: 1.2em; }
+  aside li { font-size: 22px; margin-bottom: 16px; -webkit-user-select: text; user-select: text; }
+
+  footer { display: flex; align-items: center; gap: 28px; padding: 14px 40px 26px; }
+  #play { width: 72px; height: 72px; border-radius: 50%; background: var(--ink); flex: none; display: grid; place-items: center; }
+  #play svg { width: 30px; height: 30px; fill: var(--paper); }
+  .slide { flex: 1; display: flex; align-items: center; gap: 18px; }
+  .slide .end { width: 44px; height: 44px; flex: none; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+  input[type=range] { -webkit-appearance: none; appearance: none; flex: 1; height: 56px; background: transparent; margin: 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; background: linear-gradient(to right, #000 var(--p, 0%), var(--soft) var(--p, 0%)); }
+  input[type=range]::-moz-range-track { height: 10px; border-radius: 5px; background: var(--soft); }
+  input[type=range]::-moz-range-progress { height: 10px; border-radius: 5px; background: #000; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 52px; height: 52px; border-radius: 50%; background: var(--paper); border: 5px solid var(--ink); margin-top: -21px; }
+  input[type=range]::-moz-range-thumb { width: 42px; height: 42px; border-radius: 50%; background: var(--paper); border: 5px solid var(--ink); }
+
+  /* hello 3D: three sliders, and words pinned to the shape */
+  #dims { display: none; flex: 1; gap: 40px; }
+  #dims label { flex: 1; display: flex; align-items: center; gap: 18px; font-size: 32px; font-weight: 800; }
+  body.hello #dims { display: flex; }
+  body.hello #play, body.hello .slide { display: none; }
+  .pin { position: absolute; transform: translate(-50%, -50%); font-size: 30px; font-weight: 800; pointer-events: none; display: none; }
+
+  /* quiz */
+  #question { flex: 1; font-size: 38px; font-weight: 800; min-height: 112px; display: flex; align-items: center; }
+  #progress { font-size: 26px; font-weight: 700; align-self: center; white-space: nowrap; }
+  #answers { display: none; flex: 1; justify-content: center; gap: 32px; }
+  #answers button { font-size: 34px; font-weight: 800; min-width: 220px; height: 76px; border: 4px solid var(--ink); border-radius: 999px; }
+  #answers button:hover, #next { background: var(--ink); color: var(--paper); }
+  #next { display: none; }
+  body.quiz #play, body.quiz .slide, body.quiz .ask-btn, body.quiz aside { display: none; }
+  body.quiz #answers { display: flex; }
+  body.quiz.answered #yes, body.quiz.answered #no { display: none; }
+  body.quiz.answered #next { display: block; }
+  @keyframes pop { 0% { transform: scale(.3); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+  #title.pop { animation: pop .5s ease-out; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Hello, 3D</div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <button class="ask-btn" id="askBtn" aria-pressed="false">Ask the child</button>
+</header>
+<div class="cards" id="cards"></div>
+<main>
+  <div id="stage">
+    <div id="above"><div id="title"></div><div id="count"></div></div>
+    <div id="turnhint">drag the shape to look around</div>
+    <div class="pin" id="pin0"></div><div class="pin" id="pin1"></div><div class="pin" id="pin2"></div>
+  </div>
+  <aside id="ask"><h2>Ask the child</h2><ol id="askList"></ol></aside>
+</main>
+<footer>
+  <button id="play" aria-label="Play"><svg viewBox="0 0 30 30" id="playIcon"><path d="M8 4l18 11L8 26z"/></svg></button>
+  <div class="slide">
+    <svg class="end" viewBox="0 0 44 44" id="endA"></svg>
+    <input type="range" id="slider" min="0" max="1000" value="0" aria-label="Change the shape">
+  </div>
+  <div id="dims">
+    <label>wide <input type="range" data-dim="wide" min="1" max="5" step="1" value="3" aria-label="How wide"></label>
+    <label>tall <input type="range" data-dim="tall" min="1" max="5" step="1" value="2" aria-label="How tall"></label>
+    <label>deep <input type="range" data-dim="deep" min="0" max="5" step="1" value="0" aria-label="How deep"></label>
+  </div>
+  <div id="answers">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+    <button id="next">Next</button>
+  </div>
+</footer>
+
+<script src="three.min.js"></script>
+<script>
+(() => {
+const PI = Math.PI, TAU = PI * 2;
+const RED = 0xe63946, BLUE = 0x2a7de1, ORANGE = 0xff9f1c, PURPLE = 0x9b5de5, GREEN = 0x21b573, YELLOW = 0xf4b400;
+
+// ---------- three.js stage ----------
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0xffffff);
+stage.prepend(renderer.domElement);
+const scene3 = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+scene3.add(new THREE.HemisphereLight(0xffffff, 0x666666, 0.66));
+const sun = new THREE.DirectionalLight(0xffffff, 0.55);
+sun.position.set(-3, 5, 6);
+scene3.add(sun);
+const world = new THREE.Group();
+scene3.add(world);
+let dist = 7;
+
+function fit() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  // keep the shape the same size on narrow stages, and clear of the words above and below it
+  // the words sit above the shape, so the shape is drawn just below the middle
+  const words = Math.min(1.5, h / Math.max(h - 130, 1));
+  const far = dist * Math.max(1, 1.25 / camera.aspect) * words;
+  camera.position.set(0, far * 0.015, far);
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(fit).observe(stage);
+
+const lineMat = new THREE.LineBasicMaterial({ color: 0x000000 });
+const solid = color => new THREE.MeshStandardMaterial({
+  color, roughness: 0.6, metalness: 0, side: THREE.DoubleSide,
+  polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
+});
+// every other layer uses a darker shade, so each copy can be told apart
+const shades = color => [solid(color), solid(new THREE.Color(color).multiplyScalar(0.66))];
+const v2 = pts => pts.map(p => new THREE.Vector2(p[0], p[1]));
+
+// flat polygon from 3D corner points, plus its black outline
+function polygon(points, mat) {
+  const g = new THREE.BufferGeometry().setFromPoints(points);
+  const idx = [];
+  for (let i = 1; i < points.length - 1; i++) idx.push(0, i, i + 1);
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(g, mat));
+  group.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(points), lineMat));
+  return group;
+}
+const P = (x, y, z) => new THREE.Vector3(x, y, z);
+
+// ---------- which ways a shape goes: wide, tall, deep ----------
+const pins = []; // words pinned to points on the shape: { text, pos }
+// black two-headed arrows around a shape; a way the shape does not go gets no arrow
+function measure(g) {
+  const up = P(0, 1, 0), black = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  const arrow = dir => {
+    const a = new THREE.Group();
+    const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 1, 10), black);
+    shaft.quaternion.setFromUnitVectors(up, dir);
+    const heads = [1, -1].map(s => {
+      const c = new THREE.Mesh(new THREE.ConeGeometry(0.055, 0.13, 16), black);
+      c.quaternion.setFromUnitVectors(up, dir.clone().multiplyScalar(s));
+      a.add(c);
+      return c;
+    });
+    a.add(shaft);
+    g.add(a);
+    return (mid, len) => {
+      a.visible = len > 0;
+      shaft.position.copy(mid);
+      shaft.scale.y = Math.max(len - 0.16, 0.01);
+      heads.forEach((c, i) => c.position.copy(mid).addScaledVector(dir, (i ? -1 : 1) * (len / 2 - 0.065)));
+    };
+  };
+  const wide = arrow(P(1, 0, 0)), tall = arrow(P(0, 1, 0)), deep = arrow(P(0, 0, 1));
+  return size => {
+    pins.length = 0;
+    const { w, h, d, c = [0, 0, 0] } = size || { w: 0, h: 0, d: 0 }, m = 0.3;
+    const at = (x, y, z) => P(c[0] + x, c[1] + y, c[2] + z);
+    // a shape lying flat gets its wide arrow in front of it, a standing one underneath
+    const under = h > 0 ? 1 : 0, front = 1 - under;
+    wide(at(0, -h / 2 - m * under, d / 2 + m * front), w);
+    tall(at(w / 2 + m, 0, d / 2), h);
+    deep(at(-w / 2 - m, -h / 2, 0), d);
+    if (w > 0) pins.push({ text: 'wide', pos: at(0, -h / 2 - (m + 0.42) * under, d / 2 + (m + 0.42) * front) });
+    if (h > 0) pins.push({ text: 'tall', pos: at(w / 2 + m + 0.5, 0, d / 2) });
+    if (d > 0) pins.push({ text: 'deep', pos: at(-w / 2 - m - 0.6, -h / 2, 0) });
+  };
+}
+const size = (w, h, d, c) => ({ w, h, d, c });
+// each shape's size when flat (slider at the start) and when solid (slider at the end)
+const SIZES = {
+  'spin-circle': [size(2, 2, 0), size(2, 2, 2)],
+  'spin-rect': [size(1.6, 2, 0), size(1.6, 2, 1.6)],
+  'spin-tri': [size(1.8, 2.1, 0, [0, 0.05, 0]), size(1.8, 2.1, 1.8, [0, 0.05, 0])],
+  'spin-far': [size(0.84, 0.84, 0, [1, 0, 0]), size(2.84, 0.84, 2.84)],
+  'fold-cube': [size(5, 0, 3.75), size(1.25, 1.25, 1.25)],
+  'fold-cuboid': [size(4.6, 0, 2.4), size(1.6, 0.7, 1)],
+  'fold-cylinder': [size(3.14, 3.6, 0), size(1, 1.6, 1)],
+  'fold-cone': [size(3.4, 0, 2.23, [0, 0, 0.59]), size(2.04, 1.36, 2.04)],
+  'fold-pyramid': [size(4.5, 0, 4.5), size(1.4, 1.38, 1.4)],
+  'fold-prism': [size(3.98, 0, 3.6), size(1.9, 1.04, 1.2)],
+  'stack-square': [size(1.2, 0, 1.2), size(1.2, 2.16, 1.2)],
+  'stack-circle': [size(1.4, 0, 1.4), size(1.4, 2.16, 1.4)],
+  'stack-tri': [size(1.47, 0, 1.275, [0, 0, 0.2125]), size(1.47, 2.16, 1.275, [0, 0, 0.2125])],
+  'stack-ball': [size(0.48, 0, 0.48), size(2, 2.04, 2)],
+};
+
+// ---------- FLAT AND SOLID: the child sets wide, tall and deep ----------
+const dims = { wide: 3, tall: 2, deep: 0 }, STEP = 0.45;
+function hello(g) {
+  const geo = new THREE.BoxGeometry(1, 1, 1);
+  const box = new THREE.Group();
+  box.add(new THREE.Mesh(geo, solid(BLUE)), new THREE.LineSegments(new THREE.EdgesGeometry(geo), lineMat));
+  g.add(box);
+  return () => box.scale.set(dims.wide * STEP, dims.tall * STEP, Math.max(dims.deep * STEP, 0.002));
+}
+
+// ---------- SPIN: a flat shape turns around a pole ----------
+function spin(root, { color, outline, pieces, maxDeg, stepDeg }) {
+  const mats = shades(color), mat = mats[0];
+  const g = new THREE.Group(); // turned so the flat shape starts facing the front
+  g.rotation.y = PI / 2;
+  root.add(g);
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 2.7, 12), new THREE.MeshBasicMaterial({ color: 0x000000 }));
+  g.add(pole);
+  const fillGeo = new THREE.ShapeGeometry(new THREE.Shape(v2(outline)));
+  const loopGeo = new THREE.BufferGeometry().setFromPoints(outline.map(p => P(p[0], p[1], 0)));
+  const blade = fill => {
+    const b = new THREE.Group();
+    if (fill) b.add(new THREE.Mesh(fillGeo, mat));
+    b.add(new THREE.LineLoop(loopGeo, lineMat));
+    g.add(b);
+    return b;
+  };
+  const start = blade(true), lead = blade(true);
+  start.rotation.y = -PI / 2;
+  const ghosts = [];
+  for (let d = stepDeg; d < maxDeg; d += stepDeg) {
+    const b = blade(false);
+    b.rotation.y = d * PI / 180 - PI / 2;
+    ghosts.push({ d, b });
+  }
+  // the swept surface is one wedge per copy, plus the wedge still being swept
+  const steps = Math.round(maxDeg / stepDeg), stepRad = stepDeg * PI / 180;
+  const surfaces = pieces.map(pc => {
+    const pts = v2(pc.pts), phi0 = pc.phi0 || 0;
+    const wedges = Array.from({ length: steps }, (_, k) => {
+      const m = new THREE.Mesh(new THREE.LatheGeometry(pts, 3, phi0 + k * stepRad, stepRad), mats[k % 2]);
+      g.add(m);
+      return m;
+    });
+    const part = new THREE.Mesh(new THREE.BufferGeometry(), mat);
+    g.add(part);
+    return { pts, phi0, wedges, part };
+  });
+  return t => {
+    const deg = t * maxDeg, th = deg * PI / 180;
+    const full = Math.min(steps, Math.floor(deg / stepDeg + 1e-6)), rest = th - full * stepRad;
+    lead.rotation.y = th - PI / 2;
+    for (const gh of ghosts) gh.b.visible = gh.d <= deg + 1e-6;
+    for (const s of surfaces) {
+      s.wedges.forEach((m, k) => { m.visible = k < full; });
+      s.part.geometry.dispose();
+      s.part.visible = rest > 1e-3;
+      if (s.part.visible) {
+        s.part.geometry = new THREE.LatheGeometry(s.pts, 3, s.phi0 + full * stepRad, rest);
+        s.part.material = mats[full % 2];
+      }
+    }
+  };
+}
+const arc = (cx, r, a0, a1, n) => Array.from({ length: n + 1 }, (_, i) => {
+  const a = a0 + (a1 - a0) * i / n;
+  return [cx + r * Math.cos(a), r * Math.sin(a)];
+});
+const copies = (t, maxDeg, step) => Math.min(Math.round(maxDeg / step), 1 + Math.floor(t * maxDeg / step + 1e-6));
+
+// ---------- FOLD: paper bends until the edges meet ----------
+function rollRect(g, color) {
+  const R = 0.5, W = TAU * R, H = 1.6, N = 80;
+  const mat = solid(color);
+  const body = new THREE.Group();
+  g.add(body);
+  const geo = new THREE.PlaneGeometry(W, H, N, 1);
+  const base = geo.attributes.position.array.slice();
+  body.add(new THREE.Mesh(geo, mat));
+  const edge = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(Array.from({ length: 2 * (N + 1) }, () => P(0, 0, 0))), lineMat);
+  body.add(edge);
+  const lids = [1, -1].map(s => {
+    const piv = new THREE.Group();
+    piv.position.y = s * H / 2;
+    const pts = arc(0, R, 0, TAU, 64).slice(0, -1).map(p => P(p[0], p[1] + s * R, 0));
+    const lid = new THREE.Group();
+    const m = new THREE.Mesh(new THREE.CircleGeometry(R, 64), mat);
+    m.position.y = s * R;
+    lid.add(m, new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), lineMat));
+    piv.add(lid);
+    body.add(piv);
+    return { piv, s };
+  });
+  const bend = (u, t) => {
+    const phi = Math.max(TAU * t, 1e-4), r = W / phi, a = u / r;
+    return [r * Math.sin(a), r * (1 - Math.cos(a))];
+  };
+  return t => {
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const [x, z] = bend(base[i * 3], t);
+      pos.setXYZ(i, x, base[i * 3 + 1], z);
+    }
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
+    const ep = edge.geometry.attributes.position;
+    for (let i = 0; i <= N; i++) {
+      const [x, z] = bend(-W / 2 + W * i / N, t);
+      ep.setXYZ(i, x, -H / 2, z);
+      ep.setXYZ(2 * N + 1 - i, x, H / 2, z);
+    }
+    ep.needsUpdate = true;
+    for (const l of lids) l.piv.rotation.x = l.s * t * PI / 2;
+    const phi = Math.max(TAU * t, 1e-4);
+    body.position.z = -(W / phi) * (1 - Math.cos(phi / 2)) / 2;
+  };
+}
+
+// flat pieces hinged to a base; a flap can carry one more flap (the lid)
+function net(g, color, basePts, flaps) {
+  const mat = solid(color);
+  const body = new THREE.Group();
+  g.add(body);
+  body.add(polygon(basePts, mat));
+  const hinges = [];
+  const hinge = (parent, f) => {
+    const piv = new THREE.Group();
+    piv.position.x = f.off;
+    piv.add(polygon(f.pts, mat));
+    parent.add(piv);
+    hinges.push({ piv, angle: f.angle });
+    if (f.lid) hinge(piv, f.lid);
+  };
+  for (const f of flaps) {
+    const side = new THREE.Group();
+    side.rotation.y = f.turn * PI / 2;
+    body.add(side);
+    hinge(side, f);
+  }
+  return { body, set: t => hinges.forEach(h => { h.piv.rotation.z = t * h.angle; }) };
+}
+const rectXZ = (a, b) => [P(-a / 2, 0, -b / 2), P(a / 2, 0, -b / 2), P(a / 2, 0, b / 2), P(-a / 2, 0, b / 2)];
+const flapRect = (len, wide) => [P(0, 0, -wide / 2), P(len, 0, -wide / 2), P(len, 0, wide / 2), P(0, 0, wide / 2)];
+const flapTri = (len, wide) => [P(0, 0, -wide / 2), P(len, 0, 0), P(0, 0, wide / 2)];
+// a long (x), b wide (z), c tall: a cube when all three match, otherwise a cuboid
+function foldBox(g, color, a, b, c) {
+  const q = PI / 2;
+  const n = net(g, color, rectXZ(a, b), [
+    { turn: 0, off: a / 2, pts: flapRect(c, b), angle: q, lid: { off: c, pts: flapRect(a, b), angle: q } },
+    { turn: 2, off: a / 2, pts: flapRect(c, b), angle: q },
+    { turn: 1, off: b / 2, pts: flapRect(c, a), angle: q },
+    { turn: 3, off: b / 2, pts: flapRect(c, a), angle: q },
+  ]);
+  return t => { n.set(t); n.body.position.set(-a / 2 * (1 - t), -c / 2 * t, 0); };
+}
+function foldPyramid(g, color) {
+  const s = 1.4, l = 1.55, h = s / 2, end = PI - Math.acos(h / l);
+  const n = net(g, color, rectXZ(s, s), [0, 1, 2, 3].map(turn => ({ turn, off: h, pts: flapTri(l, s), angle: end })));
+  return t => { n.set(t); n.body.position.y = -l * Math.sin(end * t) / 2; };
+}
+function foldPrism(g, color) {
+  const w = 1.2, len = 1.9, h = w * Math.sqrt(3) / 2;
+  const n = net(g, color, rectXZ(len, w), [
+    { turn: 1, off: w / 2, pts: flapRect(w, len), angle: TAU / 3 },
+    { turn: 3, off: w / 2, pts: flapRect(w, len), angle: TAU / 3 },
+    { turn: 0, off: len / 2, pts: flapTri(h, w), angle: PI / 2 },
+    { turn: 2, off: len / 2, pts: flapTri(h, w), angle: PI / 2 },
+  ]);
+  return t => { n.set(t); n.body.position.y = -h / 2 * t; };
+}
+function rollCone(g, color) {
+  const L = 1.7, A = 0.6 * TAU, M = 80;
+  const mat = solid(color);
+  const body = new THREE.Group();
+  g.add(body);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((M + 1) * 6), 3));
+  const idx = [];
+  for (let i = 0; i < M; i++) idx.push(2 * i, 2 * i + 1, 2 * i + 3, 2 * i, 2 * i + 3, 2 * i + 2);
+  geo.setIndex(idx);
+  body.add(new THREE.Mesh(geo, mat));
+  const edge = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(Array.from({ length: M + 2 }, () => P(0, 0, 0))), lineMat);
+  body.add(edge);
+  return t => {
+    const beta = TAU + (A - TAU) * t, sin = beta / TAU, cos = Math.sqrt(Math.max(0, 1 - sin * sin));
+    const pos = geo.attributes.position, ep = edge.geometry.attributes.position;
+    ep.setXYZ(0, 0, 0, 0);
+    for (let i = 0; i <= M; i++) {
+      const psi = (-A / 2 + A * i / M) * TAU / beta;
+      const x = L * sin * Math.sin(psi), y = -L * cos, z = L * sin * Math.cos(psi);
+      pos.setXYZ(2 * i, 0, 0, 0);
+      pos.setXYZ(2 * i + 1, x, y, z);
+      ep.setXYZ(i + 1, x, y, z);
+    }
+    pos.needsUpdate = true; ep.needsUpdate = true;
+    geo.computeVertexNormals();
+    body.position.y = L * cos / 2;
+  };
+}
+
+// ---------- STACK: pile up copies of a flat shape ----------
+const state = { shrink: false };
+function stack(g, { color, sides, radius, max, thick, sizeAt }) {
+  const mats = shades(color);
+  const geo = new THREE.CylinderGeometry(radius, radius, thick, sides);
+  if (sides === 4) geo.rotateY(PI / 4);
+  // one black outline per slice, around its top face
+  const rim = new THREE.BufferGeometry().setFromPoints(Array.from({ length: sides }, (_, i) => {
+    const a = i * TAU / sides + (sides === 4 ? PI / 4 : 0);
+    return P(radius * Math.sin(a), thick / 2, radius * Math.cos(a));
+  }));
+  const body = new THREE.Group();
+  g.add(body);
+  const slabs = [];
+  for (let i = 0; i < max; i++) {
+    const s = new THREE.Group();
+    s.add(new THREE.Mesh(geo, mats[i % 2]), new THREE.LineLoop(rim, lineMat));
+    s.position.y = (i + 0.5) * thick;
+    body.add(s);
+    slabs.push(s);
+  }
+  return t => {
+    const n = slices(t, max);
+    slabs.forEach((s, i) => {
+      s.visible = i < n;
+      const k = sizeAt ? sizeAt(i) : state.shrink ? 1 - i / max : 1;
+      s.scale.set(k, 1, k);
+    });
+    body.position.y = -n * thick / 2;
+  };
+}
+const slices = (t, max) => Math.max(1, Math.round(t * max));
+
+// ---------- the scenes ----------
+const pole = '<path d="M30 2v56" stroke-dasharray="4 5"/>';
+const icon = {
+  circle: '<circle cx="30" cy="30" r="22"/>',
+  circleP: '<circle cx="30" cy="30" r="20"/>' + pole,
+  rectP: '<rect x="14" y="10" width="32" height="40"/>' + pole,
+  triP: '<path d="M30 10l18 40H12z"/>' + pole,
+  ring: '<circle cx="42" cy="30" r="12"/><path d="M14 2v56" stroke-dasharray="4 5"/>',
+  wide: '<rect x="6" y="16" width="48" height="28"/>',
+  cross: '<path d="M22 4h16v14h14v16H38v22H22V34H8V18h14z"/>',
+  longcross: '<path d="M14 24h18v12H14zM6 24h8v12H6zM32 24h8v12h-8zM40 24h18v12H40zM14 24v-8h18v8M14 36v8h18v-8"/>',
+  slice: '<path d="M30 30L10 16a24 24 0 1 1 0 28z"/>',
+  star: '<path d="M22 22h16v16H22zM22 22L30 4l8 18M38 22l18 8-18 8M38 38l-8 18-8-18M22 38L4 30l18-8"/>',
+  prismnet: '<path d="M18 9h24v42H18zM18 23h24M18 37h24M18 23L6 30l12 7M42 23l12 7-12 7"/>',
+  square: '<rect x="10" y="10" width="40" height="40"/>',
+  tri3: '<path d="M30 8l24 42H6z"/>',
+  bigsmall: '<ellipse cx="30" cy="12" rx="10" ry="5"/><ellipse cx="30" cy="30" rx="23" ry="7"/><ellipse cx="30" cy="48" rx="10" ry="5"/>',
+};
+// a shape that sits across the pole sweeps both sides at once, so half a turn finishes it
+const bothSides = list => list.flatMap(pts => [{ pts }, { pts, phi0: PI }]);
+const many = (n, one) => n + ' ' + one + (n === 1 ? '' : 's');
+const TABS = [
+  { id: 'hello', label: 'Flat and solid', scenes: [
+    { id: 'hello', card: ['square', ''], dist: [7.5, 7.5], view: [0.55, 0.35],
+      build: g => hello(g),
+      title: () => dims.deep === 0 ? (dims.wide === dims.tall ? 'A square. It is flat.' : 'A rectangle. It is flat.')
+        : dims.wide === dims.tall && dims.tall === dims.deep ? 'A cube. It is solid!' : 'A cuboid. It is solid!',
+      count: () => dims.deep === 0 ? '2 ways: wide and tall' : '3 ways: wide, tall and deep. That is 3D!',
+      ask: ['Is a sheet of paper flat or solid? What about a book?', 'Pull the deep slider. What changed?', 'Can you make a cube? What did you have to do?'] },
+  ] },
+  { id: 'spin', label: 'Spin', scenes: [
+    { id: 'spin-circle', card: ['circleP', 'circle'], dist: [5.8, 5.8], view: [0.5, 0.3],
+      build: g => spin(g, { color: RED, outline: arc(0, 1, 0, TAU, 72).slice(0, -1), maxDeg: 180, stepDeg: 10,
+        pieces: bothSides([arc(0, 1, -PI / 2, PI / 2, 40)]) }),
+      title: t => t >= 1 ? 'A sphere!' : 'Spin the circle',
+      count: t => many(copies(t, 180, 10), 'circle'),
+      ask: ['What will the circle make when it spins?', 'Where have you seen a sphere? A ball? An orange?', 'It only needed half a turn. Why?'] },
+    { id: 'spin-rect', card: ['rectP', 'rectangle'], dist: [5.8, 5.8], view: [0.5, 0.35],
+      build: g => spin(g, { color: BLUE, outline: [[-0.8, -1], [0.8, -1], [0.8, 1], [-0.8, 1]], maxDeg: 180, stepDeg: 10,
+        pieces: bothSides([[[0, -1], [0.8, -1]], [[0.8, -1], [0.8, 1]], [[0.8, 1], [0, 1]]]) }),
+      title: t => t >= 1 ? 'A cylinder!' : 'Spin the rectangle',
+      count: t => many(copies(t, 180, 10), 'rectangle'),
+      ask: ['What will the rectangle make when it spins?', 'What shape is the top of the cylinder? Turn it and look.', 'What happens if the rectangle is very thin?'] },
+    { id: 'spin-tri', card: ['triP', 'triangle'], dist: [5.8, 5.8], view: [0.5, 0.35],
+      build: g => spin(g, { color: ORANGE, outline: [[-0.9, -1], [0.9, -1], [0, 1.1]], maxDeg: 180, stepDeg: 10,
+        pieces: bothSides([[[0, -1], [0.9, -1]], [[0.9, -1], [0, 1.1]]]) }),
+      title: t => t >= 1 ? 'A cone!' : 'Spin the triangle',
+      count: t => many(copies(t, 180, 10), 'triangle'),
+      ask: ['What will the triangle make when it spins?', 'What shape is the bottom of the cone?', 'Which corner became the pointy top?'] },
+    { id: 'spin-far', card: ['ring', 'far circle'], dist: [6.8, 6.8], view: [0.5, 0.6],
+      build: g => spin(g, { color: PURPLE, outline: arc(1, 0.42, 0, TAU, 48).slice(0, -1), maxDeg: 360, stepDeg: 10,
+        pieces: [{ pts: arc(1, 0.42, -PI / 2, 1.5 * PI, 48) }] }),
+      title: t => t >= 1 ? 'A torus!' : 'Spin the circle',
+      count: t => many(copies(t, 360, 10), 'circle'),
+      ask: ['This circle is away from the pole. What will it make?', 'Why does the torus have a hole in the middle?', 'How is the torus different from the sphere?'] },
+  ] },
+  { id: 'fold', label: 'Fold', scenes: [
+    { id: 'fold-cube', card: ['cross', 'squares'], dist: [8.5, 6.2], view: [0.5, 0.75],
+      build: g => foldBox(g, GREEN, 1.25, 1.25, 1.25),
+      title: t => t >= 1 ? 'A cube!' : 'Fold the squares',
+      count: () => '6 squares',
+      ask: ['How many squares are there?', 'Which square will be the lid?', 'So how many faces does a cube have?'] },
+    { id: 'fold-cuboid', card: ['longcross', 'rectangles'], dist: [9.5, 6.2], view: [0.5, 0.75],
+      build: g => foldBox(g, RED, 1.6, 1.0, 0.7),
+      title: t => t >= 1 ? 'A cuboid!' : 'Fold the rectangles',
+      count: () => '6 rectangles',
+      ask: ['How many rectangles are there?', 'A cube has 6 faces. How many does a cuboid have?', 'How is the cuboid different from the cube?'] },
+    { id: 'fold-cylinder', card: ['wide', 'rectangle'], dist: [9.8, 6.2], view: [0.35, 0.25],
+      build: g => rollRect(g, BLUE),
+      title: t => t >= 1 ? 'A cylinder!' : 'Roll the rectangle',
+      count: () => '1 rectangle, 2 circles',
+      ask: ['What will this paper become?', 'Which two edges will touch?', 'What do the two circles do?'] },
+    { id: 'fold-cone', card: ['slice', 'big slice'], dist: [7.8, 6.6], view: [0.3, 0.8],
+      build: g => rollCone(g, ORANGE),
+      title: t => t >= 1 ? 'A cone!' : 'Roll the big slice',
+      count: () => '',
+      ask: ['A piece is missing from this circle. What happens when the edges meet?', 'Where is the pointy top right now?', 'This cone is open underneath. What shape would close it?'] },
+    { id: 'fold-pyramid', card: ['star', 'triangles'], dist: [9, 6.2], view: [0.5, 0.8],
+      build: g => foldPyramid(g, YELLOW),
+      title: t => t >= 1 ? 'A pyramid!' : 'Fold the triangles',
+      count: () => '1 square, 4 triangles',
+      ask: ['What shapes can you see?', 'Where will the four points meet?', 'How many faces does the pyramid have?'] },
+    { id: 'fold-prism', card: ['prismnet', 'two triangles'], dist: [8.5, 6.4], view: [0.6, 0.75],
+      build: g => foldPrism(g, PURPLE),
+      title: t => t >= 1 ? 'A prism!' : 'Fold the paper',
+      count: () => '3 rectangles, 2 triangles',
+      ask: ['What shapes can you see?', 'Where will the two triangles end up?', 'How many faces does the prism have?'] },
+  ] },
+  { id: 'stack', label: 'Stack', scenes: [
+    { id: 'stack-square', card: ['square', 'square'], dist: [6.8, 6.8], view: [0.6, 0.45],
+      build: g => stack(g, { color: GREEN, sides: 4, radius: 0.6 * Math.SQRT2, max: 36, thick: 0.06 }),
+      title: t => state.shrink ? (t >= 1 ? 'A pyramid!' : 'Stack the squares')
+        : slices(t, 36) === 20 ? 'A cube!' : slices(t, 36) > 20 ? 'A cuboid!' : 'Stack the squares',
+      count: t => many(slices(t, 36), 'square'),
+      ask: ['What do you get when you stack squares?', 'Stop when it is a cube. What happens if you keep going?', 'Now make each square smaller. What will it become?'] },
+    { id: 'stack-circle', card: ['circle', 'circle'], dist: [6.8, 6.8], view: [0.6, 0.45],
+      build: g => stack(g, { color: BLUE, sides: 64, radius: 0.7, max: 36, thick: 0.06 }),
+      title: t => t >= 1 ? (state.shrink ? 'A cone!' : 'A cylinder!') : 'Stack the circles',
+      count: t => many(slices(t, 36), 'circle'),
+      ask: ['What do you get when you stack circles? Think of a pile of coins.', 'You made a cylinder by spinning too. Is it the same shape?', 'Now make each circle smaller. What will it become?'] },
+    { id: 'stack-tri', card: ['tri3', 'triangle'], dist: [6.8, 6.8], view: [0.5, 0.45],
+      build: g => stack(g, { color: RED, sides: 3, radius: 0.85, max: 36, thick: 0.06 }),
+      title: t => t >= 1 ? (state.shrink ? 'A pyramid!' : 'A prism!') : 'Stack the triangles',
+      count: t => many(slices(t, 36), 'triangle'),
+      ask: ['What do you get when you stack triangles?', 'What shape is the top of the prism? What shape are the sides?', 'Now make each triangle smaller. What will it become?'] },
+    { id: 'stack-ball', card: ['bigsmall', 'small and big'], fixed: true, dist: [6.8, 6.8], view: [0.6, 0.35],
+      build: g => stack(g, { color: ORANGE, sides: 64, radius: 1, max: 34, thick: 0.06,
+        sizeAt: i => Math.sqrt(1 - ((i + 0.5) / 17 - 1) ** 2) }),
+      title: t => t >= 1 ? 'A sphere!' : 'Stack the circles',
+      count: t => many(slices(t, 34), 'circle'),
+      ask: ['These circles start small, get big, then get small again. What will they make?', 'Where is the biggest circle?', 'You made a sphere by spinning too. Is it the same shape?'] },
+  ] },
+  { id: 'quiz', label: 'Quiz', scenes: [] },
+];
+
+// ---------- the quiz: each round asks 10 of these 45 yes / no questions, picked at random ----------
+// s: scene, a: the answer, why: shown afterwards. The shape then changes from 0 up to `to`,
+// unless `still` is set: then it stays as shown (`at` 0 is the flat shape, otherwise the solid),
+// and `ways` adds the wide / tall / deep arrows once answered.
+const CUBE = 20 / 36;
+const QUIZ = [
+  { s: 'spin-circle', still: true, at: 0, ways: true, q: 'Is a circle flat?', a: true, why: 'A circle is flat. It goes 2 ways: wide and tall.' },
+  { s: 'fold-cube', still: true, ways: true, q: 'Is a cube flat?', a: false, why: 'A cube is solid. It goes 3 ways: wide, tall and deep.' },
+  { s: 'spin-rect', still: true, at: 0, ways: true, q: 'Is a rectangle solid?', a: false, why: 'A rectangle is flat. It goes 2 ways: wide and tall.' },
+  { s: 'spin-circle', still: true, ways: true, q: 'Does a sphere go 3 ways?', a: true, why: 'A sphere is wide, tall and deep. It is solid.' },
+  { s: 'fold-cuboid', still: true, ways: true, q: 'Is a cuboid wide, tall and deep?', a: true, why: 'A cuboid goes 3 ways. It is solid.' },
+  { s: 'spin-circle', q: 'Spin the circle. Will it make a sphere?', a: true, why: 'A spinning circle makes a sphere.' },
+  { s: 'spin-rect', q: 'Spin the rectangle. Will it make a cone?', a: false, why: 'A spinning rectangle makes a cylinder.' },
+  { s: 'spin-tri', q: 'Spin the triangle. Will it make a cone?', a: true, why: 'A spinning triangle makes a cone.' },
+  { s: 'fold-cube', q: 'Fold the 6 squares. Will they make a cube?', a: true, why: '6 squares fold into a cube.' },
+  { s: 'stack-circle', q: 'Stack the circles. Will they make a sphere?', a: false, why: 'Circles of the same size make a cylinder.' },
+  { s: 'stack-square', to: CUBE, q: 'Stack the squares. Can they make a cube?', a: true, why: 'A stack of squares makes a cube.' },
+  { s: 'fold-cylinder', q: 'Roll the rectangle. Will it make a cylinder?', a: true, why: 'A rolled rectangle makes a cylinder.' },
+  { s: 'fold-pyramid', q: 'Fold the triangles up. Will they make a cube?', a: false, why: 'The triangles meet at a point. It is a pyramid.' },
+  { s: 'stack-tri', q: 'Stack the triangles. Will they make a prism?', a: true, why: 'A stack of triangles makes a prism.' },
+  { s: 'fold-cone', q: 'Roll the big slice. Will it make a cone?', a: true, why: 'A rolled slice makes a cone.' },
+  { s: 'stack-square', shrink: true, q: 'Stack squares that get smaller. Will they make a pyramid?', a: true, why: 'Smaller and smaller squares make a pyramid.' },
+  { s: 'stack-circle', shrink: true, q: 'Stack circles that get smaller. Will they make a cylinder?', a: false, why: 'Smaller and smaller circles make a cone.' },
+  { s: 'fold-cuboid', q: 'Fold the 6 rectangles. Will they make a cuboid?', a: true, why: '6 rectangles fold into a cuboid.' },
+  { s: 'spin-tri', q: 'Spin the triangle. Will it make a pyramid?', a: false, why: 'It makes a cone. A cone is round.' },
+  { s: 'fold-prism', q: 'Fold this paper. Will it make a prism?', a: true, why: '3 rectangles and 2 triangles fold into a prism.' },
+  { s: 'stack-ball', q: 'Stack small, big, then small circles. Will they make a sphere?', a: true, why: 'Small, big, small circles make a sphere.' },
+  { s: 'fold-cube', q: 'Fold the 6 squares. Will they make a pyramid?', a: false, why: '6 squares fold into a cube.' },
+  { s: 'stack-square', q: 'Stack lots and lots of squares. Is it still a cube?', a: false, why: 'It grew taller than a cube. It is a cuboid.' },
+  { s: 'stack-tri', shrink: true, q: 'Stack triangles that get smaller. Will they make a pyramid?', a: true, why: 'Smaller and smaller triangles make a pyramid.' },
+  { s: 'fold-cuboid', q: 'Fold the 6 rectangles. Will they make a cube?', a: false, why: 'The faces are rectangles, so it is a cuboid.' },
+  { s: 'fold-pyramid', q: 'Fold the triangles up. Will they make a pyramid?', a: true, why: '4 triangles on a square fold into a pyramid.' },
+  { s: 'stack-tri', q: 'Stack the triangles. Will they make a cone?', a: false, why: 'A stack of triangles makes a prism.' },
+  { s: 'fold-prism', q: 'Fold this paper. Will it make a cube?', a: false, why: 'It has triangles at the ends. It is a prism.' },
+  { s: 'stack-circle', shrink: true, q: 'Stack circles that get smaller. Will they make a cone?', a: true, why: 'Smaller and smaller circles make a cone.' },
+  { s: 'stack-square', shrink: true, q: 'Stack squares that get smaller. Will they make a cone?', a: false, why: 'It is a pyramid. Its bottom is a square.' },
+  { s: 'fold-cube', still: true, q: 'Does a cube have 6 faces?', a: true, why: 'A cube has 6 faces. All of them are squares.' },
+  { s: 'spin-circle', still: true, q: 'Does a sphere have corners?', a: false, why: 'A sphere is round all over. No corners.' },
+  { s: 'spin-tri', still: true, q: 'Does a cone have a pointy top?', a: true, why: 'A cone has one pointy top.' },
+  { s: 'spin-rect', still: true, q: 'Is the top of a cylinder a square?', a: false, why: 'The top of a cylinder is a circle.' },
+  { s: 'fold-pyramid', still: true, q: 'Does this pyramid have a square at the bottom?', a: true, why: 'The bottom of this pyramid is a square.' },
+  { s: 'fold-cuboid', still: true, q: 'Does a cuboid have 6 faces?', a: true, why: 'A cuboid has 6 faces, just like a cube.' },
+  { s: 'fold-cube', still: true, q: 'Are the faces of a cube triangles?', a: false, why: 'The faces of a cube are squares.' },
+  { s: 'stack-tri', still: true, q: 'Are the two ends of this prism triangles?', a: true, why: 'This prism has a triangle at each end.' },
+  { s: 'spin-tri', still: true, q: 'Is the bottom of a cone a square?', a: false, why: 'The bottom of a cone is a circle.' },
+  { s: 'fold-pyramid', still: true, q: 'Does this pyramid have 6 triangles?', a: false, why: 'This pyramid has 4 triangles and 1 square.' },
+  { s: 'spin-circle', still: true, q: 'Can a sphere roll?', a: true, why: 'A sphere is round, so it rolls every way.' },
+  { s: 'fold-cube', still: true, q: 'Can a cube roll like a ball?', a: false, why: 'A cube has flat faces. It slides, it does not roll.' },
+  { s: 'fold-cuboid', still: true, q: 'Are all the faces of this cuboid squares?', a: false, why: 'The faces of this cuboid are rectangles.' },
+  { s: 'spin-rect', still: true, q: 'Does a cylinder have 2 circles?', a: true, why: 'A cylinder has a circle on top and a circle below.' },
+  { s: 'fold-prism', still: true, q: 'Does this prism have 5 faces?', a: true, why: '3 rectangles and 2 triangles make 5 faces.' },
+];
+
+// ---------- page wiring ----------
+const $ = id => document.getElementById(id);
+const slider = $('slider'), titleEl = $('title'), countEl = $('count');
+let tab = TABS[0], sc = null, update = null, ruler = null, t = 0, playing = false, playTo = 1, playSecs = 7, last = 0;
+const view = { yaw: 0, pitch: 0 };
+const ROUND = 10;
+const quiz = { on: false, set: [], i: 0, score: 0, answered: false, done: false };
+function newRound() {
+  const pool = QUIZ.slice();
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  Object.assign(quiz, { set: pool.slice(0, ROUND), i: 0, score: 0, done: false });
+}
+newRound();
+
+function clearWorld() {
+  world.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material && o.material !== lineMat) o.material.dispose(); });
+  world.clear();
+}
+function setT(v) {
+  t = Math.min(1, Math.max(0, v));
+  slider.value = Math.round(t * 1000);
+  slider.style.setProperty('--p', t * 100 + '%');
+  update(t);
+  // the quiz zooms out a little so the answer text clears the shape
+  dist = (sc.dist[0] + (sc.dist[1] - sc.dist[0]) * t) * (quiz.on ? 1.08 : 1);
+  fit();
+  // arrows show while the shape is still flat and once it is solid, not in between
+  ruler(quiz.on ? null : sc.id === 'hello' ? size(dims.wide * STEP, dims.tall * STEP, dims.deep * STEP)
+    : t === 0 || t >= 1 ? SIZES[sc.id][t >= 1 ? 1 : 0] : null);
+  if (quiz.on) return;
+  titleEl.textContent = sc.title(t);
+  titleEl.classList.toggle('done', t >= 1);
+  countEl.textContent = sc.count(t);
+}
+function setPlaying(p) {
+  playing = p;
+  $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+  $('playIcon').innerHTML = p ? '<path d="M7 4h6v22H7zM17 4h6v22h-6z"/>' : '<path d="M8 4l18 11L8 26z"/>';
+}
+function pick(i) {
+  sc = tab.scenes[i];
+  clearWorld();
+  update = sc.build(world);
+  ruler = measure(world);
+  view.yaw = sc.view[0]; view.pitch = sc.view[1];
+  [...$('cards').querySelectorAll('.card')].forEach((c, j) => c.setAttribute('aria-pressed', j === i));
+  const sw = $('shrink');
+  if (sw) sw.classList.toggle('on', tab.id === 'stack' && !sc.fixed);
+  $('askList').innerHTML = sc.ask.map(q => `<li>${q}</li>`).join('');
+  $('endA').innerHTML = icon[sc.card[0]].replace(/<(\w+)/g, '<$1 transform="scale(.733)"');
+  setPlaying(false);
+  setT(0);
+}
+function pickTab(id) {
+  [...$('tabs').children].forEach(b => b.setAttribute('aria-selected', b.dataset.id === id));
+  quiz.on = id === 'quiz';
+  document.body.classList.toggle('hello', id === 'hello');
+  document.body.classList.toggle('quiz', quiz.on);
+  document.body.classList.remove('answered');
+  titleEl.classList.remove('pop');
+  if (quiz.on) {
+    $('cards').innerHTML = '<div id="question"></div><div id="progress"></div>';
+    if (quiz.done) newRound();
+    return showQuestion();
+  }
+  state.shrink = false;
+  tab = TABS.find(x => x.id === id);
+  $('cards').innerHTML = id === 'hello' ? '<div id="question">Flat shapes go 2 ways. Solid shapes go 3 ways.</div>' : tab.scenes.map((s, i) => `<button class="card" data-i="${i}" aria-pressed="false"><svg viewBox="0 0 60 60">${icon[s.card[0]]}</svg>${s.card[1]}</button>`).join('')
+    + `<button class="switch" id="shrink" aria-pressed="false"><span class="track"><span class="knob"></span></span>get smaller</button>`;
+  if (id === 'hello') Object.assign(dims, { wide: 3, tall: 2, deep: 0 });
+  dimSliders.forEach(showDim);
+  pick(0);
+}
+
+function showQuestion() {
+  const q = quiz.set[quiz.i];
+  tab = TABS.find(x => x.scenes.some(s => s.id === q.s));
+  state.shrink = !!q.shrink;
+  pick(tab.scenes.findIndex(s => s.id === q.s));
+  setT(q.still ? q.at ?? 1 : 0);
+  quiz.answered = false;
+  document.body.classList.remove('answered');
+  $('question').textContent = q.q;
+  $('progress').textContent = `${quiz.i + 1} of ${ROUND}  ★ ${quiz.score}`;
+  $('next').textContent = 'Next';
+  titleEl.textContent = ''; countEl.textContent = '';
+  titleEl.classList.remove('pop', 'done');
+}
+function answer(yes) {
+  if (!quiz.on || quiz.answered || quiz.done) return;
+  const q = quiz.set[quiz.i], right = yes === q.a;
+  quiz.answered = true;
+  if (right) quiz.score++;
+  titleEl.textContent = right ? 'Yay!' : 'Not this time';
+  void titleEl.offsetWidth; // restart the pop
+  titleEl.classList.add('pop', 'done');
+  countEl.textContent = q.why;
+  if (q.ways) ruler(SIZES[sc.id][t >= 1 ? 1 : 0]);
+  $('progress').textContent = `${quiz.i + 1} of ${ROUND}  ★ ${quiz.score}`;
+  document.body.classList.add('answered');
+  if (!q.still) { playTo = q.to || 1; playSecs = 4; setPlaying(true); }
+}
+function next() {
+  if (!quiz.on || !quiz.answered) return;
+  if (quiz.done) { newRound(); return showQuestion(); }
+  if (++quiz.i < ROUND) return showQuestion();
+  quiz.done = true;
+  setPlaying(false);
+  clearWorld();
+  $('question').textContent = 'All done!';
+  $('progress').textContent = '';
+  titleEl.textContent = `Yay! ${quiz.score} of ${ROUND}`;
+  countEl.textContent = '';
+  $('next').textContent = 'Play again';
+}
+const dimSliders = [...document.querySelectorAll('#dims input')];
+function showDim(el) {
+  el.value = dims[el.dataset.dim];
+  el.style.setProperty('--p', (el.value - el.min) / (el.max - el.min) * 100 + '%');
+}
+dimSliders.forEach(el => el.addEventListener('input', () => { dims[el.dataset.dim] = +el.value; showDim(el); setT(0); }));
+$('yes').addEventListener('click', () => answer(true));
+$('no').addEventListener('click', () => answer(false));
+$('next').addEventListener('click', next);
+addEventListener('keydown', e => {
+  if (!quiz.on || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (k === 'y') answer(true);
+  else if (k === 'n') answer(false);
+  else if (k === 'arrowright') next();
+});
+
+$('tabs').innerHTML = TABS.map(x => `<button class="tab" role="tab" data-id="${x.id}">${x.label}</button>`).join('');
+$('tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) pickTab(b.dataset.id); });
+$('cards').addEventListener('click', e => {
+  const c = e.target.closest('.card');
+  if (c) return pick(+c.dataset.i);
+  const s = e.target.closest('.switch');
+  if (s) { state.shrink = !state.shrink; s.setAttribute('aria-pressed', state.shrink); setT(t); }
+});
+$('askBtn').addEventListener('click', e => {
+  const on = $('ask').classList.toggle('on');
+  e.currentTarget.setAttribute('aria-pressed', on);
+});
+slider.addEventListener('input', () => { setPlaying(false); setT(slider.value / 1000); });
+$('play').addEventListener('click', () => { if (!playing && t >= 1) setT(0); playTo = 1; playSecs = 7; setPlaying(!playing); });
+
+let drag = null;
+stage.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY }; stage.setPointerCapture(e.pointerId); stage.classList.add('dragging'); $('turnhint').style.visibility = 'hidden'; });
+stage.addEventListener('pointermove', e => {
+  if (!drag) return;
+  view.yaw += (e.clientX - drag.x) * 0.01;
+  view.pitch = Math.min(1.5, Math.max(-1.5, view.pitch + (e.clientY - drag.y) * 0.01));
+  drag = { x: e.clientX, y: e.clientY };
+});
+const endDrag = () => { drag = null; stage.classList.remove('dragging'); };
+stage.addEventListener('pointerup', endDrag);
+stage.addEventListener('pointercancel', endDrag);
+
+function draw() {
+  world.rotation.set(view.pitch, view.yaw, 0);
+  renderer.render(scene3, camera);
+  for (let i = 0; i < 3; i++) {
+    const el = $('pin' + i), pin = pins[i];
+    el.style.display = pin ? 'block' : 'none';
+    if (!pin) continue;
+    const v = pin.pos.clone().applyMatrix4(world.matrixWorld).project(camera);
+    el.textContent = pin.text;
+    el.style.left = (v.x + 1) / 2 * stage.clientWidth + 'px';
+    el.style.top = (1 - v.y) / 2 * stage.clientHeight + 'px';
+  }
+}
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (playing) { setT(Math.min(playTo, t + dt / playSecs)); if (t >= playTo) setPlaying(false); }
+  draw();
+  requestAnimationFrame(frame);
+}
+pickTab('hello');
+requestAnimationFrame(frame);
+
+// used when checking the page
+window.__go = (id, i, v, shrink) => { pickTab(id); state.shrink = !!shrink; pick(i); setT(v); draw(); return renderer.domElement; };
+window.__check = { QUIZ, quiz, draw: () => { draw(); return renderer.domElement; } };
+})();
+</script>
+</body>
+</html>
